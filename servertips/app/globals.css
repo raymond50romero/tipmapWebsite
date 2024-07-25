@@ -1,3 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
 body {
-  color: rgb(var(--foreground-rgb));
+  height: 100%;
+  width: 100%;
 }
+
+main {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  grid-template-rows: 5% 95%;
+  grid-template-areas:
+    'topnav topnav'
+    'sidenav content-body';
+}
+
+#homepage-topnav {
+  grid-area: topnav;
+}
+
+#homepage-sidenav {
+  grid-area: sidenav;
+}
+
+#homepage-body {
+  grid-area: content-body;
+}
+*/
