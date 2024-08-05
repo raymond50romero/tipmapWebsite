@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-import styles from "./styles.module.css";
+import LoginPopup from "./loginPopup";
 
 export default function LoginButtons() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -31,6 +31,9 @@ export default function LoginButtons() {
 
   return (
     <div className="flex items-center justify-center">
+      <div>
+        <LoginPopup />
+      </div>
       {isLoggedIn ? <LoggedIn /> : <NoLogin />}
     </div>
   );

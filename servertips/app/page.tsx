@@ -1,6 +1,7 @@
 import React from "react";
 import TopNav from "./components/topnav/topnav";
 import SideNav from "./components/sidenav/sidenav";
+import Tiles from "./components/mainpageContent/tiles";
 
 export default function Home() {
   return (
@@ -11,8 +12,8 @@ export default function Home() {
       <section className="row-span-2">
         <SideNav />
       </section>
-      <section id="homepage-body">
-        <h1>hello world</h1>
+      <section id="homepage-body" className="overflow-y-scroll p-12">
+        <Tiles />
       </section>
     </main>
   );
