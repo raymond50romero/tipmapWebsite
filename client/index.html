@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href='./styles-index.css' rel='stylesheet'/>
+    <script src='./script-index.js'></script>
+    <title>Server Tips</title>
+  </head>
+  <body>
+    <header>
+      <nav id="topnav">
+        <h1 id="header">Server Tips</h1>
+        <input type='text' placeholder='Search for Restaurant' id='restaurant-search'/>
+        <button>Login/Create Account</button>
+      </nav>
+    </header>
+    <main>
+      <nav id="sidenav">
+        <div id='sidenav-display'>
+          <button class='sidenav-buttons' id='display-restaurants'>Restaurants</button>
+          <button class='sidenav-buttons' id='display-latest'>Latest Review</button>
+        </div>
+        <div id='sidenav-tools'>
+          <hr/>
+          <button class='sidenav-buttons' id='restaurant-maps'>Map of Restaurants</button>
+        </div>
+        <div id='sidenav-extras'>
+          <hr/>
+          <button class='sidenav-buttons' id='add-new-restaurant'>Add New Restaurant</button>
+        </div>
+      </nav>
+      <div id="main-content-container">
+        main content goes here
+        <template id='restaurant-card-template'>
+          <restaurant-card>
+            <img src='' alt='picture of restaurant' class='restaurant-picture'/>
+            <div class='rc-header-container'>
+              <h3 class='rc-title'></h3>
+              <span class='rc-ovr-server-rating'></span>
+            </div>
+            <div class='rc-ratings'>
+              <span class='rc-ovr-work-env'></span>
+              <span class='rc-ovr-clientele'></span>
+              <span class='rc-money-est'></span>
+            </div>
+          <restaurant-card>
+        </template>
+      </div>
+    </main>
+  </body>
+</html>
