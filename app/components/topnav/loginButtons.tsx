@@ -13,7 +13,7 @@ export default function LoginButtons() {
     }
 
     return (
-      <div className="align-center btn btn-primary flex justify-center rounded-2xl">
+      <div className={styles.loginButton}>
         <button onClick={setLogin} className="italic">
           Login/Sign Up
         </button>
