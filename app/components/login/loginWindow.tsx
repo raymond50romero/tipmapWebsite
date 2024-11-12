@@ -1,6 +1,5 @@
 'use client';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import styles from './styles.module.css';
 import {
@@ -10,8 +9,8 @@ import {
 } from '@ant-design/icons';
 
 export default function LoginWindow() {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState<string>();
+  const [password, setPassword] = useState<string>();
 
   return (
     <div className={styles.popupWindow}>
@@ -21,7 +20,10 @@ export default function LoginWindow() {
       </div>
       <div>
         <span>
-          New user? <Link to="/create-account">Create new account</Link>
+          New user?{' '}
+          <a href="/create-account" className="text-hyperlink">
+            Create a new account
+          </a>
         </span>
       </div>
       <div className="flex h-[80%] flex-col">
@@ -29,14 +31,18 @@ export default function LoginWindow() {
           type="email"
           placeholder="Email"
           className="border-2 border-black"
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setEmail(event.target.value)
+          }
         />
         <div id="password-container">
           <input
             type="password"
             placeholder="Password"
             className="border-2 border-black"
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setPassword(event.target.value)
+            }
           />
         </div>
       </div>
