@@ -7,15 +7,20 @@ export default function LoginButtons() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   function NoLogin() {
-    function setLogin(e: any) {
-      e.preventDefault();
+    function setLogin(event: MouseEvent) {
+      event.preventDefault();
       setIsLoggedIn(true);
     }
 
     return (
       <div className={styles.loginButton}>
-        <button onClick={setLogin} className="italic">
-          Login/Sign Up
+        <button
+          onClick={(event: MouseEvent) => {
+            setLogin(event);
+          }}
+          className="italic"
+        >
+          Login
         </button>
       </div>
     );
