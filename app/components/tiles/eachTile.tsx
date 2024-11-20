@@ -1,3 +1,4 @@
+// cspell:ignore webp
 'use client';
 import React from 'react';
 import defaultRestaurant from '../../../public/static/images/restaurant_icon.webp';
@@ -16,7 +17,7 @@ export default function EachTile() {
       <div className="col-span-2 col-start-2 flex flex-row justify-between gap-4 p-[1rem]">
         <div>
           <h3 className="text-4xl">Name of Restaurant</h3>
-          <p>Adress</p>
+          <p>Address</p>
         </div>
         <div>
           <span>Overall rating</span>

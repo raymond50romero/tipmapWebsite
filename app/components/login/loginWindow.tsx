@@ -11,6 +11,7 @@ import {
 export default function LoginWindow() {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
+  const [visible, setVisible] = useState<boolean>(false);
 
   return (
     <div className={styles.popupWindow}>
@@ -37,13 +38,24 @@ export default function LoginWindow() {
         />
         <div id="password-container">
           <input
-            type="password"
+            type={visible ? 'text' : 'password'}
             placeholder="Password"
             className="border-2 border-black"
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setPassword(event.target.value)
             }
           />
+          {visible ? (
+            <EyeOutlined
+              id="visible-icon"
+              onClick={() => setVisible(!visible)}
+            />
+          ) : (
+            <EyeInvisibleOutlined
+              id="visible-icon"
+              onClick={() => setVisible(!visible)}
+            />
+          )}
         </div>
       </div>
     </div>
