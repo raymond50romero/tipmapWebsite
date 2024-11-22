@@ -12,7 +12,7 @@ export default function EmailPasswordContainer({
   const [visible, setVisible] = useState<boolean>(false);
 
   return (
-    <div className="flex h-[80%] flex-col">
+    <div className="flex flex-col">
       <input
         type="email"
         placeholder="Email"
