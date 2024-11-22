@@ -42,6 +42,8 @@ export default function EmailPasswordContainer({
           />
         )}
       </div>
+      <input type="checkbox" name="remember" />
+      <label for="remember">remember me</label>
     </div>
   );
 }

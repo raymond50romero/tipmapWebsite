@@ -1,4 +1,3 @@
-// cspell:ignore subcomponents
 'use client';
 import React, { useState } from 'react';
 
@@ -10,6 +9,7 @@ import doLogin from './doLogin';
 export default function LoginWindow() {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
+  const [remember, setRemember] = useState<boolean>(false);
 
   return (
     <div className={styles.popupWindow}>
@@ -30,7 +30,9 @@ export default function LoginWindow() {
         <a href="/recover-account" className="text-hyperlink">
           Forgot Password?
         </a>
-        <button>Log in</button>
+        <button onClick={() => doLogin(email!, password!, remember!)}>
+          Log in
+        </button>
       </div>
     </div>
   );
