@@ -1,16 +1,11 @@
 import axios from 'axios';
 
-export default function doLogin(
-  email: string,
-  password: string,
-  remember: boolean
-) {
+export default function doLogin(email: string, password: string) {
   if (!email || !password) return false;
 
   const loginData = {
     email: email,
     password: password,
-    remember: remember,
   };
 
   return axios

@@ -1,6 +1,9 @@
+/*
+ * START OF POPUP WINDOW STYLES
+ */
 .popupWindow {
-  width: 25%;
-  height: 50%;
+  width: 30%;
+  height: 60%;
   display: none;
   position: fixed;
   top: 50%;
@@ -13,6 +16,41 @@
   border-radius: 16px;
   z-index: 10000;
 }
+
+@media only screen and (max-width: 1500px) {
+  .popupWindow {
+    width: 35%;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .popupWindow {
+    width: 40%;
+  }
+}
+
+@media only screen and (max-width: 1050px) {
+  .popupWindow {
+    width: 45%;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .popupWindow {
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .popupWindow {
+    width: 90%;
+    height: 90%;
+  }
+}
+
+/*
+ * END OF POPUP WINDOW STYLES
+ */
 
 .loginButton {
   border: 1px solid #ccc;
@@ -27,7 +65,7 @@
 
 .passwordField {
   border: 1px solid #ccc;
-  padding: 0.5rem;
+  padding: 0.75rem;
   border-radius: 16px;
   width: 100%;
   padding-right: 40px;

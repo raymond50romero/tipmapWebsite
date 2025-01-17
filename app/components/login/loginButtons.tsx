@@ -17,7 +17,7 @@ export default function LoginButton() {
       blurBackground.style.left = '0';
       blurBackground.style.zIndex = '100';
       blurBackground.style.backdropFilter = 'blur(1px)';
-      blurBackground.style.filter = 'brightness(95%)';
+      blurBackground.style.filter = 'brightness(90%)';
     }
 
     return (

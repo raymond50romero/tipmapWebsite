@@ -3,6 +3,7 @@ import TopNav from './components/topnav/topnav';
 import SideNav from './components/sidenav/sidenav';
 import Tiles from './components/tiles/tiles';
 import LoginWindow from './components/login/loginWindow';
+import CAWindow from './components/createAccount/createAccountWindow';
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <section id="homepage-body" className="overflow-y-scroll p-12">
         <Tiles />
         <LoginWindow />
+        <CAWindow />
       </section>
     </main>
   );
