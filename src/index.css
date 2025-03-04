@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  height: 100vh;
+  width: 100%;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+/**
+ * LAYOUT
+ */
+
+#main-container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 16% 84%;
+  grid-template-rows: 8% 92%;
+  grid-template-areas:
+    'header header'
+    'nav main';
+}
+
+#header {
+  grid-area: header;
+  height: 100%;
+}
+
+#nav {
+  grid-area: nav;
+}
+
+#main {
+  grid-area: main;
+}
+
+/*
+ * MISC 
+ */
+
+#blur-background {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+  filter: brightness(90%);
+  backdrop-filter: blur(1px);
+}
