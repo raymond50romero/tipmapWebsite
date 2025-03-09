@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { Select, Space } from 'antd';
 
@@ -44,12 +44,32 @@ export default function CreateAccountForm() {
     },
   ];
 
+  useEffect(() => {
+    const caButton = document.getElementById('create-account-button');
+    if (userName && email && password && confirmPassword && occupation.length) {
+      caButton.style.background = '#33f';
+      caButton.style.color = 'white';
+      caButton.style.cursor = 'pointer';
+    } else {
+      caButton.style.background = '#eee';
+      caButton.style.color = 'black';
+      caButton.style.cursor = 'default';
+    }
+  }, [userName, email, password, confirmPassword, occupation]);
+
   return (
-    <div id="ca-form-container">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        doCreate(email, userName, password, confirmPassword, occupation);
+      }}
+      id="ca-form-container"
+    >
       <input
         type="email"
         placeholder="Email"
         className="input-field"
+        id="create-email-field"
         onChange={(event) => {
           setEmail(event.target.value);
         }}
@@ -58,6 +78,7 @@ export default function CreateAccountForm() {
         type="text"
         placeholder="Username"
         className="input-field"
+        id="create-username-field"
         onChange={(event) => {
           setUserName(event.target.value);
         }}
@@ -67,6 +88,7 @@ export default function CreateAccountForm() {
           type={visible ? 'text' : 'password'}
           placeholder="Password"
           className="input-field password-field"
+          id="create-password-field"
           onChange={(event) => {
             setPassword(event.target.value);
           }}
@@ -92,6 +114,7 @@ export default function CreateAccountForm() {
           type={visible ? 'text' : 'password'}
           placeholder="Confirm Password"
           className="input-field password-field"
+          id="create-confirm-password-field"
           onChange={(event) => {
             setConfirmPassword(event.target.value);
           }}
@@ -113,9 +136,9 @@ export default function CreateAccountForm() {
         )}
       </div>
       <div>
-        <h6>Select occupations</h6>
+        <h6>Select Occupation(s)</h6>
         <Select
-          id="select-occupation"
+          id="create-select-occupation-field"
           mode="multiple"
           style={{ width: '100%' }}
           placeholder="Select front of house positions..."
@@ -125,16 +148,10 @@ export default function CreateAccountForm() {
           options={options}
         />
       </div>
-      <button
-        className="login-button"
-        onClick={() => {
-          console.log(
-            doCreate(email, userName, password, confirmPassword, occupation)
-          );
-        }}
-      >
+      <div id="helper-message" />
+      <button id="create-account-button" className="login-button">
         Create Account
       </button>
-    </div>
+    </form>
   );
 }

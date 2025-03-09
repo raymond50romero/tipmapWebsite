@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import doLogin from './doLogin';
 
 import './formStyles.css';
 
@@ -18,19 +19,45 @@ export default function LoginForm() {
     }
   }
 
+  useEffect(() => {
+    const loginButton = document.getElementById('login-window-button');
+    if (email && password) {
+      loginButton.style.backgroundColor = '#33f';
+      loginButton.style.color = 'white';
+      loginButton.style.cursor = 'pointer';
+    } else {
+      loginButton.style.backgroundColor = '#eee';
+      loginButton.style.color = 'black';
+      loginButton.style.cursor = 'default';
+    }
+  }, [email, password]);
+
   return (
-    <div id="login-form-container">
+    <form
+      id="login-form-container"
+      onSubmit={(e) => {
+        e.preventDefault();
+        doLogin(email, password);
+      }}
+    >
       <input
         type="email"
         placeholder="Email"
-        id="email-field"
+        id="login-email-field"
         className="input-field"
+        onChange={(event) => {
+          setEmail(event.target.value);
+        }}
       />
       <div className="password-container">
         <input
           type={visible ? 'text' : 'password'}
           placeholder="Password"
           className="input-field password-field"
+          id="login-password-field"
+          onChange={(event) => {
+            setPassword(event.target.value);
+          }}
         />
         {visible ? (
           <EyeOutlined
@@ -63,7 +90,10 @@ export default function LoginForm() {
           Create Account
         </span>
       </p>
-      <button className="login-button">Log In</button>
-    </div>
+      <div id="helper-message" />
+      <button id="login-window-button" className="login-button">
+        Log In
+      </button>
+    </form>
   );
 }
