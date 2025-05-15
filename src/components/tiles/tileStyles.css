@@ -1,0 +1,25 @@
+.tiles-container {
+  height: 100%;
+}
+
+.restaurant-tile-container {
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  margin: 3rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.restaurant-tile-image-container {
+  object-fit: contain;
+  padding: 1rem;
+}
+
+.restaurant-tile-image {
+  max-height: 250px;
+}
+
+.restaurant-tile-details-container {
+  border-left: 1px dashed #ccc;
+  padding: 1rem;
+}
