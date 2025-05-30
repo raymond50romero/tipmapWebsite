@@ -22,4 +22,11 @@
 .restaurant-tile-details-container {
   border-left: 1px dashed #ccc;
   padding: 1rem;
+  width: 100%;
+}
+
+.restaurant-tile-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

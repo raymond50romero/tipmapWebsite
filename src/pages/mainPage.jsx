@@ -17,6 +17,7 @@ function MainPage() {
           <SideNav />
         </nav>
         <main id="main">
+          {/* TODO add a conditional statement to show tiles based on what the user selects. going to come from the sidenav*/}
           <RestaurantTiles />
         </main>
         <div id="blur-background" />
