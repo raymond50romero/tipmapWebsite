@@ -1,7 +1,7 @@
 import React from 'react';
-import LoginButton from '../login/loginButton';
-import LoginWindow from '../login/loginWindow';
-import CreateAccountWindow from '../createAccount/createAccountWindow';
+import LoginButton from '../../features/account/login/loginButton';
+import LoginWindow from '../../features/account/login/loginWindow';
+import CreateAccountWindow from '../../features/account/createAccount/createAccountWindow';
 
 import './styles.css';
 

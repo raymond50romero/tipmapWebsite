@@ -2,7 +2,7 @@ import React from 'react';
 
 import TopNav from '../components/topnav/topnav';
 import SideNav from '../components/sidenav/sidenav';
-import RestaurantTiles from '../components/tiles/restaurantTiles';
+import ContentWindow from '../components/content/contentWindow.jsx';
 
 import '../index.css';
 
@@ -17,8 +17,7 @@ function MainPage() {
           <SideNav />
         </nav>
         <main id="main">
-          {/* TODO add a conditional statement to show tiles based on what the user selects. going to come from the sidenav*/}
-          <RestaurantTiles />
+          <ContentWindow />
         </main>
         <div id="blur-background" />
       </div>
