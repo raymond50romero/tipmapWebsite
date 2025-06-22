@@ -35,12 +35,20 @@ export default function CreateAccountForm() {
       value: 'server',
     },
     {
+      label: 'Support',
+      value: 'support',
+    },
+    {
       label: 'Management',
       value: 'management',
     },
     {
-      label: 'Non restaurant worker',
-      value: 'guest',
+      label: 'Back of house',
+      value: 'boh',
+    },
+    {
+      label: 'Other',
+      value: 'other',
     },
   ];
 

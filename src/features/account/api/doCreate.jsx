@@ -47,7 +47,7 @@ export default function doCreate(
     email: email,
     username: username,
     password: password,
-    confirmPassword,
+    confirmPassword: confirmPassword,
     occupation: occupations,
   };
 

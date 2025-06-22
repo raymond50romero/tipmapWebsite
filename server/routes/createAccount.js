@@ -7,6 +7,8 @@ import {
   findUserByUsername,
 } from '../database/users.database.js';
 
+import { createOccupation } from '../database/occupation.database.js';
+
 const router = express.Router();
 
 router.post('/', async (req, res) => {
@@ -23,30 +25,99 @@ router.post('/', async (req, res) => {
 
   try {
     // check if username or email exists
-    const isEmail = await findUserByEmail(email);
-    console.log('this is findUserByEmail', isEmail);
-    if (isEmail) {
-      console.log('inside find user email if statement');
+    if (await findUserByEmail(email)) {
       return res.status(409).send('email exists');
     }
     if (await findUserByUsername(username)) {
-      console.log('inside find username if statement');
       return res.status(409).send('username exists');
     }
-
-    console.log('passed all if statements');
 
     // if not then hash password and save user to database
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await createUser(email, username, hashedPassword);
 
     if (newUser) {
-      return res.status(201).send('user created');
+      // set occupation list of new user
+      const occList = getOccupationsList(occupation);
+      const newOcc = createOccupation(
+        newUser.user_id,
+        occList.bartender,
+        occList.busser,
+        occList.host,
+        occList.takeout,
+        occList.server,
+        occList.support,
+        occList.management,
+        occList.boh,
+        occList.other
+      );
+      if (newOcc) {
+        return res.status(201).send('user created');
+      } else {
+        return res
+          .status(207)
+          .send('user created but occupation was not set correctly');
+      }
     } else return res.status(500).send('Server error, could not make new user');
   } catch (error) {
     console.log('could not make new user \n', error);
     return res.status(500).send('Server error, could not make new user');
   }
 });
+
+/************************
+ *                      *
+ *   HELPER FUNCTIONS   *
+ *                      *
+ ************************/
+function getOccupationsList(occupations) {
+  let occObj = {
+    bartender: false,
+    busser: false,
+    host: false,
+    takeout: false,
+    server: false,
+    support: false,
+    management: false,
+    boh: false,
+    other: false,
+  };
+
+  for (let i in occupations) {
+    switch (occupations[i]) {
+      case 'bartender':
+        occObj.bartender = true;
+        break;
+      case 'busser':
+        occObj.busser = true;
+        break;
+      case 'host':
+        occObj.host = true;
+        break;
+      case 'takeout':
+        occObj.takeout = true;
+        break;
+      case 'server':
+        occObj.server = true;
+        break;
+      case 'support':
+        occObj.support = true;
+        break;
+      case 'management':
+        occObj.management = true;
+        break;
+      case 'boh':
+        occObj.boh = true;
+        break;
+      case 'other':
+        occObj.other = true;
+        break;
+      default:
+        break;
+    }
+  }
+
+  return occObj;
+}
 
 export default router;
