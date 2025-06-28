@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { CloseOutlined } from '@ant-design/icons';
 import CreateAccountForm from './caForm';
 
 import './caWindow.styles.css';
 
 export default function CreateAccountWindow() {
+  const [setCreate, setDidCreate] = useState();
+
   function closeWindow() {
     const createAccountPopupWindow = document.getElementById(
       'create-account-popup-window'
@@ -14,6 +16,12 @@ export default function CreateAccountWindow() {
       createAccountPopupWindow.style.display = 'none';
     }
   }
+
+  useMemo(() => {
+    if (setCreate) {
+      closeWindow();
+    }
+  }, [setCreate]);
 
   return (
     <div id="create-account-popup-window">
@@ -26,7 +34,7 @@ export default function CreateAccountWindow() {
           }}
         />
       </div>
-      <CreateAccountForm />
+      <CreateAccountForm setDidCreate={setDidCreate} />
     </div>
   );
 }

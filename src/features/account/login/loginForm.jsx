@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-import doLogin from './doLogin';
+import doLogin from '../api/doLogin.jsx';
 
 import './formStyles.css';
 
-export default function LoginForm() {
-  const [email, setEmail] = useState();
+export default function LoginForm({ setDidLogin, setCloseWindowLogin }) {
+  const [emailOrUser, setEmailOrUser] = useState();
   const [password, setPassword] = useState();
   const [visible, setVisible] = useState(false);
 
@@ -21,7 +21,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     const loginButton = document.getElementById('login-window-button');
-    if (email && password) {
+    if (emailOrUser && password) {
       loginButton.style.backgroundColor = '#33f';
       loginButton.style.color = 'white';
       loginButton.style.cursor = 'pointer';
@@ -30,23 +30,29 @@ export default function LoginForm() {
       loginButton.style.color = 'black';
       loginButton.style.cursor = 'default';
     }
-  }, [email, password]);
+  }, [emailOrUser, password]);
 
   return (
     <form
       id="login-form-container"
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
-        doLogin(email, password);
+        if (await doLogin(emailOrUser, password)) {
+          setDidLogin(true);
+          setCloseWindowLogin(true);
+        } else {
+          setDidLogin(false);
+          setCloseWindowLogin(false);
+        }
       }}
     >
       <input
-        type="email"
-        placeholder="Email"
+        type="text"
+        placeholder="Email or Username"
         id="login-email-field"
         className="input-field"
         onChange={(event) => {
-          setEmail(event.target.value);
+          setEmailOrUser(event.target.value);
         }}
       />
       <div className="password-container">
@@ -90,7 +96,6 @@ export default function LoginForm() {
           Create Account
         </span>
       </p>
-      <div id="helper-message" />
       <button id="login-window-button" className="login-button">
         Log In
       </button>

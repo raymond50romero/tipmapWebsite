@@ -42,8 +42,10 @@ app.use((req, res, next) => {
 const httpServer = http.createServer(app);
 
 import createAccountRouter from './routes/createAccount.js';
+import loginRouter from './routes/login.js';
 
 app.use('/createAccount', createAccountRouter);
+app.use('/login', loginRouter);
 
 httpServer.listen(PORT, () => {
   console.log(`server ${SERVER} is running on port ${PORT}`);

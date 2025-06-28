@@ -52,7 +52,3 @@ body {
   filter: brightness(90%);
   backdrop-filter: blur(1px);
 }
-
-#helper-message {
-  color: red;
-}

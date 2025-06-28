@@ -25,7 +25,6 @@ export function createUser(email, username, password) {
           password: password,
         })
         .then((result) => {
-          console.log('\n new user created \n');
           return result;
         })
         .catch((error) => {
@@ -57,17 +56,13 @@ export async function findUserByEmail(email) {
       return await user
         .findOne({ where: { email: `${email}` } })
         .then((res) => {
-          console.log('this is res in database \n', res);
           if (res) {
-            console.log('user found', res);
             return res;
           } else {
-            console.log('no user email found in database');
             return false;
           }
         })
         .catch((error) => {
-          console.log('trouble looking for email', error);
           return false;
         });
     })
@@ -98,12 +93,11 @@ export async function findUserByUsername(username) {
         .findOne({ where: { username: `${username}` } })
         .then((res) => {
           if (res) {
-            console.log('user found', res);
             return res;
           } else return false;
         })
         .catch((error) => {
-          console.log('trouble looking for username', error);
+          console.log('error while finding user by username', error);
           return false;
         });
     })

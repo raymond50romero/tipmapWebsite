@@ -5,7 +5,7 @@ import { Select, Space } from 'antd';
 import './caWindow.styles.css';
 import doCreate from '../api/doCreate.jsx';
 
-export default function CreateAccountForm() {
+export default function CreateAccountForm({ setDidCreate }) {
   const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -69,7 +69,9 @@ export default function CreateAccountForm() {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        doCreate(email, userName, password, confirmPassword, occupation);
+        if (doCreate(email, userName, password, confirmPassword, occupation)) {
+          setDidCreate(true);
+        } else setDidCreate(false);
       }}
       id="ca-form-container"
     >
@@ -156,7 +158,6 @@ export default function CreateAccountForm() {
           options={options}
         />
       </div>
-      <div id="helper-message" />
       <button id="create-account-button" className="login-button">
         Create Account
       </button>

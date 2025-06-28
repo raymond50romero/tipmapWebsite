@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
-export default function LoginButton() {
+export default function LoginButton({ didLogin }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   function LoggedIn() {
@@ -35,10 +35,10 @@ export default function LoginButton() {
     );
   }
 
-  return (
-    <div>
-      <div id="blur-background" />
-      {isLoggedIn ? <LoggedIn /> : <NoLogin />}
-    </div>
-  );
+  useMemo(() => {
+    if (didLogin) {
+      setIsLoggedIn(true);
+    } else setIsLoggedIn(false);
+  }, [didLogin]);
+  return <div>{isLoggedIn ? <LoggedIn /> : <NoLogin />}</div>;
 }

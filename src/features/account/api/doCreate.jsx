@@ -10,7 +10,7 @@ import axios from 'axios';
  *
  *
  */
-export default function doCreate(
+export default async function doCreate(
   email,
   username,
   password,
@@ -51,21 +51,24 @@ export default function doCreate(
     occupation: occupations,
   };
 
-  axios
+  return await axios
     .post(`http://localhost:4000/createAccount`, data, {
       withCredentials: true,
     })
     .then((res) => {
       console.log('response from server', res);
+      return res;
     })
     .catch((error) => {
       console.log('error:', error);
+      return false;
     });
 }
 
 function setError(elementId, message) {
   const htmlTag = document.getElementById(`${elementId}`);
-  const helperMessage = document.getElementById('helper-message');
+  const helperMessage = document.getElementById('helper-message-caForm');
   htmlTag.style.borderColor = 'red';
-  helperMessage.innerHTML = `${message}`;
+  helperMessage.innerHTML = message;
+  helperMessage.style.display = 'block';
 }

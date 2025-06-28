@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { CloseOutlined } from '@ant-design/icons';
 
 import LoginForm from './loginForm';
 
 import './styles.css';
+import setLoginHelper from './helperFunction.jsx';
 
-export default function LoginWindow() {
+export default function LoginWindow({ setDidLogin }) {
+  const [closeWindowLogin, setCloseWindowLogin] = useState(false);
+
   function closeWindow() {
     const loginWindow = document.getElementById('login-popup-window');
     const blurBackground = document.getElementById('blur-background');
@@ -15,6 +18,13 @@ export default function LoginWindow() {
       blurBackground.style.display = 'none';
     }
   }
+
+  useMemo(() => {
+    if (closeWindowLogin) {
+      closeWindow();
+      setLoginHelper();
+    }
+  }, [closeWindowLogin]);
 
   return (
     <div id="login-popup-window">
@@ -28,7 +38,10 @@ export default function LoginWindow() {
             }}
           />
         </div>
-        <LoginForm />
+        <LoginForm
+          setDidLogin={setDidLogin}
+          setCloseWindowLogin={setCloseWindowLogin}
+        />
       </section>
     </div>
   );

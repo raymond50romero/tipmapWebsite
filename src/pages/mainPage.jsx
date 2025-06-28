@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import TopNav from '../components/topnav/topnav';
 import SideNav from '../components/sidenav/sidenav';
 import ContentWindow from '../components/content/contentWindow.jsx';
+import HelperMessage from '../components/helper/helperMessage.jsx';
 
 import '../index.css';
 
@@ -20,6 +21,7 @@ function MainPage() {
           <ContentWindow />
         </main>
         <div id="blur-background" />
+        <HelperMessage />
       </div>
     </>
   );
