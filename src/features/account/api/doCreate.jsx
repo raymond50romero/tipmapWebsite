@@ -15,7 +15,8 @@ export default async function doCreate(
   username,
   password,
   confirmPassword,
-  occupations
+  occupations,
+  other
 ) {
   if (!email) {
     setError('create-email-field', 'Missing Email');
@@ -49,12 +50,17 @@ export default async function doCreate(
     password: password,
     confirmPassword: confirmPassword,
     occupation: occupations,
+    other: other,
   };
 
   return await axios
-    .post(`http://localhost:4000/createAccount`, data, {
-      withCredentials: true,
-    })
+    .post(
+      `${process.env.HOST}:${process.env.PORT}/${process.env.CREATE}`,
+      data,
+      {
+        withCredentials: true,
+      }
+    )
     .then((res) => {
       console.log('response from server', res);
       return res;

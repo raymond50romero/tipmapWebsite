@@ -22,7 +22,11 @@ export default async function doLogin(emailOrUser, password) {
   };
 
   return await axios
-    .post(`http://localhost:4000/login`, data, { withCredentials: true })
+    .post(
+      `${process.env.HOST}:${process.env.PORT}/${process.env.LOGIN}`,
+      data,
+      { withCredentials: true }
+    )
     .then((res) => {
       console.log('response from server\n', res);
       return res;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-import { Select, Space } from 'antd';
+import { Select } from 'antd';
 
 import './caWindow.styles.css';
 import doCreate from '../api/doCreate.jsx';
@@ -11,6 +11,7 @@ export default function CreateAccountForm({ setDidCreate }) {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [occupation, setOccupation] = useState();
+  const [other, setOther] = useState();
   const [visible, setVisible] = useState(false);
 
   const options = [
@@ -19,32 +20,8 @@ export default function CreateAccountForm({ setDidCreate }) {
       value: 'bartender',
     },
     {
-      label: 'Busser',
-      value: 'busser',
-    },
-    {
-      label: 'Host/Greeter',
-      value: 'host',
-    },
-    {
-      label: 'Takeout',
-      value: 'takeout',
-    },
-    {
-      label: 'Server/Waiter',
+      label: 'Server',
       value: 'server',
-    },
-    {
-      label: 'Support',
-      value: 'support',
-    },
-    {
-      label: 'Management',
-      value: 'management',
-    },
-    {
-      label: 'Back of house',
-      value: 'boh',
     },
     {
       label: 'Other',
@@ -69,7 +46,16 @@ export default function CreateAccountForm({ setDidCreate }) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        if (doCreate(email, userName, password, confirmPassword, occupation)) {
+        if (
+          doCreate(
+            email,
+            userName,
+            password,
+            confirmPassword,
+            occupation,
+            other
+          )
+        ) {
           setDidCreate(true);
         } else setDidCreate(false);
       }}
@@ -151,13 +137,28 @@ export default function CreateAccountForm({ setDidCreate }) {
           id="create-select-occupation-field"
           mode="multiple"
           style={{ width: '100%' }}
-          placeholder="Select front of house positions..."
+          placeholder="Select..."
           onChange={(event) => {
+            if (event.includes('other')) {
+              document.getElementById('other-found-input').style.display =
+                'block';
+            } else {
+              document.getElementById('other-found-input').style.display =
+                'none';
+            }
             setOccupation(event);
           }}
           options={options}
         />
       </div>
+      <input
+        id="other-found-input"
+        className="input-field"
+        placeholder="Specify other..."
+        onChange={(event) => {
+          setOther(event.target.value);
+        }}
+      />
       <button id="create-account-button" className="login-button">
         Create Account
       </button>
