@@ -4,7 +4,6 @@ import { CloseOutlined } from '@ant-design/icons';
 import LoginForm from './loginForm';
 
 import './styles.css';
-import setLoginHelper from './helperFunction.jsx';
 
 export default function LoginWindow({ setDidLogin }) {
   const [closeWindowLogin, setCloseWindowLogin] = useState(false);
