@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { Select } from 'antd';
+import doCreate from '../api/doCreate.jsx';
+import {
+  setError,
+  setNormal,
+  setButtonClick,
+  setButtonGrey,
+} from '../utils/setHelperColors.jsx';
 
 import './caWindow.styles.css';
-import doCreate from '../api/doCreate.jsx';
 
-export default function CreateAccountForm({ setDidCreate }) {
+export default function CreateAccountForm({
+  setDidCreate,
+  setServerResponse,
+  setHelper,
+}) {
   const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -30,34 +40,46 @@ export default function CreateAccountForm({ setDidCreate }) {
   ];
 
   useEffect(() => {
-    const caButton = document.getElementById('create-account-button');
     if (userName && email && password && confirmPassword) {
-      caButton.style.background = '#33f';
-      caButton.style.color = 'white';
-      caButton.style.cursor = 'pointer';
+      setButtonClick('create-account-button');
     } else {
-      caButton.style.background = '#eee';
-      caButton.style.color = 'black';
-      caButton.style.cursor = 'default';
+      setButtonGrey('create-account-button');
     }
   }, [userName, email, password, confirmPassword, occupation]);
 
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
-        if (
-          doCreate(
+        if (!email) {
+          setHelper('Email needed');
+          setError('create-email-field');
+        } else if (!userName) {
+          setHelper('Username needed');
+          setError('create-username-field');
+        } else if (!password) {
+          setHelper('Password needed');
+          setError('create-password-field');
+        } else if (!confirmPassword) {
+          setHelper('Confirm password needed');
+          setError('create-confirm-password-field');
+        } else if (!occupation) {
+          setHelper('Occupation needed');
+          setError('create-set-occupation-field');
+        } else {
+          const serverResponse = await doCreate(
             email,
             userName,
             password,
             confirmPassword,
             occupation,
             other
-          )
-        ) {
-          setDidCreate(true);
-        } else setDidCreate(false);
+          );
+          if (serverResponse) {
+            setDidCreate(true);
+            setServerResponse(serverResponse);
+          } else setDidCreate(false);
+        }
       }}
       id="ca-form-container"
     >
@@ -68,6 +90,7 @@ export default function CreateAccountForm({ setDidCreate }) {
         id="create-email-field"
         onChange={(event) => {
           setEmail(event.target.value);
+          setNormal('create-email-field');
         }}
       />
       <input
@@ -77,6 +100,7 @@ export default function CreateAccountForm({ setDidCreate }) {
         id="create-username-field"
         onChange={(event) => {
           setUserName(event.target.value);
+          setNormal('create-username-field');
         }}
       />
       <div className="password-container">
@@ -87,6 +111,7 @@ export default function CreateAccountForm({ setDidCreate }) {
           id="create-password-field"
           onChange={(event) => {
             setPassword(event.target.value);
+            setNormal('create-password-field');
           }}
         />
         {visible ? (
@@ -113,6 +138,7 @@ export default function CreateAccountForm({ setDidCreate }) {
           id="create-confirm-password-field"
           onChange={(event) => {
             setConfirmPassword(event.target.value);
+            setNormal('create-confirm-password-field');
           }}
         />
         {visible ? (
@@ -147,6 +173,7 @@ export default function CreateAccountForm({ setDidCreate }) {
                 'none';
             }
             setOccupation(event);
+            setNormal('create-select-occupation-field');
           }}
           options={options}
         />

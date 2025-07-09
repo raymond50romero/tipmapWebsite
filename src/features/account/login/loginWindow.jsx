@@ -2,11 +2,15 @@ import React, { useMemo, useState } from 'react';
 import { CloseOutlined } from '@ant-design/icons';
 
 import LoginForm from './loginForm';
+import { useHelper } from '../../../components/helper/helperContext.jsx';
 
 import './styles.css';
 
 export default function LoginWindow({ setDidLogin }) {
   const [closeWindowLogin, setCloseWindowLogin] = useState(false);
+  const [serverResponse, setServerResponse] = useState();
+  const [helper, setHelper] = useState();
+  const showHelper = useHelper();
 
   function closeWindow() {
     const loginWindow = document.getElementById('login-popup-window');
@@ -19,11 +23,19 @@ export default function LoginWindow({ setDidLogin }) {
   }
 
   useMemo(() => {
+    if (helper) {
+      showHelper(helper);
+    }
     if (closeWindowLogin) {
       closeWindow();
-      setLoginHelper();
+      showHelper('Login Successful!');
     }
-  }, [closeWindowLogin]);
+    if (serverResponse) {
+      if (serverResponse.status !== 200) {
+        showHelper(serverResponse.response.data);
+      }
+    }
+  }, [closeWindowLogin, showHelper, serverResponse, helper]);
 
   return (
     <div id="login-popup-window">
@@ -40,6 +52,8 @@ export default function LoginWindow({ setDidLogin }) {
         <LoginForm
           setDidLogin={setDidLogin}
           setCloseWindowLogin={setCloseWindowLogin}
+          setServerResponse={setServerResponse}
+          setHelper={setHelper}
         />
       </section>
     </div>

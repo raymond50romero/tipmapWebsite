@@ -8,7 +8,7 @@ import axios from 'axios';
  * @param {string} confirmPassword
  * @param {object} occupations an array that contains all of the occupations of the user
  *
- *
+ * @returns {Promise<Object>} returns server response after creating, false otherwise
  */
 export default async function doCreate(
   email,
@@ -18,31 +18,13 @@ export default async function doCreate(
   occupations,
   other
 ) {
-  if (!email) {
-    setError('create-email-field', 'Missing Email');
-    return false;
-  }
-  if (!username) {
-    setError('create-username-field', 'Missing Username');
-    return false;
-  }
-  if (!password) {
-    setError('create-password-field', 'Missing Password');
-    return false;
-  }
-  if (!confirmPassword) {
-    setError('create-confirm-password-field', 'Missing Confirm Password');
-    return false;
-  }
-  if (!occupations) {
-    setError('create-select-occupation-field', 'Missing Occupations');
-    return false;
-  }
-  if (password !== confirmPassword) {
-    setError('create-password-field', 'Passwords do not match');
-    setError('create-confirm-password-field', 'Passwords do not match');
-    return false;
-  }
+  if (!email) return false;
+
+  if (!username) return false;
+  if (!password) return false;
+  if (!confirmPassword) return false;
+  if (!occupations) return false;
+  if (password !== confirmPassword) return false;
 
   const data = {
     email: email,
@@ -55,26 +37,20 @@ export default async function doCreate(
 
   return await axios
     .post(
-      `${process.env.HOST}:${process.env.PORT}/${process.env.CREATE}`,
+      `${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}/${
+        import.meta.env.VITE_CREATE
+      }`,
       data,
       {
         withCredentials: true,
       }
     )
     .then((res) => {
-      console.log('response from server', res);
+      console.log('response:', res);
       return res;
     })
     .catch((error) => {
-      console.log('error:', error);
-      return false;
+      console.log('error response:', error);
+      return error;
     });
-}
-
-function setError(elementId, message) {
-  const htmlTag = document.getElementById(`${elementId}`);
-  const helperMessage = document.getElementById('helper-message-caForm');
-  htmlTag.style.borderColor = 'red';
-  helperMessage.innerHTML = message;
-  helperMessage.style.display = 'block';
 }

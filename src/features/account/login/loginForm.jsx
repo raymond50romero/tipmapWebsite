@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import doLogin from '../api/doLogin.jsx';
+import {
+  setError,
+  setNormal,
+  setButtonClick,
+  setButtonGrey,
+} from '../utils/setHelperColors.jsx';
 
 import './formStyles.css';
 
-export default function LoginForm({ setDidLogin, setCloseWindowLogin }) {
+export default function LoginForm({
+  setDidLogin,
+  setCloseWindowLogin,
+  setServerResponse,
+  setHelper,
+}) {
   const [emailOrUser, setEmailOrUser] = useState();
   const [password, setPassword] = useState();
   const [visible, setVisible] = useState(false);
@@ -20,15 +31,10 @@ export default function LoginForm({ setDidLogin, setCloseWindowLogin }) {
   }
 
   useEffect(() => {
-    const loginButton = document.getElementById('login-window-button');
     if (emailOrUser && password) {
-      loginButton.style.backgroundColor = '#33f';
-      loginButton.style.color = 'white';
-      loginButton.style.cursor = 'pointer';
+      setButtonClick('login-window-button');
     } else {
-      loginButton.style.backgroundColor = '#eee';
-      loginButton.style.color = 'black';
-      loginButton.style.cursor = 'default';
+      setButtonGrey('login-window-button');
     }
   }, [emailOrUser, password]);
 
@@ -37,7 +43,16 @@ export default function LoginForm({ setDidLogin, setCloseWindowLogin }) {
       id="login-form-container"
       onSubmit={async (e) => {
         e.preventDefault();
-        if (await doLogin(emailOrUser, password)) {
+        if (!emailOrUser) {
+          setHelper('Need email/username');
+          setError('login-email-field');
+        } else if (!password) {
+          setHelper('Need password');
+          setError('login-password-field');
+        }
+        const serverResponse = await doLogin(emailOrUser, password);
+        setServerResponse(serverResponse);
+        if (serverResponse.status === 200) {
           setDidLogin(true);
           setCloseWindowLogin(true);
         } else {
@@ -53,6 +68,7 @@ export default function LoginForm({ setDidLogin, setCloseWindowLogin }) {
         className="input-field"
         onChange={(event) => {
           setEmailOrUser(event.target.value);
+          setNormal('login-email-field');
         }}
       />
       <div className="password-container">
@@ -63,6 +79,7 @@ export default function LoginForm({ setDidLogin, setCloseWindowLogin }) {
           id="login-password-field"
           onChange={(event) => {
             setPassword(event.target.value);
+            setNormal('login-password-field');
           }}
         />
         {visible ? (

@@ -1,11 +1,15 @@
 import React, { useMemo, useState } from 'react';
 import { CloseOutlined } from '@ant-design/icons';
 import CreateAccountForm from './caForm';
+import { useHelper } from '../../../components/helper/helperContext.jsx';
 
 import './caWindow.styles.css';
 
 export default function CreateAccountWindow() {
-  const [setCreate, setDidCreate] = useState();
+  const [setCreate, setDidCreate] = useState(false);
+  const [serverResponse, setServerResponse] = useState();
+  const [helper, setHelper] = useState();
+  const showHelper = useHelper();
 
   function closeWindow() {
     const createAccountPopupWindow = document.getElementById(
@@ -18,10 +22,20 @@ export default function CreateAccountWindow() {
   }
 
   useMemo(() => {
+    if (helper) {
+      showHelper(helper);
+    }
     if (setCreate) {
       closeWindow();
+      showHelper('New Account Created!');
     }
-  }, [setCreate]);
+    if (serverResponse) {
+      console.log('this is serverResponse:', serverResponse);
+      if (serverResponse.status !== 201) {
+        showHelper(serverResponse.data);
+      }
+    }
+  }, [setCreate, serverResponse, helper]);
 
   return (
     <div id="create-account-popup-window">
@@ -34,7 +48,11 @@ export default function CreateAccountWindow() {
           }}
         />
       </div>
-      <CreateAccountForm setDidCreate={setDidCreate} />
+      <CreateAccountForm
+        setDidCreate={setDidCreate}
+        setServerResponse={setServerResponse}
+        setHelper={setHelper}
+      />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import HelperMessage from './helperMessage.jsx';
 
-const DURATION = '5000';
+const DURATION = '3000';
 
 const HelperContext = createContext(() => {});
 
