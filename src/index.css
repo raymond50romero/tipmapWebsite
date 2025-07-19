@@ -37,6 +37,11 @@ body {
   grid-area: main;
 }
 
+#forgot-password-container {
+  height: 100%;
+  width: 100%;
+}
+
 /*
  * MISC 
  */

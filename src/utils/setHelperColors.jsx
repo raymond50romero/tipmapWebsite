@@ -4,7 +4,7 @@
  */
 export function setError(elementId) {
   const htmlTag = document.getElementById(`${elementId}`);
-  htmlTag.style.borderColor = 'red';
+  if (htmlTag) htmlTag.style.borderColor = 'red';
 }
 
 /**
@@ -13,7 +13,7 @@ export function setError(elementId) {
  */
 export function setNormal(elementId) {
   const htmlTag = document.getElementById(`${elementId}`);
-  htmlTag.style.borderColor = '#ccc';
+  if (htmlTag) htmlTag.style.borderColor = '#ccc';
 }
 
 /**
@@ -22,9 +22,11 @@ export function setNormal(elementId) {
  */
 export function setButtonClick(elementId) {
   const buttonTag = document.getElementById(`${elementId}`);
-  buttonTag.style.backgroundColor = '#33f';
-  buttonTag.style.color = 'white';
-  buttonTag.style.cursor = 'pointer';
+  if (buttonTag) {
+    buttonTag.style.backgroundColor = '#33f';
+    buttonTag.style.color = 'white';
+    buttonTag.style.cursor = 'pointer';
+  }
 }
 
 /**
@@ -33,7 +35,9 @@ export function setButtonClick(elementId) {
  */
 export function setButtonGrey(elementId) {
   const buttonTag = document.getElementById(`${elementId}`);
-  buttonTag.style.backgroundColor = '#eee';
-  buttonTag.style.color = 'black';
-  buttonTag.style.cursor = 'default';
+  if (buttonTag) {
+    buttonTag.style.backgroundColor = '#eee';
+    buttonTag.style.color = 'black';
+    buttonTag.style.cursor = 'default';
+  }
 }

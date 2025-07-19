@@ -7,7 +7,7 @@ import {
   setNormal,
   setButtonClick,
   setButtonGrey,
-} from '../utils/setHelperColors.jsx';
+} from '../../../utils/setHelperColors.jsx';
 
 import './caWindow.styles.css';
 

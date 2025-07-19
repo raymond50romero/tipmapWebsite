@@ -6,7 +6,7 @@ import {
   setNormal,
   setButtonClick,
   setButtonGrey,
-} from '../utils/setHelperColors.jsx';
+} from '../../../utils/setHelperColors.jsx';
 
 import './formStyles.css';
 
@@ -27,6 +27,13 @@ export default function LoginForm({
     if (caWindow && blurBackground) {
       caWindow.style.display = 'block';
       blurBackground.style.display = 'block';
+    }
+  }
+
+  function openForgotPasswordWindow() {
+    const fpWindow = document.getElementById('forgot-password-window');
+    if (fpWindow) {
+      fpWindow.style.display = 'block';
     }
   }
 
@@ -98,7 +105,13 @@ export default function LoginForm({
           />
         )}
       </div>
-      <p id="forgot-password-link" className="link">
+      <p
+        id="forgot-password-link"
+        className="link"
+        onClick={() => {
+          openForgotPasswordWindow();
+        }}
+      >
         Forgot password?
       </p>
       <p id="new-user-message">

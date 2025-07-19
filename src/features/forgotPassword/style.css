@@ -1,0 +1,64 @@
+#forgot-password-window {
+  width: 28rem;
+  height: auto;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem 4rem 2rem 4rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  z-index: 1000;
+}
+
+.reset-password-inner-container {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.reset-password-header {
+  font-size: xx-large;
+}
+
+.reset-password-description {
+  font-size: larger;
+  font-weight: normal;
+}
+
+.reset-password-form {
+  margin-top: 1rem;
+  width: 20%;
+}
+
+#forgot-password-email-field {
+  width: auto;
+  padding: 1rem;
+  text-align: center;
+}
+
+#forgot-password-email-field::placeholder {
+  text-align: center;
+}
+
+.forgot-password-center-container {
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+
+#forgot-password-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#forgot-password-go-back {
+  margin-top: 1rem;
+  text-decoration: none;
+}

@@ -55,3 +55,7 @@
 #close-outline {
   font-size: x-large;
 }
+
+#forgot-password-link {
+  text-decoration: none;
+}
