@@ -7,6 +7,7 @@ import "./style.css";
 
 export default function AuthWindow({ setIsLoggedIn }) {
   const [header, setHeader] = useState();
+  const [goBack, setGoBack] = useState(false);
 
   function closeWindow() {
     const authWindow = document.getElementById("auth-window");
@@ -15,6 +16,7 @@ export default function AuthWindow({ setIsLoggedIn }) {
     }
   }
 
+  // TODO set go back arrow properly
   return (
     <section id="auth-window">
       <div id="auth-window-header">
@@ -27,7 +29,11 @@ export default function AuthWindow({ setIsLoggedIn }) {
         />
       </div>
       <section>
-        <HandleAuthForm setHeader={setHeader} setIsLoggedIn={setIsLoggedIn} />
+        <HandleAuthForm
+          setGoBack={setGoBack}
+          setHeader={setHeader}
+          setIsLoggedIn={setIsLoggedIn}
+        />
       </section>
     </section>
   );

@@ -11,27 +11,15 @@ import {
 } from "../../../utils/setHelperColors.jsx";
 import "./formStyles.css";
 
-export default function LoginForm({ setIsLoggedIn, setServerResponse }) {
+export default function LoginForm({
+  setStatus,
+  setIsLoggedIn,
+  setServerResponse,
+  setHelper,
+}) {
   const [emailOrUser, setEmailOrUser] = useState();
   const [password, setPassword] = useState();
   const [visible, setVisible] = useState(false);
-
-  function openCreateAccount() {
-    const caWindow = document.getElementById("create-account-popup-window");
-    const blurBackground = document.getElementById("blur-background");
-
-    if (caWindow && blurBackground) {
-      caWindow.style.display = "block";
-      blurBackground.style.display = "block";
-    }
-  }
-
-  function openForgotPasswordWindow() {
-    const fpWindow = document.getElementById("forgot-password-window");
-    if (fpWindow) {
-      fpWindow.style.display = "block";
-    }
-  }
 
   useEffect(() => {
     if (emailOrUser && password) {
@@ -48,8 +36,10 @@ export default function LoginForm({ setIsLoggedIn, setServerResponse }) {
         e.preventDefault();
         if (!emailOrUser) {
           setError("login-email-field");
+          setHelper("Email/Username required");
         } else if (!password) {
           setError("login-password-field");
+          setHelper("Password required");
         }
         const serverResponse = await doLogin(emailOrUser, password);
         setServerResponse(serverResponse);
@@ -101,7 +91,7 @@ export default function LoginForm({ setIsLoggedIn, setServerResponse }) {
         id="forgot-password-link"
         className="link"
         onClick={() => {
-          openForgotPasswordWindow();
+          setStatus("forgotPassword");
         }}
       >
         Forgot password?
@@ -112,7 +102,7 @@ export default function LoginForm({ setIsLoggedIn, setServerResponse }) {
           id="create-account-link"
           className="link"
           onClick={() => {
-            openCreateAccount();
+            setStatus("createAccount");
           }}
         >
           Create Account
@@ -126,6 +116,8 @@ export default function LoginForm({ setIsLoggedIn, setServerResponse }) {
 }
 
 LoginForm.propTypes = {
+  setStatus: PropTypes.string.isRequired,
   setIsLoggedIn: PropTypes.bool.isRequired,
   setServerResponse: PropTypes.any.isRequired,
+  setHelper: PropTypes.string.isRequired,
 };

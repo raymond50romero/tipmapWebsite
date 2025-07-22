@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-import { Select } from 'antd';
-import doCreate from '../api/doCreate.jsx';
+import React, { useState, useEffect } from "react";
+import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import { Select } from "antd";
+import PropTypes from "prop-types";
+
+import doCreate from "../api/doCreate.jsx";
 import {
   setError,
   setNormal,
   setButtonClick,
   setButtonGrey,
-} from '../../../utils/setHelperColors.jsx';
-
-import './caWindow.styles.css';
+} from "../../../utils/setHelperColors.jsx";
+import "./caWindow.styles.css";
 
 export default function CreateAccountForm({
-  setDidCreate,
+  setStatus,
   setServerResponse,
   setHelper,
 }) {
@@ -26,24 +27,24 @@ export default function CreateAccountForm({
 
   const options = [
     {
-      label: 'Bartender',
-      value: 'bartender',
+      label: "Bartender",
+      value: "bartender",
     },
     {
-      label: 'Server',
-      value: 'server',
+      label: "Server",
+      value: "server",
     },
     {
-      label: 'Other',
-      value: 'other',
+      label: "Other",
+      value: "other",
     },
   ];
 
   useEffect(() => {
     if (userName && email && password && confirmPassword) {
-      setButtonClick('create-account-button');
+      setButtonClick("create-account-button");
     } else {
-      setButtonGrey('create-account-button');
+      setButtonGrey("create-account-button");
     }
   }, [userName, email, password, confirmPassword, occupation]);
 
@@ -52,20 +53,24 @@ export default function CreateAccountForm({
       onSubmit={async (e) => {
         e.preventDefault();
         if (!email) {
-          setHelper('Email needed');
-          setError('create-email-field');
+          setHelper("Email needed");
+          setError("create-email-field");
         } else if (!userName) {
-          setHelper('Username needed');
-          setError('create-username-field');
+          setHelper("Username needed");
+          setError("create-username-field");
         } else if (!password) {
-          setHelper('Password needed');
-          setError('create-password-field');
+          setHelper("Password needed");
+          setError("create-password-field");
         } else if (!confirmPassword) {
-          setHelper('Confirm password needed');
-          setError('create-confirm-password-field');
+          setHelper("Confirm password needed");
+          setError("create-confirm-password-field");
+        } else if (password !== confirmPassword) {
+          setHelper("Passwords do not match");
+          setError("create-password-field");
+          setError("create-confirm-password-field");
         } else if (!occupation) {
-          setHelper('Occupation needed');
-          setError('create-set-occupation-field');
+          setHelper("Occupation needed");
+          setError("create-set-occupation-field");
         } else {
           const serverResponse = await doCreate(
             email,
@@ -73,12 +78,12 @@ export default function CreateAccountForm({
             password,
             confirmPassword,
             occupation,
-            other
+            other,
           );
-          if (serverResponse) {
-            setDidCreate(true);
-            setServerResponse(serverResponse);
-          } else setDidCreate(false);
+          if (serverResponse.status === 200) {
+            setStatus("login");
+          }
+          setServerResponse(serverResponse);
         }
       }}
       id="ca-form-container"
@@ -90,7 +95,7 @@ export default function CreateAccountForm({
         id="create-email-field"
         onChange={(event) => {
           setEmail(event.target.value);
-          setNormal('create-email-field');
+          setNormal("create-email-field");
         }}
       />
       <input
@@ -100,18 +105,18 @@ export default function CreateAccountForm({
         id="create-username-field"
         onChange={(event) => {
           setUserName(event.target.value);
-          setNormal('create-username-field');
+          setNormal("create-username-field");
         }}
       />
       <div className="password-container">
         <input
-          type={visible ? 'text' : 'password'}
+          type={visible ? "text" : "password"}
           placeholder="Password"
           className="input-field password-field"
           id="create-password-field"
           onChange={(event) => {
             setPassword(event.target.value);
-            setNormal('create-password-field');
+            setNormal("create-password-field");
           }}
         />
         {visible ? (
@@ -132,13 +137,13 @@ export default function CreateAccountForm({
       </div>
       <div className="password-container">
         <input
-          type={visible ? 'text' : 'password'}
+          type={visible ? "text" : "password"}
           placeholder="Confirm Password"
           className="input-field password-field"
           id="create-confirm-password-field"
           onChange={(event) => {
             setConfirmPassword(event.target.value);
-            setNormal('create-confirm-password-field');
+            setNormal("create-confirm-password-field");
           }}
         />
         {visible ? (
@@ -162,18 +167,18 @@ export default function CreateAccountForm({
         <Select
           id="create-select-occupation-field"
           mode="multiple"
-          style={{ width: '100%' }}
+          style={{ width: "100%" }}
           placeholder="Select..."
           onChange={(event) => {
-            if (event.includes('other')) {
-              document.getElementById('other-found-input').style.display =
-                'block';
+            if (event.includes("other")) {
+              document.getElementById("other-found-input").style.display =
+                "block";
             } else {
-              document.getElementById('other-found-input').style.display =
-                'none';
+              document.getElementById("other-found-input").style.display =
+                "none";
             }
             setOccupation(event);
-            setNormal('create-select-occupation-field');
+            setNormal("create-select-occupation-field");
           }}
           options={options}
         />
@@ -192,3 +197,10 @@ export default function CreateAccountForm({
     </form>
   );
 }
+
+CreateAccountForm.propTypes = {
+  setStatus: PropTypes.string.isRequired,
+  setDidCreate: PropTypes.bool.isRequired,
+  setServerResponse: PropTypes.any.isRequired,
+  setHelper: PropTypes.string.isRequired,
+};
