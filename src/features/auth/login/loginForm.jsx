@@ -1,47 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-import doLogin from '../api/doLogin.jsx';
+import React, { useState, useEffect } from "react";
+import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import PropTypes from "prop-types";
+
+import doLogin from "../api/doLogin.jsx";
 import {
   setError,
   setNormal,
   setButtonClick,
   setButtonGrey,
-} from '../../../utils/setHelperColors.jsx';
+} from "../../../utils/setHelperColors.jsx";
+import "./formStyles.css";
 
-import './formStyles.css';
-
-export default function LoginForm({
-  setDidLogin,
-  setCloseWindowLogin,
-  setServerResponse,
-  setHelper,
-}) {
+export default function LoginForm({ setIsLoggedIn, setServerResponse }) {
   const [emailOrUser, setEmailOrUser] = useState();
   const [password, setPassword] = useState();
   const [visible, setVisible] = useState(false);
 
   function openCreateAccount() {
-    const caWindow = document.getElementById('create-account-popup-window');
-    const blurBackground = document.getElementById('blur-background');
+    const caWindow = document.getElementById("create-account-popup-window");
+    const blurBackground = document.getElementById("blur-background");
 
     if (caWindow && blurBackground) {
-      caWindow.style.display = 'block';
-      blurBackground.style.display = 'block';
+      caWindow.style.display = "block";
+      blurBackground.style.display = "block";
     }
   }
 
   function openForgotPasswordWindow() {
-    const fpWindow = document.getElementById('forgot-password-window');
+    const fpWindow = document.getElementById("forgot-password-window");
     if (fpWindow) {
-      fpWindow.style.display = 'block';
+      fpWindow.style.display = "block";
     }
   }
 
   useEffect(() => {
     if (emailOrUser && password) {
-      setButtonClick('login-window-button');
+      setButtonClick("login-window-button");
     } else {
-      setButtonGrey('login-window-button');
+      setButtonGrey("login-window-button");
     }
   }, [emailOrUser, password]);
 
@@ -51,20 +47,16 @@ export default function LoginForm({
       onSubmit={async (e) => {
         e.preventDefault();
         if (!emailOrUser) {
-          setHelper('Need email/username');
-          setError('login-email-field');
+          setError("login-email-field");
         } else if (!password) {
-          setHelper('Need password');
-          setError('login-password-field');
+          setError("login-password-field");
         }
         const serverResponse = await doLogin(emailOrUser, password);
         setServerResponse(serverResponse);
         if (serverResponse.status === 200) {
-          setDidLogin(true);
-          setCloseWindowLogin(true);
+          setIsLoggedIn(true);
         } else {
-          setDidLogin(false);
-          setCloseWindowLogin(false);
+          setIsLoggedIn(false);
         }
       }}
     >
@@ -75,18 +67,18 @@ export default function LoginForm({
         className="input-field"
         onChange={(event) => {
           setEmailOrUser(event.target.value);
-          setNormal('login-email-field');
+          setNormal("login-email-field");
         }}
       />
       <div className="password-container">
         <input
-          type={visible ? 'text' : 'password'}
+          type={visible ? "text" : "password"}
           placeholder="Password"
           className="input-field password-field"
           id="login-password-field"
           onChange={(event) => {
             setPassword(event.target.value);
-            setNormal('login-password-field');
+            setNormal("login-password-field");
           }}
         />
         {visible ? (
@@ -115,7 +107,7 @@ export default function LoginForm({
         Forgot password?
       </p>
       <p id="new-user-message">
-        New user?{' '}
+        New user?{" "}
         <span
           id="create-account-link"
           className="link"
@@ -132,3 +124,8 @@ export default function LoginForm({
     </form>
   );
 }
+
+LoginForm.propTypes = {
+  setIsLoggedIn: PropTypes.bool.isRequired,
+  setServerResponse: PropTypes.any.isRequired,
+};

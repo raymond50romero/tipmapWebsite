@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { CloseOutlined } from "@ant-design/icons";
+import PropTypes from "prop-types";
 
-import useHelper from "../helper/helperContext.jsx";
+import HandleAuthForm from "./handleAuthForm.jsx";
+import "./style.css";
 
-export default function AuthWindow() {
-  const [header, setHeader] = useState("authentication window header");
+export default function AuthWindow({ setIsLoggedIn }) {
+  const [header, setHeader] = useState();
 
   function closeWindow() {
     const authWindow = document.getElementById("auth-window");
@@ -24,6 +26,13 @@ export default function AuthWindow() {
           }}
         />
       </div>
+      <section>
+        <HandleAuthForm setHeader={setHeader} setIsLoggedIn={setIsLoggedIn} />
+      </section>
     </section>
   );
 }
+
+AuthWindow.propTypes = {
+  setIsLoggedIn: PropTypes.bool.isRequired,
+};
