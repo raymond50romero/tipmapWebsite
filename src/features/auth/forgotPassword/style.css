@@ -23,18 +23,16 @@
   align-items: center;
 }
 
-.reset-password-header {
-  font-size: xx-large;
-}
-
 .reset-password-description {
   font-size: larger;
   font-weight: normal;
 }
 
 .reset-password-form {
-  margin-top: 1rem;
-  width: 20%;
+  margin: 1rem;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
 }
 
 #forgot-password-email-field {

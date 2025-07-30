@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import LoginButton from '../../features/account/login/loginButton';
-import LoginWindow from '../../features/account/login/loginWindow';
-import CreateAccountWindow from '../../features/account/createAccount/createAccountWindow';
-import ForgotPasswordWindow from '../../features/forgotPassword/forgotPasswordWindow';
+import React, { useState } from "react";
+import LoginButton from "./loginButton";
+import AuthWindow from "../windows/authWindow.jsx";
 
-import './styles.css';
+import "./styles.css";
 
 export default function TopNav() {
   const [didLogin, setDidLogin] = useState(false);
@@ -14,9 +12,7 @@ export default function TopNav() {
       <h1 id="title">Server Tips</h1>
       <input placeholder="Search" id="search-bar" />
       <LoginButton didLogin={didLogin} />
-      <LoginWindow setDidLogin={setDidLogin} />
-      <CreateAccountWindow />
-      <ForgotPasswordWindow />
+      <AuthWindow setIsLoggedIn={setDidLogin} />
     </div>
   );
 }

@@ -10,7 +10,7 @@ import {
   setButtonClick,
   setButtonGrey,
 } from "../../../utils/setHelperColors.jsx";
-import "./caWindow.styles.css";
+import "./style.css";
 
 export default function CreateAccountForm({
   setStatus,
@@ -81,6 +81,7 @@ export default function CreateAccountForm({
             other,
           );
           if (serverResponse.status === 200) {
+            setHelper("Account Created!");
             setStatus("login");
           }
           setServerResponse(serverResponse);

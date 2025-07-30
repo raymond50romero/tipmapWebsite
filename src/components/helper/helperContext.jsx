@@ -1,12 +1,13 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
-import HelperMessage from './helperMessage.jsx';
+import React, { createContext, useContext, useState, useCallback } from "react";
+import HelperMessage from "./helperMessage.jsx";
+import PropTypes from "prop-types";
 
-const DURATION = '3000';
+const DURATION = "3000";
 
 const HelperContext = createContext(() => {});
 
 export function HelperProvider({ children }) {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [visible, setVisible] = useState(false);
 
   const showMessage = useCallback((msg) => {
@@ -28,3 +29,7 @@ export function HelperProvider({ children }) {
 export function useHelper() {
   return useContext(HelperContext);
 }
+
+HelperProvider.propTypes = {
+  children: PropTypes.any,
+};

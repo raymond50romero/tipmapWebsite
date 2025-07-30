@@ -1,4 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState } from "react";
+import PropTypes from "prop-types";
+
+import "./styles.css";
 
 export default function LoginButton({ didLogin }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -13,11 +16,11 @@ export default function LoginButton({ didLogin }) {
 
   function NoLogin() {
     function openWindow() {
-      const loginPopupWindow = document.getElementById('login-popup-window');
-      const blurBackground = document.getElementById('blur-background');
-      if (loginPopupWindow && blurBackground) {
-        loginPopupWindow.style.display = 'block';
-        blurBackground.style.display = 'block';
+      const authWindow = document.getElementById("auth-window");
+      const blurBackground = document.getElementById("blur-background");
+      if (authWindow && blurBackground) {
+        authWindow.style.display = "block";
+        blurBackground.style.display = "block";
       }
     }
 
@@ -42,3 +45,7 @@ export default function LoginButton({ didLogin }) {
   }, [didLogin]);
   return <div>{isLoggedIn ? <LoggedIn /> : <NoLogin />}</div>;
 }
+
+LoginButton.propTypes = {
+  didLogin: PropTypes.bool.isRequired,
+};

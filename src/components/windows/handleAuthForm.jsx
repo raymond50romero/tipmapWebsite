@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-import useHelper from "../helper/helperContext.jsx";
+import { useHelper } from "../helper/helperContext.jsx";
 import LoginForm from "../../features/auth/login/loginForm.jsx";
 import CreatAccountForm from "../../features/auth/createAccount/createAccountForm.jsx";
 import ForgotPasswordForm from "../../features/auth/forgotPassword/forgotPasswordForm.jsx";
@@ -10,8 +10,9 @@ export default function HandleAuthForm({
   setGoBack,
   setHeader,
   setIsLoggedIn,
+  status,
+  setStatus,
 }) {
-  const [status, setStatus] = useState();
   const [serverResponse, setServerResponse] = useState();
   const [helper, setHelper] = useState();
   const showHelper = useHelper();
@@ -19,8 +20,7 @@ export default function HandleAuthForm({
   useEffect(() => {
     if (helper) {
       showHelper(helper);
-    }
-    if (serverResponse) {
+    } else if (serverResponse) {
       showHelper(serverResponse.response.data);
     }
   }, [helper, showHelper, serverResponse]);
@@ -39,7 +39,13 @@ export default function HandleAuthForm({
     case "forgotPassword":
       setHeader("Forgot Password");
       setGoBack(true);
-      return <ForgotPasswordForm />;
+      return (
+        <ForgotPasswordForm
+          setStatus={setStatus}
+          setServerResponse={setServerResponse}
+          setHelper={setHelper}
+        />
+      );
     default:
       setHeader("Login");
       setGoBack(false);
@@ -48,6 +54,7 @@ export default function HandleAuthForm({
           setStatus={setStatus}
           setIsLoggedIn={setIsLoggedIn}
           setServerResponse={setServerResponse}
+          setHelper={setHelper}
         />
       );
   }
@@ -57,4 +64,6 @@ HandleAuthForm.propTypes = {
   setGoBack: PropTypes.bool.isRequired,
   setHeader: PropTypes.string.isRequired,
   setIsLoggedIn: PropTypes.bool.isRequired,
+  status: PropTypes.string,
+  setStatus: PropTypes.any,
 };

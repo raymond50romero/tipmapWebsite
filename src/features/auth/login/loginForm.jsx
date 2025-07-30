@@ -9,7 +9,7 @@ import {
   setButtonClick,
   setButtonGrey,
 } from "../../../utils/setHelperColors.jsx";
-import "./formStyles.css";
+import "./style.css";
 
 export default function LoginForm({
   setStatus,
@@ -116,7 +116,7 @@ export default function LoginForm({
 }
 
 LoginForm.propTypes = {
-  setStatus: PropTypes.string.isRequired,
+  setStatus: PropTypes.any,
   setIsLoggedIn: PropTypes.bool.isRequired,
   setServerResponse: PropTypes.any.isRequired,
   setHelper: PropTypes.string.isRequired,

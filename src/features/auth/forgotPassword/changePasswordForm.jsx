@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
-import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import React, { useState } from "react";
+import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import PropTypes from "prop-types";
 
 import {
   setError,
   setNormal,
   setButtonClick,
   setButtonGrey,
-} from '../../utils/setHelperColors.jsx';
-import './style.css';
+} from "../../../utils/setHelperColors.jsx";
+import "./style.css";
 
-export default function ChangePasswordForm() {
+export default function ChangePasswordForm({
+  setStatus,
+  setServerResponse,
+  setHelper,
+}) {
   const [passcode, setPasscode] = useState();
   const [newPassword, setNewPassword] = useState();
   const [confirmNewPassword, setConfirmNewPassword] = useState();
@@ -17,10 +22,9 @@ export default function ChangePasswordForm() {
 
   return (
     <section className="reset-password-inner-container">
-      <h1 className="reset-password-header">Reset Password</h1>
-      <h3 className="reset-password-description">
+      <h4 className="reset-password-description">
         enter one time passcode from email along with new password
-      </h3>
+      </h4>
       <form className="reset-password-form">
         <input
           type="text"
@@ -33,13 +37,13 @@ export default function ChangePasswordForm() {
         />
         <div className="password-container">
           <input
-            type={visible ? 'text' : 'password'}
+            type={visible ? "text" : "password"}
             placeholder="New Password"
             className="input-field password-field"
             id="create-password-field"
             onChange={(event) => {
               setNewPassword(event.target.value);
-              setNormal('create-password-field');
+              setNormal("create-password-field");
             }}
           />
           {visible ? (
@@ -60,13 +64,13 @@ export default function ChangePasswordForm() {
         </div>
         <div className="password-container">
           <input
-            type={visible ? 'text' : 'password'}
+            type={visible ? "text" : "password"}
             placeholder="Confirm New Password"
             className="input-field password-field"
             id="create-confirm-password-field"
             onChange={(event) => {
               setConfirmNewPassword(event.target.value);
-              setNormal('create-confirm-password-field');
+              setNormal("create-confirm-password-field");
             }}
           />
           {visible ? (
@@ -85,8 +89,14 @@ export default function ChangePasswordForm() {
             />
           )}
         </div>
-        <button></button>
+        <button className="login-button">Set new password</button>
       </form>
     </section>
   );
 }
+
+ChangePasswordForm.propTypes = {
+  setStatus: PropTypes.any,
+  setServerResponse: PropTypes.any,
+  setHelper: PropTypes.any,
+};

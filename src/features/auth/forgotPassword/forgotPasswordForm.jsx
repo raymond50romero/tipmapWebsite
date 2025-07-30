@@ -1,18 +1,37 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
-import EmailForm from "./emailForm.jsx";
+import EmailPasscodeForm from "./emailPasscodeForm.jsx";
 import ChangePasswordForm from "./changePasswordForm.jsx";
 
-export default function ForgotPasswordForm() {
-  const [emailSent, setEmailSent] = useState();
+export default function ForgotPasswordForm({
+  setStatus,
+  setServerResponse,
+  setHelper,
+}) {
+  const [emailSent, setEmailSent] = useState(false);
 
   return (
     <>
       {emailSent ? (
-        <EmailForm setEmailSent={setEmailSent} />
+        <ChangePasswordForm
+          setStatus={setStatus}
+          setServerResponse={setServerResponse}
+          setHelper={setHelper}
+        />
       ) : (
-        <ChangePasswordForm />
+        <EmailPasscodeForm
+          setEmailSent={setEmailSent}
+          setServerResponse={setServerResponse}
+          setHelper={setHelper}
+        />
       )}
     </>
   );
 }
+
+ForgotPasswordForm.propTypes = {
+  setStatus: PropTypes.any,
+  setServerResponse: PropTypes.any,
+  setHelper: PropTypes.any,
+};
