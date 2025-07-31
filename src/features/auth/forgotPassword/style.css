@@ -55,8 +55,3 @@
   display: flex;
   flex-direction: column;
 }
-
-#forgot-password-go-back {
-  margin-top: 1rem;
-  text-decoration: none;
-}

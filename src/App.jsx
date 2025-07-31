@@ -1,21 +1,22 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import MainPage from './pages/mainPage';
-import { HelperProvider } from './components/helper/helperContext';
+import MainPage from "./pages/mainPage";
+import { HelperProvider } from "./components/helper/helperContext";
+import { ContentStatusProvider } from "./globals/contentStatus/contentStatus";
 
-function App() {
+export default function App() {
   return (
     <>
-      <HelperProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<MainPage />} />
-          </Routes>
-        </BrowserRouter>
-      </HelperProvider>
+      <ContentStatusProvider>
+        <HelperProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<MainPage />} />
+            </Routes>
+          </BrowserRouter>
+        </HelperProvider>
+      </ContentStatusProvider>
     </>
   );
 }
-
-export default App;

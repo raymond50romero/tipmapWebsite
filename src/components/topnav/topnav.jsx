@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+
 import LoginButton from "./loginButton";
 import AuthWindow from "../windows/authWindow.jsx";
 
@@ -16,3 +18,7 @@ export default function TopNav() {
     </div>
   );
 }
+
+TopNav.propTypes = {
+  setCurrentContent: PropTypes.any,
+};

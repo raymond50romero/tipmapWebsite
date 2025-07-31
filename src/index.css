@@ -17,23 +17,23 @@ body {
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: 16% 84%;
+  grid-template-columns: 14% 84%;
   grid-template-rows: 8% 92%;
   grid-template-areas:
-    'header header'
-    'nav main';
+    "header header"
+    "nav main";
 }
 
-#header {
+header {
   grid-area: header;
   height: 100%;
 }
 
-#nav {
+nav {
   grid-area: nav;
 }
 
-#main {
+main {
   grid-area: main;
 }
 

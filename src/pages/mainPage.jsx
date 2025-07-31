@@ -1,22 +1,22 @@
-import React from 'react';
+import React from "react";
 
-import TopNav from '../components/topnav/topnav';
-import SideNav from '../components/sidenav/sidenav';
-import ContentWindow from '../components/content/contentWindow.jsx';
+import TopNav from "../components/topnav/topnav";
+import SideNav from "../components/sidenav/sidenav";
+import ContentWindow from "../components/content/contentWindow.jsx";
 
-import '../index.css';
+import "../index.css";
 
-function MainPage() {
+export default function MainPage() {
   return (
     <>
       <div id="main-container">
-        <header id="header">
+        <header>
           <TopNav />
         </header>
-        <nav id="nav">
+        <nav>
           <SideNav />
         </nav>
-        <main id="main">
+        <main>
           <ContentWindow />
         </main>
         <div id="blur-background" />
@@ -24,5 +24,3 @@ function MainPage() {
     </>
   );
 }
-
-export default MainPage;

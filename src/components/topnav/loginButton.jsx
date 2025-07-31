@@ -1,15 +1,25 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 
+import { useContentStatus } from "../../globals/contentStatus/contentStatus.jsx";
+
 import "./styles.css";
 
 export default function LoginButton({ didLogin }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { setContentStatus } = useContentStatus();
 
   function LoggedIn() {
     return (
       <div className="login-buttons-container">
-        <button className="topnav-buttons">Profile</button>
+        <button
+          className="topnav-buttons"
+          onClick={() => {
+            setContentStatus("profile");
+          }}
+        >
+          Profile
+        </button>
       </div>
     );
   }
@@ -43,9 +53,10 @@ export default function LoginButton({ didLogin }) {
       setIsLoggedIn(true);
     } else setIsLoggedIn(false);
   }, [didLogin]);
-  return <div>{isLoggedIn ? <LoggedIn /> : <NoLogin />}</div>;
+  return <>{isLoggedIn ? <LoggedIn /> : <NoLogin />}</>;
 }
 
 LoginButton.propTypes = {
   didLogin: PropTypes.bool.isRequired,
+  setCurrentContent: PropTypes.any.isRequired,
 };

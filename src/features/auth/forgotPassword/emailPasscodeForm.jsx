@@ -21,9 +21,9 @@ export default function EmailPasscodeForm({
 
   useEffect(() => {
     if (email) {
-      setButtonClick("forgot-password-button");
+      setButtonClick("forgot-password-send-email-button");
     } else {
-      setButtonGrey("forgot-password-button");
+      setButtonGrey("forgot-password-send-email-button");
     }
   }, [email]);
 
@@ -53,7 +53,10 @@ export default function EmailPasscodeForm({
           }}
         />
         <div className="forgot-password-center-container">
-          <button id="forgot-password-button" className="login-button">
+          <button
+            id="forgot-password-send-email-button"
+            className="login-button"
+          >
             Send Email
           </button>
         </div>

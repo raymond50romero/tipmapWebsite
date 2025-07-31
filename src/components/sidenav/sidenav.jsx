@@ -1,12 +1,33 @@
-import React from 'react';
+import React from "react";
 
-import './style.css';
+import { useContentStatus } from "../../globals/contentStatus/contentStatus.jsx";
+
+import "./style.css";
 
 export default function SideNav() {
+  const { setContentStatus } = useContentStatus();
+
   return (
     <div id="sidenav-container">
       <section id="sidenav-main-container">
-        main navigation goes here (restaurants, tipmap, cities etc...)
+        <button
+          className="sidenav-button"
+          onClick={() => {
+            setContentStatus("tipmap");
+          }}
+        >
+          Tipmap
+        </button>
+        <button
+          className="sidenav-button"
+          onClick={() => {
+            setContentStatus("restaurant");
+          }}
+        >
+          Restaurants
+        </button>
+        <button className="sidenav-button">Cities</button>
+        <button className="sidenav-button">Latest Posts</button>
       </section>
       <section id="sidenav-secondary-container">
         still deciding what goes here, (like history or nav between different
