@@ -16,7 +16,7 @@ export default function SideNav() {
             setContentStatus("tipmap");
           }}
         >
-          Tipmap
+          Tip map
         </button>
         <button
           className="sidenav-button"
@@ -26,8 +26,22 @@ export default function SideNav() {
         >
           Restaurants
         </button>
-        <button className="sidenav-button">Cities</button>
-        <button className="sidenav-button">Latest Posts</button>
+        <button
+          className="sidenav-button"
+          onClick={() => {
+            setContentStatus("city");
+          }}
+        >
+          Cities
+        </button>
+        <button
+          className="sidenav-button"
+          onClick={() => {
+            setContentStatus("latest");
+          }}
+        >
+          Latest Posts
+        </button>
       </section>
       <section id="sidenav-secondary-container">
         still deciding what goes here, (like history or nav between different

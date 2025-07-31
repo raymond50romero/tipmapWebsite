@@ -14,19 +14,22 @@
   display: flex;
   align-items: center;
   text-align: center;
+  transition: color 250ms ease;
 }
 
 #title:hover {
-  color: #444;
+  color: #555;
 }
 
 #search-bar {
   border: 1px solid #ccc;
   border-radius: 32px;
+  background-color: #f9f9f5;
   width: 28%;
   text-align: center;
   font-size: larger;
   margin: 1rem;
+  transition: border-color 250ms ease;
 }
 
 @media screen and (max-width: 1500px) {
@@ -37,7 +40,7 @@
 }
 
 #search-bar:hover {
-  border: 1px solid #aaa;
+  border-color: #999;
 }
 
 #search-bar::placeholder {
@@ -59,8 +62,9 @@
   padding: 0.75rem 2rem 0.75rem 2rem;
   font-size: larger;
   cursor: pointer;
+  transition: background-color 250ms ease;
 }
 
-.login-buttons:hover {
+.topnav-buttons:hover {
   background-color: #ddd;
 }
