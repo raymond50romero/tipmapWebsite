@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 
-import { useContentStatus } from "../../globals/contentStatus/contentStatus.jsx";
+import { useContentStatus } from "../../globals/contentStatus.jsx";
 
 import "./styles.css";
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useContentStatus } from "../../globals/contentStatus/contentStatus.jsx";
+import { useContentStatus } from "../../globals/contentStatus.jsx";
 
 import "./style.css";
 

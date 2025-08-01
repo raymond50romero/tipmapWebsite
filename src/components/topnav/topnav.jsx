@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 
 import LoginButton from "./loginButton";
 import AuthWindow from "../windows/authWindow.jsx";
@@ -11,14 +10,10 @@ export default function TopNav() {
 
   return (
     <div id="topnav-container">
-      <h1 id="title">Server Tips</h1>
+      <h1 id="title">Front of House Tips</h1>
       <input placeholder="Search" id="search-bar" />
       <LoginButton didLogin={didLogin} />
       <AuthWindow setIsLoggedIn={setDidLogin} />
     </div>
   );
 }
-
-TopNav.propTypes = {
-  setCurrentContent: PropTypes.any,
-};

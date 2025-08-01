@@ -5,7 +5,7 @@ import RestaurantTiles from "../content/restaurants/restaurantTiles.jsx";
 import Tipmap from "../content/tipmap/tipmap.jsx";
 import Cities from "../content/cities/cities.jsx";
 import Latest from "../content/latest/latest.jsx";
-import { useContentStatus } from "../../globals/contentStatus/contentStatus.jsx";
+import { useContentStatus } from "../../globals/contentStatus.jsx";
 
 export default function ContentWindow() {
   const { contentStatus } = useContentStatus();
