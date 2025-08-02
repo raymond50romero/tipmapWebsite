@@ -13,18 +13,18 @@ export default function SideNav() {
         <button
           className="sidenav-button"
           onClick={() => {
-            setContentStatus("tipmap");
-          }}
-        >
-          Tip map
-        </button>
-        <button
-          className="sidenav-button"
-          onClick={() => {
             setContentStatus("restaurant");
           }}
         >
           Restaurants
+        </button>
+        <button
+          className="sidenav-button"
+          onClick={() => {
+            setContentStatus("tipmap");
+          }}
+        >
+          Tip map
         </button>
         <button
           className="sidenav-button"

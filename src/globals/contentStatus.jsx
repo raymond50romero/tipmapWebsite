@@ -3,7 +3,7 @@ import React, { useContext, createContext, useState } from "react";
 const ContentStatus = createContext(() => {});
 
 export function ContentStatusProvider({ children }) {
-  const [contentStatus, setContentStatus] = useState("tipmap");
+  const [contentStatus, setContentStatus] = useState("restaurant");
 
   return (
     <ContentStatus.Provider value={{ contentStatus, setContentStatus }}>

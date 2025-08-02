@@ -13,17 +13,17 @@ export default function EachRestaurantTile({
   workEnvironmentRating,
 }) {
   return (
-    <div className="restaurant-tile-container">
-      <div className="restaurant-tile-image-container">
-        <img src={restaurantImage} className="restaurant-tile-image" />
+    <div className="each-restaurant-tile-container">
+      <div className="each-restaurant-tile-image-container">
+        <img src={restaurantImage} className="each-restaurant-tile-image" />
       </div>
-      <div className="restaurant-tile-details-container">
-        <section className="restaurant-tile-header">
+      <div className="each-restaurant-tile-details-container">
+        <section className="each-restaurant-tile-header">
           <h5>{title ? title : "no title found"}</h5>
           <h5>{location ? location : "no location found"}</h5>
           <h5>{numStars ? numStars : "no rating found"}</h5>
         </section>
-        <section className="restaurant-tile-all-reviews">
+        <section className="each-restaurant-tile-all-reviews">
           <h6>
             {tipsRange
               ? tipsRange

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import EachRestaurantTile from "../../../features/content/restaurants/eachRestaurantTile.jsx";
 
+import "./styles.css";
+
 export default function RestaurantTiles() {
   // TODO figure out how to get images from backend and pass them
   // to the restaurant tile component
@@ -17,7 +19,8 @@ export default function RestaurantTiles() {
   // then populate each tile via a loop
 
   return (
-    <>
+    <div id="restaurants-container">
+      <div id="restaurants-filter-container">Filter goes here</div>
       <EachRestaurantTile
         title={title}
         location={location}
@@ -27,6 +30,6 @@ export default function RestaurantTiles() {
         managementRating={managementRating}
         workEnvironment={workEnvironment}
       />
-    </>
+    </div>
   );
 }
