@@ -31,7 +31,7 @@ export default function ForgotPasswordForm({
 }
 
 ForgotPasswordForm.propTypes = {
-  setStatus: PropTypes.any,
-  setServerResponse: PropTypes.any,
-  setHelper: PropTypes.any,
+  setStatus: PropTypes.func.isRequired,
+  setServerResponse: PropTypes.func.isRequired,
+  setHelper: PropTypes.func.isRequired,
 };

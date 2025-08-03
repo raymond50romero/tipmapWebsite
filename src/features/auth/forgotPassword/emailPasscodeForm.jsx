@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import {
@@ -66,7 +65,7 @@ export default function EmailPasscodeForm({
 }
 
 EmailPasscodeForm.propTypes = {
-  setEmailSent: PropTypes.any,
-  setServerResponse: PropTypes.any,
-  setHelper: PropTypes.any,
+  setEmailSent: PropTypes.func.isRequired,
+  setServerResponse: PropTypes.func.isRequired,
+  setHelper: PropTypes.func.isRequired,
 };

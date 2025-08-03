@@ -200,8 +200,7 @@ export default function CreateAccountForm({
 }
 
 CreateAccountForm.propTypes = {
-  setStatus: PropTypes.string.isRequired,
-  setDidCreate: PropTypes.bool.isRequired,
-  setServerResponse: PropTypes.any.isRequired,
-  setHelper: PropTypes.string.isRequired,
+  setStatus: PropTypes.func.isRequired,
+  setServerResponse: PropTypes.func.isRequired,
+  setHelper: PropTypes.func.isRequired,
 };

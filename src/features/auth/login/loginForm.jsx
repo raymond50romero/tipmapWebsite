@@ -116,8 +116,8 @@ export default function LoginForm({
 }
 
 LoginForm.propTypes = {
-  setStatus: PropTypes.any,
-  setIsLoggedIn: PropTypes.bool.isRequired,
-  setServerResponse: PropTypes.any.isRequired,
-  setHelper: PropTypes.string.isRequired,
+  setStatus: PropTypes.func.isRequired,
+  setIsLoggedIn: PropTypes.func.isRequired,
+  setServerResponse: PropTypes.func.isRequired,
+  setHelper: PropTypes.func.isRequired,
 };

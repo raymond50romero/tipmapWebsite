@@ -23,12 +23,25 @@ export default function HandleAuthForm({
     } else if (serverResponse) {
       showHelper(serverResponse.response.data);
     }
-  }, [helper, showHelper, serverResponse]);
+
+    switch (status) {
+      case "createAccount":
+        setHeader("Create Account");
+        setGoBack(true);
+        break;
+      case "forgotPassword":
+        setHeader("Forgot Password");
+        setGoBack(true);
+        break;
+      default:
+        setHeader("Login");
+        setGoBack(true);
+        break;
+    }
+  }, [helper, showHelper, serverResponse, status, setHeader, setGoBack]);
 
   switch (status) {
     case "createAccount":
-      setHeader("Create Account");
-      setGoBack(true);
       return (
         <CreatAccountForm
           setStatus={setStatus}
@@ -37,8 +50,6 @@ export default function HandleAuthForm({
         />
       );
     case "forgotPassword":
-      setHeader("Forgot Password");
-      setGoBack(true);
       return (
         <ForgotPasswordForm
           setStatus={setStatus}
@@ -47,8 +58,6 @@ export default function HandleAuthForm({
         />
       );
     default:
-      setHeader("Login");
-      setGoBack(false);
       return (
         <LoginForm
           setStatus={setStatus}
@@ -61,9 +70,9 @@ export default function HandleAuthForm({
 }
 
 HandleAuthForm.propTypes = {
-  setGoBack: PropTypes.bool.isRequired,
-  setHeader: PropTypes.string.isRequired,
-  setIsLoggedIn: PropTypes.bool.isRequired,
-  status: PropTypes.string,
-  setStatus: PropTypes.any,
+  setGoBack: PropTypes.func.isRequired,
+  setHeader: PropTypes.func.isRequired,
+  setIsLoggedIn: PropTypes.func.isRequired,
+  status: PropTypes.string.isRequired,
+  setStatus: PropTypes.func.isRequired,
 };

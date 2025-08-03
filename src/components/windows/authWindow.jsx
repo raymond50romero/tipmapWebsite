@@ -57,5 +57,5 @@ export default function AuthWindow({ setIsLoggedIn }) {
 }
 
 AuthWindow.propTypes = {
-  setIsLoggedIn: PropTypes.bool.isRequired,
+  setIsLoggedIn: PropTypes.func.isRequired,
 };

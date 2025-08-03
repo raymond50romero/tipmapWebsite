@@ -96,7 +96,7 @@ export default function ChangePasswordForm({
 }
 
 ChangePasswordForm.propTypes = {
-  setStatus: PropTypes.any,
-  setServerResponse: PropTypes.any,
-  setHelper: PropTypes.any,
+  setStatus: PropTypes.func.isRequired,
+  setServerResponse: PropTypes.func.isRequired,
+  setHelper: PropTypes.func.isRequired,
 };
