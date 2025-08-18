@@ -1,8 +1,8 @@
-#restaurants-container {
+#post-tiles-container {
   width: 100%;
   height: 100%;
 }
 
-#restaurants-filter-container {
+#post-tiles-filter-container {
   padding-bottom: 1rem;
 }

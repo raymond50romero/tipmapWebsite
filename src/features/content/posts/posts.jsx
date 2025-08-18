@@ -3,7 +3,7 @@ import React from "react";
 import restaurantImage from "../../../../public/images/restaurant_image.png";
 import "./styles.css";
 
-export default function EachRestaurantTile({
+export default function Posts({
   title,
   location,
   numStars,
@@ -13,17 +13,17 @@ export default function EachRestaurantTile({
   workEnvironmentRating,
 }) {
   return (
-    <div className="each-restaurant-tile-container">
-      <div className="each-restaurant-tile-image-container">
-        <img src={restaurantImage} className="each-restaurant-tile-image" />
+    <div className="posts-tile-container">
+      <div className="posts-tile-image-container">
+        <img src={restaurantImage} className="posts-tile-image" />
       </div>
-      <div className="each-restaurant-tile-details-container">
-        <section className="each-restaurant-tile-header">
+      <div className="posts-tile-details-container">
+        <section className="posts-tile-header">
           <h5>{title ? title : "no title found"}</h5>
           <h5>{location ? location : "no location found"}</h5>
           <h5>{numStars ? numStars : "no rating found"}</h5>
         </section>
-        <section className="each-restaurant-tile-all-reviews">
+        <section className="posts-tile-all-reviews">
           <h6>
             {tipsRange
               ? tipsRange

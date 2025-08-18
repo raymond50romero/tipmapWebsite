@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
-
 import "mapbox-gl/dist/mapbox-gl.css";
+
+import { useHelper } from "../../helper/helperContext.jsx";
 import "./styles.css";
 
 const MAPBOXGL_TOKEN = import.meta.env.VITE_MAP_TOKEN;
@@ -17,6 +18,7 @@ export default function Tipmap() {
   const [currCenter, setCurrCenter] = useState();
   const [center, setCenter] = useState(INITIAL_CENTER);
   const [zoom, setZoom] = useState(INITIAL_ZOOM);
+  const setHelper = useHelper();
 
   function goToCurrLocation() {
     mapRef.current.flyTo({
@@ -26,19 +28,16 @@ export default function Tipmap() {
   }
 
   useEffect(() => {
-    if (!navigator.geolocation) {
-      console.log("unable to find users location");
-    } else {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setCenter([position.coords.longitude, position.coords.latitude]);
-        },
-        (error) => {
-          console.log("unable to set user position", error);
-        },
-      );
-    }
-  }, []);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setCenter([position.coords.longitude, position.coords.latitude]);
+      },
+      (error) => {
+        console.error("unable to set user position", error);
+        setHelper("unable to find your location, defaulting to San Diego");
+      },
+    );
+  }, [setHelper]);
 
   useEffect(() => {
     mapboxgl.accessToken = MAPBOXGL_TOKEN;

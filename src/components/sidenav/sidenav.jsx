@@ -13,14 +13,6 @@ export default function SideNav() {
         <button
           className="sidenav-button"
           onClick={() => {
-            setContentStatus("restaurant");
-          }}
-        >
-          Restaurants
-        </button>
-        <button
-          className="sidenav-button"
-          onClick={() => {
             setContentStatus("tipmap");
           }}
         >
@@ -29,18 +21,10 @@ export default function SideNav() {
         <button
           className="sidenav-button"
           onClick={() => {
-            setContentStatus("city");
+            setContentStatus("posts");
           }}
         >
-          Cities
-        </button>
-        <button
-          className="sidenav-button"
-          onClick={() => {
-            setContentStatus("latest");
-          }}
-        >
-          Latest Posts
+          Posts
         </button>
       </section>
       <section id="sidenav-secondary-container">

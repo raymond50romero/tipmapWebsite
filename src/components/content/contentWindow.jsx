@@ -1,10 +1,7 @@
 import React from "react";
 
-import ProfilePage from "../account/profilePage.jsx";
-import RestaurantTiles from "../content/restaurants/restaurantTiles.jsx";
+import PostTiles from "../content/posts/postTiles.jsx";
 import Tipmap from "../content/tipmap/tipmap.jsx";
-import Cities from "../content/cities/cities.jsx";
-import Latest from "../content/latest/latest.jsx";
 import { useContentStatus } from "../../globals/contentStatus.jsx";
 
 export default function ContentWindow() {
@@ -12,14 +9,8 @@ export default function ContentWindow() {
 
   // TODO same conditional used for auth window, use it for content displayed
   switch (contentStatus) {
-    case "restaurant":
-      return <RestaurantTiles />;
-    case "profile":
-      return <ProfilePage />;
-    case "city":
-      return <Cities />;
-    case "latest":
-      return <Latest />;
+    case "posts":
+      return <PostTiles />;
     default:
       return <Tipmap />;
   }

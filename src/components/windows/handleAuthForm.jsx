@@ -35,7 +35,7 @@ export default function HandleAuthForm({
         break;
       default:
         setHeader("Login");
-        setGoBack(true);
+        setGoBack(false);
         break;
     }
   }, [helper, showHelper, serverResponse, status, setHeader, setGoBack]);

@@ -1,26 +1,26 @@
-.each-restaurant-tile-container {
+.posts-tile-container {
   border: 1px solid #ccc;
   border-radius: 16px;
   display: flex;
   flex-direction: row;
 }
 
-.each-restaurant-tile-image-container {
+.posts-tile-image-container {
   object-fit: contain;
   padding: 1rem;
 }
 
-.each-restaurant-tile-image {
+.posts-tile-image {
   max-height: 250px;
 }
 
-.each-restaurant-tile-details-container {
+.posts-tile-details-container {
   border-left: 1px dashed #ccc;
   padding: 1rem;
   width: 100%;
 }
 
-.each-restaurant-tile-header {
+.posts-tile-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
