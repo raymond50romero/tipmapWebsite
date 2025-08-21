@@ -11,6 +11,8 @@ const INITIAL_ZOOM = 11;
 
 // San Diego long, lat: -117.2096543, 32.8577702
 // Tacos El Gordo long, lat: 32.713659878220476, -117.15981993970202
+// Petco Park long, lat: -117.15704, 32.70767
+// Seaport Village long, lat: -117.17093, 32.70923
 
 export default function Tipmap() {
   const mapRef = useRef();
@@ -27,10 +29,13 @@ export default function Tipmap() {
     });
   }
 
+  // set users location, default to Tacos El Gordo in San Diego if user does
+  // not want to share location
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setCenter([position.coords.longitude, position.coords.latitude]);
+        setHelper("position set to your location");
       },
       (error) => {
         console.error("unable to set user position", error);
@@ -39,6 +44,7 @@ export default function Tipmap() {
     );
   }, [setHelper]);
 
+  // create map on startup
   useEffect(() => {
     mapboxgl.accessToken = MAPBOXGL_TOKEN;
     mapRef.current = new mapboxgl.Map({
@@ -47,16 +53,122 @@ export default function Tipmap() {
       zoom: zoom,
     });
 
-    // TODO save current move coords so that you can later implement tipmap funcionality
+    // set up heatmap
+    mapRef.current.on("load", () => {
+      const points = {
+        type: "featureCollection",
+        features: [
+          {
+            // petco park
+            type: "Feature",
+            properties: { value: 1 },
+            geometry: { type: "Point", coordinates: [-117.15704, 32.70767] },
+          },
+          {
+            // seaport village
+            type: "Feature",
+            properties: { value: 0.5 },
+            geometry: { type: "Point", coordinates: [-117.17093, 32.70923] },
+          },
+          {
+            // tacos el gordo
+            type: "Feature",
+            properties: { value: 0.8 },
+            geometry: { type: "Point", coordinates: [-117.1598, 32.71362] },
+          },
+        ],
+      };
+
+      mapRef.current.addSource("hotspots", {
+        type: "geojson",
+        data: points, // or a URL: 'https://example.com/your-data.geojson'
+      });
+
+      mapRef.current.addLayer({
+        id: "hotspots-heat",
+        type: "heatmap",
+        source: "hotspots",
+        maxzoom: 15,
+        paint: {
+          // Weight each point by the "value" property (default 1 if omitted)
+          "heatmap-weight": [
+            "interpolate",
+            ["linear"],
+            ["get", "value"],
+            0,
+            0,
+            1,
+            1,
+          ],
+          // Intensify with zoom
+          "heatmap-intensity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            0,
+            1,
+            15,
+            3,
+          ],
+          // Color ramp based on density
+          "heatmap-color": [
+            "interpolate",
+            ["linear"],
+            ["heatmap-density"],
+            0,
+            "rgba(0,0,255,0)",
+            0.1,
+            "blue",
+            0.3,
+            "cyan",
+            0.5,
+            "lime",
+            0.7,
+            "yellow",
+            1,
+            "red",
+          ],
+          // Radius grows with zoom
+          "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 0, 2, 9, 20],
+          // Fade heatmap as we zoom in (to reveal points)
+          "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 7, 1, 15, 0],
+        },
+      });
+
+      // 3) Optional: show points as circles when zoomed in
+      mapRef.current.addLayer({
+        id: "hotspots-point",
+        type: "circle",
+        source: "hotspots",
+        minzoom: 14,
+        paint: {
+          "circle-radius": ["interpolate", ["linear"], ["zoom"], 14, 2, 22, 10],
+          "circle-color": "#ff5722",
+          "circle-stroke-color": "#ffffff",
+          "circle-stroke-width": 1,
+        },
+      });
+    });
+
     mapRef.current.on("move", () => {
       //mapRef.current.getZoom();
       setCurrCenter(mapRef.current.getCenter());
+      console.log("inside on move");
     });
 
     return () => {
       mapRef.current.remove();
     };
   }, [center, zoom]);
+
+  /*
+   * 
+  useEffect(() => {
+    mapRef.current.on("move", () => {
+      setCurrCenter(mapRef.current.getCenter());
+    })
+  })
+  */
 
   return (
     <>
