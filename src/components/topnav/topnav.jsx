@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import LoginButton from "./loginButton";
+import NewPostButton from "./newPostButton.jsx";
 import AuthWindow from "../windows/authWindow.jsx";
 
 import "./styles.css";
@@ -12,7 +13,10 @@ export default function TopNav() {
     <div id="topnav-container">
       <h1 id="title">Front of House Tips</h1>
       <input placeholder="Search" id="search-bar" />
-      <LoginButton didLogin={didLogin} />
+      <div id="topnav-button-container">
+        <NewPostButton />
+        <LoginButton didLogin={didLogin} />
+      </div>
       <AuthWindow setIsLoggedIn={setDidLogin} />
     </div>
   );

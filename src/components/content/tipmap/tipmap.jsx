@@ -56,7 +56,7 @@ export default function Tipmap() {
     // set up heatmap
     mapRef.current.on("load", () => {
       const points = {
-        type: "featureCollection",
+        type: "FeatureCollection",
         features: [
           {
             // petco park
@@ -97,8 +97,8 @@ export default function Tipmap() {
             ["get", "value"],
             0,
             0,
-            1,
-            1,
+            6,
+            6,
           ],
           // Intensify with zoom
           "heatmap-intensity": [
@@ -133,6 +133,7 @@ export default function Tipmap() {
           // Fade heatmap as we zoom in (to reveal points)
           "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 7, 1, 15, 0],
         },
+        slot: "top",
       });
 
       // 3) Optional: show points as circles when zoomed in
@@ -143,32 +144,23 @@ export default function Tipmap() {
         minzoom: 14,
         paint: {
           "circle-radius": ["interpolate", ["linear"], ["zoom"], 14, 2, 22, 10],
-          "circle-color": "#ff5722",
-          "circle-stroke-color": "#ffffff",
+          "circle-color": "#aaa",
+          "circle-stroke-color": "black",
           "circle-stroke-width": 1,
         },
+        slot: "top",
       });
     });
 
     mapRef.current.on("move", () => {
       //mapRef.current.getZoom();
       setCurrCenter(mapRef.current.getCenter());
-      console.log("inside on move");
     });
 
     return () => {
       mapRef.current.remove();
     };
   }, [center, zoom]);
-
-  /*
-   * 
-  useEffect(() => {
-    mapRef.current.on("move", () => {
-      setCurrCenter(mapRef.current.getCenter());
-    })
-  })
-  */
 
   return (
     <>

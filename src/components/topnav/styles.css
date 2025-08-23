@@ -9,6 +9,7 @@
 
 #title {
   font-style: italic;
+  font-size: xxx-large;
   margin: 1rem;
   cursor: pointer;
   display: flex;
@@ -54,10 +55,24 @@
   justify-content: center;
 }
 
+#topnav-button-container {
+  display: flex;
+  flex-direction: row;
+}
+
+#new-post-button {
+  background-color: #4778fcc4;
+  color: black;
+}
+
+#new-post-button:hover {
+  background-color: #4778fff4;
+}
+
 .topnav-buttons {
   margin: 1rem;
   border: 1px solid #ccc;
-  background-color: #eee;
+  background-color: #ddd;
   border-radius: 32px;
   padding: 0.75rem 2rem 0.75rem 2rem;
   font-size: larger;
@@ -66,5 +81,5 @@
 }
 
 .topnav-buttons:hover {
-  background-color: #ddd;
+  background-color: #ccc;
 }
