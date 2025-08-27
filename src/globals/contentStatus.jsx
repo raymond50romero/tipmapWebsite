@@ -1,4 +1,5 @@
 import React, { useContext, createContext, useState } from "react";
+import PropTypes from "prop-types";
 
 const ContentStatus = createContext(() => {});
 
@@ -19,3 +20,7 @@ export function useContentStatus() {
   }
   return context;
 }
+
+ContentStatusProvider.propTypes = {
+  children: PropTypes.any,
+};
