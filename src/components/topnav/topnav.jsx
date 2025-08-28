@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 import LoginButton from "./loginButton";
 import NewPostButton from "./newPostButton.jsx";
-import AuthWindow from "../windows/authWindow.jsx";
+import AuthWindow from "../windows/auth/authWindow.jsx";
+import NewPostWindow from "../windows/newPost/newPostWindow.jsx";
 
 import "./styles.css";
 
@@ -18,6 +19,7 @@ export default function TopNav() {
         <LoginButton didLogin={didLogin} />
       </div>
       <AuthWindow setIsLoggedIn={setDidLogin} />
+      <NewPostWindow />
     </div>
   );
 }

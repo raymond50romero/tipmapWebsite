@@ -21,7 +21,7 @@ export default function AuthWindow({ setIsLoggedIn }) {
   }
 
   return (
-    <section id="auth-window">
+    <section className="window" id="auth-window">
       <div id="auth-window-header-container">
         <h3 id="auth-window-header">{header}</h3>
         <div id="auth-window-header-buttons-container">

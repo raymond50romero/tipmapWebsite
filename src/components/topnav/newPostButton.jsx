@@ -4,7 +4,12 @@ import "./styles.css";
 
 export default function NewPostButton() {
   function createPost() {
-    console.log("post created");
+    const newPostWindow = document.getElementById("new-post-window");
+    const blurBackground = document.getElementById("blur-background");
+    if (newPostWindow) {
+      newPostWindow.style.display = "block";
+      blurBackground.style.display = "block";
+    }
   }
 
   return (

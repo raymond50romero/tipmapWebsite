@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-import { useHelper } from "../helper/helperContext.jsx";
-import LoginForm from "../../features/auth/login/loginForm.jsx";
-import CreatAccountForm from "../../features/auth/createAccount/createAccountForm.jsx";
-import ForgotPasswordForm from "../../features/auth/forgotPassword/forgotPasswordForm.jsx";
+import { useHelper } from "../../helper/helperContext.jsx";
+import LoginForm from "../../../features/auth/login/loginForm.jsx";
+import CreatAccountForm from "../../../features/auth/createAccount/createAccountForm.jsx";
+import ForgotPasswordForm from "../../../features/auth/forgotPassword/forgotPasswordForm.jsx";
 
 export default function HandleAuthForm({
   setGoBack,

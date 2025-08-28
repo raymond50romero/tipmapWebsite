@@ -1,0 +1,13 @@
+#new-post-window-header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#new-post-header {
+  padding: 0;
+  margin: 0;
+  font-size: xx-large;
+  font-weight: 600;
+  font-style: italic;
+}
