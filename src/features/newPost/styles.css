@@ -1,4 +1,4 @@
-#new-post-form-container {
+.new-post-form-container {
   margin-top: 2rem;
 }
 
@@ -56,7 +56,7 @@
 }
 
 #star-rating-container {
-  margin: 1rem;
+  margin: 1rem 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -65,4 +65,33 @@
 #new-post-window-button-container {
   display: flex;
   justify-content: center;
+}
+
+.new-post-details {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.post-details-inputs {
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+#post-details-title {
+  width: 60%;
+  font-size: medium;
+  font-weight: 500;
+}
+
+#post-details-textarea {
+  margin-top: 1rem;
+  height: 6rem;
+  font-size: medium;
+}
+
+#create-new-post-button {
+  background-color: #33f;
+  color: white;
+  width: 50%;
 }

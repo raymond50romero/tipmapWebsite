@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 import { useHelper } from "../../components/helper/helperContext.jsx";
 import StarRating from "./starRating.jsx";
 import "./styles.css";
 
-export default function NewPostForm() {
+export default function NewPostForm({ setNextForm }) {
   const setHelper = useHelper();
   const [name, setName] = useState();
   const [address, setAddress] = useState();
@@ -14,13 +15,14 @@ export default function NewPostForm() {
 
   return (
     <form
-      id="new-post-form-container"
+      className="new-post-form-container"
       onSubmit={(event) => {
         event.preventDefault();
         if (!name || !address || !weekdayTips || !weekendTips) {
           setHelper("missing information");
           return;
         }
+        setNextForm(true);
         console.log("form submitted");
         console.log("this is name: ", name);
         console.log("this is address: ", address);
@@ -182,7 +184,7 @@ export default function NewPostForm() {
       </div>
       <div id="star-rating-container">
         <span>
-          overall rating
+          work environment
           <StarRating
             onChange={(value) => {
               setRating(value);
@@ -190,7 +192,7 @@ export default function NewPostForm() {
           />
         </span>
         <span>
-          management rating
+          management
           <StarRating
             onChange={(value) => {
               setRating(value);
@@ -198,7 +200,7 @@ export default function NewPostForm() {
           />
         </span>
         <span>
-          clientele rating
+          clientele
           <StarRating
             onChange={(value) => {
               setRating(value);
@@ -212,3 +214,7 @@ export default function NewPostForm() {
     </form>
   );
 }
+
+NewPostForm.propTypes = {
+  setNextForm: PropTypes.func,
+};

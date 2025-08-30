@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import "./styles.css";
+
 export default function StarRating({ max = 5, onChange }) {
   const [rating, setRating] = useState(0); // final selected rating
   const [hover, setHover] = useState(0); // hover preview rating
@@ -15,10 +17,11 @@ export default function StarRating({ max = 5, onChange }) {
         const value = i + 1;
         return (
           <svg
+            className="stars"
             key={i}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill={value <= (hover || rating) ? "#FBBF24" : "#E5E7EB"}
+            fill={value <= (hover || rating) ? "#FBBF24" : "#ccc"}
             onMouseEnter={() => setHover(value)}
             onMouseLeave={() => setHover(0)}
             onClick={() => handleClick(value)}

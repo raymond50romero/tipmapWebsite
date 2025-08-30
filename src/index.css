@@ -79,3 +79,15 @@ main {
   border-radius: 16px;
   z-index: 1000;
 }
+
+.input-field {
+  margin-bottom: 1rem;
+  padding: 1rem 0 1rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  font-size: medium;
+}
+
+.input-field::placeholder {
+  font-size: medium;
+}

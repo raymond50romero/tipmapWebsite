@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { CloseOutlined } from "@ant-design/icons";
 
 import NewPostForm from "../../../features/newPost/newPostForm.jsx";
+import PostDetailsForm from "../../../features/newPost/postDetailsForm.jsx";
 import "./styles.css";
 
 export default function NewPostWindow() {
+  const [nextForm, setNextForm] = useState(false);
+
   function closeWindow() {
     const newPostWindow = document.getElementById("new-post-window");
     const blurBackground = document.getElementById("blur-background");
@@ -27,7 +30,11 @@ export default function NewPostWindow() {
         />
       </div>
       <>
-        <NewPostForm />
+        {nextForm ? (
+          <PostDetailsForm />
+        ) : (
+          <NewPostForm setNextForm={setNextForm} />
+        )}
       </>
     </section>
   );
