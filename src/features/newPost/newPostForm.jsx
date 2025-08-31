@@ -5,29 +5,54 @@ import { useHelper } from "../../components/helper/helperContext.jsx";
 import StarRating from "./starRating.jsx";
 import "./styles.css";
 
-export default function NewPostForm({ setNextForm }) {
+export default function NewPostForm({
+  setNextForm,
+  setName,
+  setAddress,
+  setWeekdayTips,
+  setWeekendTips,
+  setWorkenv,
+  setManagement,
+  setClientele,
+}) {
   const setHelper = useHelper();
-  const [name, setName] = useState();
-  const [address, setAddress] = useState();
-  const [weekdayTips, setWeekdayTips] = useState();
-  const [weekendTips, setWeekendTips] = useState();
-  const [rating, setRating] = useState();
+  const [cName, setcName] = useState();
+  const [cAddress, setcAddress] = useState();
+  const [cWeekdayTips, setcWeekdayTips] = useState();
+  const [cWeekendTips, setcWeekendTips] = useState();
+  const [cWorkenv, setcWorkenv] = useState();
+  const [cManagement, setcManagement] = useState();
+  const [cClientele, setcClientele] = useState();
 
   return (
     <form
       className="new-post-form-container"
       onSubmit={(event) => {
         event.preventDefault();
-        if (!name || !address || !weekdayTips || !weekendTips) {
+        if (
+          !cName ||
+          !cAddress ||
+          !cWeekdayTips ||
+          !cWeekendTips ||
+          !cWorkenv ||
+          !cManagement ||
+          !cClientele
+        ) {
           setHelper("missing information");
           return;
         }
         setNextForm(true);
         console.log("form submitted");
-        console.log("this is name: ", name);
-        console.log("this is address: ", address);
-        console.log("this is weekday tips: ", weekdayTips);
-        console.log("this is weekend tips: ", weekendTips);
+        console.log("this is workenv: ", cWorkenv);
+        console.log("this is management: ", cManagement);
+        console.log("this is clientele: ", cClientele);
+        setName(cName);
+        setAddress(cAddress);
+        setWeekdayTips(cWeekdayTips);
+        setWeekendTips(cWeekendTips);
+        setWorkenv(cWorkenv);
+        setManagement(cManagement);
+        setClientele(cClientele);
       }}
     >
       <h6 className="new-post-helper-header">* Required</h6>
@@ -37,7 +62,7 @@ export default function NewPostForm({ setNextForm }) {
         id="new-post-input-name"
         className="input-field new-post-input"
         onChange={(event) => {
-          setName(event.target.value);
+          setcName(event.target.value);
         }}
       />
       <input
@@ -46,7 +71,7 @@ export default function NewPostForm({ setNextForm }) {
         id="new-post-input-address"
         className="input-field new-post-input"
         onChange={(event) => {
-          setAddress(event.target.value);
+          setcAddress(event.target.value);
         }}
       />
       <div className="avg-tips-container">
@@ -58,7 +83,7 @@ export default function NewPostForm({ setNextForm }) {
             id="weekday-0"
             className="avg-tips-rating"
             onClick={() => {
-              setWeekdayTips(0);
+              setcWeekdayTips(0);
             }}
           />
           <label htmlFor="weekday-0" className="avg-tips-label">
@@ -71,7 +96,7 @@ export default function NewPostForm({ setNextForm }) {
             id="weekday-1"
             className="avg-tips-rating"
             onClick={() => {
-              setWeekdayTips(1);
+              setcWeekdayTips(1);
             }}
           />
           <label htmlFor="weekday-1" className="avg-tips-label">
@@ -83,7 +108,7 @@ export default function NewPostForm({ setNextForm }) {
             id="weekday-2"
             className="avg-tips-rating"
             onClick={() => {
-              setWeekdayTips(2);
+              setcWeekdayTips(2);
             }}
           />
           <label htmlFor="weekday-2" className="avg-tips-label">
@@ -95,7 +120,7 @@ export default function NewPostForm({ setNextForm }) {
             id="weekday-3"
             className="avg-tips-rating"
             onClick={() => {
-              setWeekdayTips(3);
+              setcWeekdayTips(3);
             }}
           />
           <label htmlFor="weekday-3" className="avg-tips-label">
@@ -107,7 +132,7 @@ export default function NewPostForm({ setNextForm }) {
             id="weekday-4"
             className="avg-tips-rating"
             onClick={() => {
-              setWeekdayTips(4);
+              setcWeekdayTips(4);
             }}
           />
           <label htmlFor="weekday-4" className="avg-tips-label">
@@ -125,7 +150,7 @@ export default function NewPostForm({ setNextForm }) {
             id="weekend-0"
             className="avg-tips-rating"
             onClick={() => {
-              setWeekendTips(0);
+              setcWeekendTips(0);
             }}
           />
           <label htmlFor="weekend-0" className="avg-tips-label">
@@ -138,7 +163,7 @@ export default function NewPostForm({ setNextForm }) {
             id="weekend-1"
             className="avg-tips-rating"
             onClick={() => {
-              setWeekendTips(1);
+              setcWeekendTips(1);
             }}
           />
           <label htmlFor="weekend-1" className="avg-tips-label">
@@ -150,7 +175,7 @@ export default function NewPostForm({ setNextForm }) {
             id="weekend-2"
             className="avg-tips-rating"
             onClick={() => {
-              setWeekendTips(2);
+              setcWeekendTips(2);
             }}
           />
           <label htmlFor="weekend-2" className="avg-tips-label">
@@ -162,7 +187,7 @@ export default function NewPostForm({ setNextForm }) {
             id="weekend-3"
             className="avg-tips-rating"
             onClick={() => {
-              setWeekendTips(3);
+              setcWeekendTips(3);
             }}
           />
           <label htmlFor="weekend-3" className="avg-tips-label">
@@ -174,7 +199,7 @@ export default function NewPostForm({ setNextForm }) {
             id="weekend-4"
             className="avg-tips-rating"
             onClick={() => {
-              setWeekendTips(4);
+              setcWeekendTips(4);
             }}
           />
           <label htmlFor="weekend-4" className="avg-tips-label">
@@ -187,7 +212,7 @@ export default function NewPostForm({ setNextForm }) {
           work environment
           <StarRating
             onChange={(value) => {
-              setRating(value);
+              setcWorkenv(value);
             }}
           />
         </span>
@@ -195,7 +220,7 @@ export default function NewPostForm({ setNextForm }) {
           management
           <StarRating
             onChange={(value) => {
-              setRating(value);
+              setcManagement(value);
             }}
           />
         </span>
@@ -203,7 +228,7 @@ export default function NewPostForm({ setNextForm }) {
           clientele
           <StarRating
             onChange={(value) => {
-              setRating(value);
+              setcClientele(value);
             }}
           />
         </span>
@@ -217,4 +242,11 @@ export default function NewPostForm({ setNextForm }) {
 
 NewPostForm.propTypes = {
   setNextForm: PropTypes.func,
+  setName: PropTypes.func,
+  setAddress: PropTypes.func,
+  setWeekdayTips: PropTypes.func,
+  setWeekendTips: PropTypes.func,
+  setWorkenv: PropTypes.func,
+  setManagement: PropTypes.func,
+  setClientele: PropTypes.func,
 };

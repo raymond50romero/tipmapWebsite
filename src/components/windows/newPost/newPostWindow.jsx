@@ -1,12 +1,24 @@
-import React, { useState } from "react";
-import { CloseOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { CloseOutlined, LeftOutlined } from "@ant-design/icons";
 
 import NewPostForm from "../../../features/newPost/newPostForm.jsx";
 import PostDetailsForm from "../../../features/newPost/postDetailsForm.jsx";
+import { useHelper } from "../../helper/helperContext.jsx";
 import "./styles.css";
 
 export default function NewPostWindow() {
+  const setHelper = useHelper();
   const [nextForm, setNextForm] = useState(false);
+  const [name, setName] = useState();
+  const [address, setAddress] = useState();
+  const [weekdayTips, setWeekdayTips] = useState();
+  const [weekendTips, setWeekendTips] = useState();
+  const [workenv, setWorkenv] = useState();
+  const [management, setManagement] = useState();
+  const [clientele, setClientele] = useState();
+  const [title, setTitle] = useState();
+  const [comment, setComment] = useState();
+  const [close, setClose] = useState();
 
   function closeWindow() {
     const newPostWindow = document.getElementById("new-post-window");
@@ -17,10 +29,26 @@ export default function NewPostWindow() {
     }
   }
 
+  useEffect(() => {
+    if (close) {
+      closeWindow();
+    }
+  }, [close, closeWindow]);
+
   return (
     <section className="window" id="new-post-window">
       <div id="new-post-window-header-container">
         <h3 id="new-post-header">Create a New Post</h3>
+        {nextForm ? (
+          <LeftOutlined
+            className="auth-window-header-buttons"
+            onClick={() => {
+              setNextForm(false);
+            }}
+          />
+        ) : (
+          " "
+        )}
         <CloseOutlined
           className="auth-window-header-buttons"
           id="new-post-close-window"
@@ -31,9 +59,22 @@ export default function NewPostWindow() {
       </div>
       <>
         {nextForm ? (
-          <PostDetailsForm />
+          <PostDetailsForm
+            setTitle={setTitle}
+            setComment={setComment}
+            setClose={setClose}
+          />
         ) : (
-          <NewPostForm setNextForm={setNextForm} />
+          <NewPostForm
+            setNextForm={setNextForm}
+            setName={setName}
+            setAddress={setAddress}
+            setWeekdayTips={setWeekdayTips}
+            setWeekendTips={setWeekendTips}
+            setWorkenv={setWorkenv}
+            setManagement={setManagement}
+            setClientele={setClientele}
+          />
         )}
       </>
     </section>
