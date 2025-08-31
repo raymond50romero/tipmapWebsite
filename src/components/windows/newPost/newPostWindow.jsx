@@ -18,7 +18,7 @@ export default function NewPostWindow() {
   const [clientele, setClientele] = useState();
   const [title, setTitle] = useState();
   const [comment, setComment] = useState();
-  const [close, setClose] = useState();
+  const [close, setClose] = useState(false);
 
   function closeWindow() {
     const newPostWindow = document.getElementById("new-post-window");
@@ -32,8 +32,20 @@ export default function NewPostWindow() {
   useEffect(() => {
     if (close) {
       closeWindow();
+      setClose(false);
+      if (
+        name &&
+        address &&
+        weekdayTips &&
+        weekendTips &&
+        workenv &&
+        management &&
+        clientele
+      ) {
+        setHelper("New post created");
+      }
     }
-  }, [close, closeWindow]);
+  }, [close]);
 
   return (
     <section className="window" id="new-post-window">

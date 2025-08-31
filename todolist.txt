@@ -1,0 +1,5 @@
+1) make forgot password work  
+  send email with one time password
+  verify email password and change to new password
+2) make address from new post show up on the heat map
+3) make the new post show up as a post

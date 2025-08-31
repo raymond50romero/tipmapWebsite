@@ -3,15 +3,13 @@ import PropTypes from "prop-types";
 
 import "./styles.css";
 
-export default function PostDetailsForm({ setTitle, setComment }) {
-  const [ctitle, setcTitle] = useState();
-  const [ctextarea, setcTextarea] = useState();
-
+export default function PostDetailsForm({ setTitle, setComment, setClose }) {
   return (
     <form
       className="new-post-form-container"
       onSubmit={(e) => {
         e.preventDefault();
+        setClose(true);
       }}
     >
       <h6 className="new-post-helper-header">Optional</h6>
@@ -31,7 +29,7 @@ export default function PostDetailsForm({ setTitle, setComment }) {
           id="post-details-textarea"
           className="post-details-inputs"
           onChange={(event) => {
-            setTextarea(event.target.value);
+            setComment(event.target.value);
           }}
         ></textarea>
       </div>
@@ -45,4 +43,5 @@ export default function PostDetailsForm({ setTitle, setComment }) {
 PostDetailsForm.propTypes = {
   setTitle: PropTypes.func,
   setComment: PropTypes.func,
+  setClose: PropTypes.func,
 };
