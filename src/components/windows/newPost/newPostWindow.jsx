@@ -26,6 +26,7 @@ export default function NewPostWindow() {
     if (newPostWindow) {
       newPostWindow.style.display = "none";
       blurBackground.style.display = "none";
+      setNextForm(false);
     }
   }
 
