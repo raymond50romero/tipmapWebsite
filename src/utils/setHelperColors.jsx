@@ -4,7 +4,7 @@
  */
 export function setError(elementId) {
   const htmlTag = document.getElementById(`${elementId}`);
-  if (htmlTag) htmlTag.style.borderColor = 'red';
+  if (htmlTag) htmlTag.style.borderColor = "red";
 }
 
 /**
@@ -13,7 +13,16 @@ export function setError(elementId) {
  */
 export function setNormal(elementId) {
   const htmlTag = document.getElementById(`${elementId}`);
-  if (htmlTag) htmlTag.style.borderColor = '#ccc';
+  if (htmlTag) htmlTag.style.borderColor = "#ccc";
+}
+
+/**
+ * set error to transparent
+ * @param {*} elementId id of box to set transparent
+ */
+export function setNormalTransparent(elementId) {
+  const htmlTag = document.getElementById(`${elementId}`);
+  if (htmlTag) htmlTag.style.borderColor = "transparent";
 }
 
 /**
@@ -23,9 +32,9 @@ export function setNormal(elementId) {
 export function setButtonClick(elementId) {
   const buttonTag = document.getElementById(`${elementId}`);
   if (buttonTag) {
-    buttonTag.style.backgroundColor = '#33f';
-    buttonTag.style.color = 'white';
-    buttonTag.style.cursor = 'pointer';
+    buttonTag.style.backgroundColor = "#33f";
+    buttonTag.style.color = "white";
+    buttonTag.style.cursor = "pointer";
   }
 }
 
@@ -36,8 +45,8 @@ export function setButtonClick(elementId) {
 export function setButtonGrey(elementId) {
   const buttonTag = document.getElementById(`${elementId}`);
   if (buttonTag) {
-    buttonTag.style.backgroundColor = '#eee';
-    buttonTag.style.color = 'black';
-    buttonTag.style.cursor = 'default';
+    buttonTag.style.backgroundColor = "#eee";
+    buttonTag.style.color = "black";
+    buttonTag.style.cursor = "default";
   }
 }

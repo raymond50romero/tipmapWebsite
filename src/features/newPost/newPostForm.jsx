@@ -1,6 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
+import {
+  setError,
+  setNormal,
+  setNormalTransparent,
+  setButtonClick,
+  setButtonGrey,
+} from "../../utils/setHelperColors.jsx";
 import { useHelper } from "../../components/helper/helperContext.jsx";
 import StarRating from "./starRating.jsx";
 import "./styles.css";
@@ -24,35 +31,75 @@ export default function NewPostForm({
   const [cManagement, setcManagement] = useState();
   const [cClientele, setcClientele] = useState();
 
+  function checkInputs() {
+    if (!cName) {
+      setError("new-post-input-name");
+      setHelper("Missing restaurant name");
+      return false;
+    } else if (!cAddress) {
+      setError("new-post-input-address");
+      setHelper("Missing restaurant address");
+      return false;
+    } else if (!cWeekdayTips) {
+      setError("weekday-tips-container");
+      setHelper("Missing weekday tips average");
+      return false;
+    } else if (!cWeekendTips) {
+      setError("weekend-tips-container");
+      setHelper("Missing weekend tips average");
+      return false;
+    } else if (!cWorkenv) {
+      setError("work-env-star-rating");
+      setHelper("Missing work environment star rating");
+      return false;
+    } else if (!cManagement) {
+      setError("management-star-rating");
+      setHelper("Missing management star rating");
+      return false;
+    } else if (!cClientele) {
+      setError("clientele-star-rating");
+      setHelper("Missing clientele star rating");
+      return false;
+    } else return true;
+  }
+
+  useEffect(() => {
+    if (
+      cName &&
+      cAddress &&
+      cWeekdayTips &&
+      cWeekendTips &&
+      cWorkenv &&
+      cManagement &&
+      cClientele
+    ) {
+      setButtonClick("new-post-next-button");
+    }
+  }, [
+    cName,
+    cAddress,
+    cWeekdayTips,
+    cWeekendTips,
+    cWorkenv,
+    cManagement,
+    cClientele,
+  ]);
+
   return (
     <form
       className="new-post-form-container"
       onSubmit={(event) => {
         event.preventDefault();
-        if (
-          !cName ||
-          !cAddress ||
-          !cWeekdayTips ||
-          !cWeekendTips ||
-          !cWorkenv ||
-          !cManagement ||
-          !cClientele
-        ) {
-          setHelper("missing information");
-          return;
+        if (checkInputs()) {
+          setNextForm(true);
+          setName(cName);
+          setAddress(cAddress);
+          setWeekdayTips(cWeekdayTips);
+          setWeekendTips(cWeekendTips);
+          setWorkenv(cWorkenv);
+          setManagement(cManagement);
+          setClientele(cClientele);
         }
-        setNextForm(true);
-        console.log("form submitted");
-        console.log("this is workenv: ", cWorkenv);
-        console.log("this is management: ", cManagement);
-        console.log("this is clientele: ", cClientele);
-        setName(cName);
-        setAddress(cAddress);
-        setWeekdayTips(cWeekdayTips);
-        setWeekendTips(cWeekendTips);
-        setWorkenv(cWorkenv);
-        setManagement(cManagement);
-        setClientele(cClientele);
       }}
     >
       <h6 className="new-post-helper-header">* Required</h6>
@@ -63,6 +110,7 @@ export default function NewPostForm({
         className="input-field new-post-input"
         onChange={(event) => {
           setcName(event.target.value);
+          setNormal("new-post-input-name");
         }}
       />
       <input
@@ -72,11 +120,16 @@ export default function NewPostForm({
         className="input-field new-post-input"
         onChange={(event) => {
           setcAddress(event.target.value);
+          setNormal("new-post-input-address");
         }}
       />
       <div className="avg-tips-container">
         <h6 className="avg-tips-header">Average Weekday Tips</h6>
-        <div className="avg-tips-ratings-container">
+        <div
+          className="avg-tips-ratings-container"
+          style={{ border: "1px solid transparent" }}
+          id="weekday-tips-container"
+        >
           <input
             type="radio"
             name="weekday-tips"
@@ -84,6 +137,7 @@ export default function NewPostForm({
             className="avg-tips-rating"
             onClick={() => {
               setcWeekdayTips(0);
+              setNormalTransparent("weekday-tips-container");
             }}
           />
           <label htmlFor="weekday-0" className="avg-tips-label">
@@ -97,6 +151,7 @@ export default function NewPostForm({
             className="avg-tips-rating"
             onClick={() => {
               setcWeekdayTips(1);
+              setNormalTransparent("weekday-tips-container");
             }}
           />
           <label htmlFor="weekday-1" className="avg-tips-label">
@@ -109,6 +164,7 @@ export default function NewPostForm({
             className="avg-tips-rating"
             onClick={() => {
               setcWeekdayTips(2);
+              setNormalTransparent("weekday-tips-container");
             }}
           />
           <label htmlFor="weekday-2" className="avg-tips-label">
@@ -121,6 +177,7 @@ export default function NewPostForm({
             className="avg-tips-rating"
             onClick={() => {
               setcWeekdayTips(3);
+              setNormalTransparent("weekday-tips-container");
             }}
           />
           <label htmlFor="weekday-3" className="avg-tips-label">
@@ -133,6 +190,7 @@ export default function NewPostForm({
             className="avg-tips-rating"
             onClick={() => {
               setcWeekdayTips(4);
+              setNormalTransparent("weekday-tips-container");
             }}
           />
           <label htmlFor="weekday-4" className="avg-tips-label">
@@ -143,7 +201,11 @@ export default function NewPostForm({
       </div>
       <div className="avg-tips-container">
         <h6 className="avg-tips-header">Average Weekend Tips</h6>
-        <div className="avg-tips-ratings-container">
+        <div
+          className="avg-tips-ratings-container"
+          style={{ border: "1px solid transparent" }}
+          id="weekend-tips-container"
+        >
           <input
             type="radio"
             name="weekend-tips"
@@ -151,6 +213,7 @@ export default function NewPostForm({
             className="avg-tips-rating"
             onClick={() => {
               setcWeekendTips(0);
+              setNormalTransparent("weekend-tips-container");
             }}
           />
           <label htmlFor="weekend-0" className="avg-tips-label">
@@ -164,6 +227,7 @@ export default function NewPostForm({
             className="avg-tips-rating"
             onClick={() => {
               setcWeekendTips(1);
+              setNormalTransparent("weekend-tips-container");
             }}
           />
           <label htmlFor="weekend-1" className="avg-tips-label">
@@ -176,6 +240,7 @@ export default function NewPostForm({
             className="avg-tips-rating"
             onClick={() => {
               setcWeekendTips(2);
+              setNormalTransparent("weekend-tips-container");
             }}
           />
           <label htmlFor="weekend-2" className="avg-tips-label">
@@ -188,6 +253,7 @@ export default function NewPostForm({
             className="avg-tips-rating"
             onClick={() => {
               setcWeekendTips(3);
+              setNormalTransparent("weekend-tips-container");
             }}
           />
           <label htmlFor="weekend-3" className="avg-tips-label">
@@ -200,6 +266,7 @@ export default function NewPostForm({
             className="avg-tips-rating"
             onClick={() => {
               setcWeekendTips(4);
+              setNormalTransparent("weekend-tips-container");
             }}
           />
           <label htmlFor="weekend-4" className="avg-tips-label">
@@ -208,33 +275,47 @@ export default function NewPostForm({
         </div>
       </div>
       <div id="star-rating-container">
-        <span>
-          work environment
+        <span
+          id="work-env-star-rating"
+          style={{ border: "1px solid transparent" }}
+        >
+          Work environment
           <StarRating
             onChange={(value) => {
               setcWorkenv(value);
+              setNormalTransparent("work-env-star-rating");
             }}
           />
         </span>
-        <span>
-          management
+        <span
+          id="management-star-rating"
+          style={{ border: "1px solid transparent" }}
+        >
+          Management
           <StarRating
             onChange={(value) => {
               setcManagement(value);
+              setNormalTransparent("management-star-rating");
             }}
           />
         </span>
-        <span>
-          clientele
+        <span
+          id="clientele-star-rating"
+          style={{ border: "1px solid transparent" }}
+        >
+          Clientele
           <StarRating
             onChange={(value) => {
               setcClientele(value);
+              setNormalTransparent("clientele-star-rating");
             }}
           />
         </span>
       </div>
       <div id="new-post-window-button-container">
-        <button className="login-button">Next &gt;</button>
+        <button className="login-button" id="new-post-next-button">
+          Next &gt;
+        </button>
       </div>
     </form>
   );
