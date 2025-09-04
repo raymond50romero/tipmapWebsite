@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CloseOutlined, LeftOutlined } from "@ant-design/icons";
 import PropTypes from "prop-types";
 
@@ -9,6 +9,7 @@ export default function AuthWindow({ setIsLoggedIn }) {
   const [header, setHeader] = useState();
   const [goBack, setGoBack] = useState(false);
   const [status, setStatus] = useState("login");
+  const [close, setClose] = useState(false);
 
   function closeWindow() {
     const authWindow = document.getElementById("auth-window");
@@ -19,6 +20,12 @@ export default function AuthWindow({ setIsLoggedIn }) {
       blurBackground.style.display = "none";
     }
   }
+
+  useEffect(() => {
+    if (close) {
+      closeWindow();
+    }
+  });
 
   return (
     <section className="window" id="auth-window">
@@ -50,6 +57,7 @@ export default function AuthWindow({ setIsLoggedIn }) {
           setIsLoggedIn={setIsLoggedIn}
           status={status}
           setStatus={setStatus}
+          setClose={setClose}
         />
       </>
     </section>

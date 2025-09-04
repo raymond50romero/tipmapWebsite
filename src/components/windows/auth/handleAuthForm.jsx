@@ -12,6 +12,7 @@ export default function HandleAuthForm({
   setIsLoggedIn,
   status,
   setStatus,
+  setClose,
 }) {
   const [serverResponse, setServerResponse] = useState();
   const [helper, setHelper] = useState();
@@ -21,7 +22,8 @@ export default function HandleAuthForm({
     if (helper) {
       showHelper(helper);
     } else if (serverResponse) {
-      showHelper(serverResponse.response.data);
+      showHelper(serverResponse.data);
+      setClose(true);
     }
 
     switch (status) {
@@ -38,7 +40,15 @@ export default function HandleAuthForm({
         setGoBack(false);
         break;
     }
-  }, [helper, showHelper, serverResponse, status, setHeader, setGoBack]);
+  }, [
+    helper,
+    showHelper,
+    serverResponse,
+    status,
+    setHeader,
+    setGoBack,
+    setClose,
+  ]);
 
   switch (status) {
     case "createAccount":
@@ -75,4 +85,5 @@ HandleAuthForm.propTypes = {
   setIsLoggedIn: PropTypes.func.isRequired,
   status: PropTypes.string.isRequired,
   setStatus: PropTypes.func.isRequired,
+  setClose: PropTypes.func,
 };
