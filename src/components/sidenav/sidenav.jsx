@@ -16,7 +16,7 @@ export default function SideNav() {
             setContentStatus("tipmap");
           }}
         >
-          Tip map
+          Map
         </button>
         <button
           className="sidenav-button"
