@@ -133,20 +133,6 @@ export default function NewPostForm({
           <input
             type="radio"
             name="weekday-tips"
-            id="weekday-0"
-            className="avg-tips-rating"
-            onClick={() => {
-              setcWeekdayTips(0);
-              setNormalTransparent("weekday-tips-container");
-            }}
-          />
-          <label htmlFor="weekday-0" className="avg-tips-label">
-            {" "}
-            &lt; 50
-          </label>
-          <input
-            type="radio"
-            name="weekday-tips"
             id="weekday-1"
             className="avg-tips-rating"
             onClick={() => {
@@ -155,7 +141,8 @@ export default function NewPostForm({
             }}
           />
           <label htmlFor="weekday-1" className="avg-tips-label">
-            50 - 100
+            {" "}
+            &lt; 50
           </label>
           <input
             type="radio"
@@ -168,7 +155,7 @@ export default function NewPostForm({
             }}
           />
           <label htmlFor="weekday-2" className="avg-tips-label">
-            100 - 150
+            50 - 100
           </label>
           <input
             type="radio"
@@ -181,7 +168,7 @@ export default function NewPostForm({
             }}
           />
           <label htmlFor="weekday-3" className="avg-tips-label">
-            150 - 200
+            100 - 150
           </label>
           <input
             type="radio"
@@ -194,6 +181,19 @@ export default function NewPostForm({
             }}
           />
           <label htmlFor="weekday-4" className="avg-tips-label">
+            150 - 200
+          </label>
+          <input
+            type="radio"
+            name="weekday-tips"
+            id="weekday-5"
+            className="avg-tips-rating"
+            onClick={() => {
+              setcWeekdayTips(5);
+              setNormalTransparent("weekday-tips-container");
+            }}
+          />
+          <label htmlFor="weekday-5" className="avg-tips-label">
             {" "}
             &gt; 200
           </label>
@@ -209,20 +209,6 @@ export default function NewPostForm({
           <input
             type="radio"
             name="weekend-tips"
-            id="weekend-0"
-            className="avg-tips-rating"
-            onClick={() => {
-              setcWeekendTips(0);
-              setNormalTransparent("weekend-tips-container");
-            }}
-          />
-          <label htmlFor="weekend-0" className="avg-tips-label">
-            {" "}
-            &lt; 100
-          </label>
-          <input
-            type="radio"
-            name="weekend-tips"
             id="weekend-1"
             className="avg-tips-rating"
             onClick={() => {
@@ -231,7 +217,8 @@ export default function NewPostForm({
             }}
           />
           <label htmlFor="weekend-1" className="avg-tips-label">
-            100 - 150
+            {" "}
+            &lt; 100
           </label>
           <input
             type="radio"
@@ -244,7 +231,7 @@ export default function NewPostForm({
             }}
           />
           <label htmlFor="weekend-2" className="avg-tips-label">
-            150 - 200
+            100 - 150
           </label>
           <input
             type="radio"
@@ -257,7 +244,7 @@ export default function NewPostForm({
             }}
           />
           <label htmlFor="weekend-3" className="avg-tips-label">
-            200 - 250
+            150 - 200
           </label>
           <input
             type="radio"
@@ -270,6 +257,19 @@ export default function NewPostForm({
             }}
           />
           <label htmlFor="weekend-4" className="avg-tips-label">
+            200 - 250
+          </label>
+          <input
+            type="radio"
+            name="weekend-tips"
+            id="weekend-5"
+            className="avg-tips-rating"
+            onClick={() => {
+              setcWeekendTips(5);
+              setNormalTransparent("weekend-tips-container");
+            }}
+          />
+          <label htmlFor="weekend-5" className="avg-tips-label">
             250 &lt;
           </label>
         </div>

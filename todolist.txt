@@ -1,5 +1,8 @@
-1) make forgot password work  
-  send email with one time password
-  verify email password and change to new password
-2) make address from new post show up on the heat map
-3) make the new post show up as a post
+forgot password does not work yet, fix it
+
+need to add a way to check if a user is logged in currently. we are saving the cookie on the frontend so we should be 
+able to see if the user is logged in
+
+make address from new post show up on the heat map
+
+make the new post show up as a post

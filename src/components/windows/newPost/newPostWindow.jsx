@@ -31,6 +31,25 @@ export default function NewPostWindow() {
     }
   }
 
+  async function createNewPost() {
+    const newPostResponse = await newPost(
+      name,
+      address,
+      weekdayTips,
+      weekendTips,
+      workenv,
+      management,
+      clientele,
+      title,
+      comment,
+    );
+    if (newPostResponse) {
+      setHelper(newPostResponse.data);
+    } else {
+      setHelper("Error occured while creating new post");
+    }
+  }
+
   useEffect(() => {
     if (close) {
       closeWindow();
@@ -44,18 +63,7 @@ export default function NewPostWindow() {
         management &&
         clientele
       ) {
-        setHelper("New post created");
-        newPost(
-          name,
-          address,
-          weekdayTips,
-          weekendTips,
-          workenv,
-          management,
-          clientele,
-          title,
-          comment,
-        );
+        createNewPost();
       }
     }
   }, [close]);

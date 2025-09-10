@@ -1,5 +1,22 @@
 import axios from "axios";
 
+const host = import.meta.env.VITE_HOST;
+const port = import.meta.env.VITE_PORT;
+const route = import.meta.env.VITE_NEW_POST;
+
+/**
+ *
+ * @param {string} name
+ * @param {string} address
+ * @param {number} weekdayTips
+ * @param {number} weekendTips
+ * @param {number} workenv
+ * @param {number} management
+ * @param {number} clientele
+ * @param {string} title
+ * @param {string} comment
+ * @returns {Promise<object>} returns object containing returned data from server, false otherwise
+ */
 export default async function newPost(
   name,
   address,
@@ -36,19 +53,17 @@ export default async function newPost(
   };
 
   return await axios
-    .post(
-      `${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}/${import.meta.env.VITE_NEW_POST}`,
-      data,
-      { withCredentials: true },
-    )
+    .post(`${host}:${port}/${route}`, data, { withCredentials: true })
     .then((res) => {
       if (res) {
-        console.log("got res response: ", res);
         return res;
-      } else return false;
+      } else {
+        console.error("Server Error, no response");
+        return false;
+      }
     })
     .catch((error) => {
-      console.log("error: ", error);
+      console.error(error);
       return false;
     });
 }

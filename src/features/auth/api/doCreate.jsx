@@ -1,4 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
+
+const host = import.meta.env.VITE_HOST;
+const port = import.meta.env.VITE_PORT;
+const route = import.meta.env.VITE_CREATE;
 
 /**
  *
@@ -16,7 +20,7 @@ export default async function doCreate(
   password,
   confirmPassword,
   occupations,
-  other
+  other,
 ) {
   if (!email) return false;
 
@@ -36,21 +40,15 @@ export default async function doCreate(
   };
 
   return await axios
-    .post(
-      `${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}/${
-        import.meta.env.VITE_CREATE
-      }`,
-      data,
-      {
-        withCredentials: true,
-      }
-    )
+    .post(`${host}:${port}/${route}`, data, {
+      withCredentials: true,
+    })
     .then((res) => {
-      console.log('response:', res);
+      console.log("response:", res);
       return res;
     })
     .catch((error) => {
-      console.log('error response:', error);
+      console.log("error response:", error);
       return error;
     });
 }
