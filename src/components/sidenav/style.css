@@ -1,10 +1,9 @@
 #sidenav-container {
   height: 100%;
   width: 100%;
-  border-right: 1px solid #333;
+  border-right: 1px solid #bbb;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .sidenav-button {
@@ -22,22 +21,31 @@
 }
 
 #sidenav-main-container {
-  margin: 1rem;
+  margin: 0 1rem;
   padding: 1rem;
-  padding-left: 0;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 1rem;
 }
 
 #sidenav-secondary-container {
-  margin: 1rem;
+  margin: 0 1rem;
   padding: 1rem;
-  border-top: 1px solid #333;
+  border-top: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #sidenav-settings-container {
-  margin: 1rem;
+  margin: 0 1rem;
   padding: 1rem;
-  border-top: 1px solid #333;
+  border-top: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

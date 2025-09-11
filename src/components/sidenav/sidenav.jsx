@@ -28,8 +28,7 @@ export default function SideNav() {
         </button>
       </section>
       <section id="sidenav-secondary-container">
-        still deciding what goes here, (like history or nav between different
-        sections like community help and/or finding a job)
+        post filter/map nav will go here
       </section>
       <section id="sidenav-settings-container">
         general settings go here

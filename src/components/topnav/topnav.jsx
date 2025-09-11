@@ -13,7 +13,9 @@ export default function TopNav() {
   return (
     <div id="topnav-container">
       <h1 id="title">Tip map</h1>
-      <input placeholder="Search" id="search-bar" />
+      {
+        //<input placeholder="Search" id="search-bar" />
+      }
       <div id="topnav-button-container">
         <NewPostButton />
         <LoginButton didLogin={didLogin} />

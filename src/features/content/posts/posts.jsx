@@ -20,17 +20,24 @@ export default function Posts({
         <img src={restaurantImage} className="posts-tile-image" />
       </div>
       <div className="posts-tile-details-container">
-        <section className="posts-tile-header">
+        <section className="posts-tile-format">
           <h5>{title ? title : "no title found"}</h5>
           <h5>{location ? location : "no location found"}</h5>
           <h5>{numStars ? numStars : "no overall rating found"}</h5>
         </section>
-        <section className="posts-tile-all-reviews">
+        <section className="posts-tile-format">
           <h6>
             {weekdayTipsRange
               ? weekdayTipsRange
               : "no rating for weekday tips range"}
           </h6>
+          <h6>
+            {weekendTipsRange
+              ? weekendTipsRange
+              : "no rating for weekend tips range"}
+          </h6>
+        </section>
+        <section className="posts-tile-format">
           <h6>
             {workEnvironmentRating
               ? workEnvironmentRating
