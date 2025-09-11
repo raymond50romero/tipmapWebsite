@@ -164,10 +164,7 @@ export default function Tipmap() {
 
   return (
     <>
-      <div id="tipmap" ref={mapContainerRef} />
-      <button className="reset-button" onClick={goToCurrLocation}>
-        Reset
-      </button>
+      <div id="tipmap" className="map-container" ref={mapContainerRef} />
     </>
   );
 }
