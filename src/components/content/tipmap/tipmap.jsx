@@ -7,7 +7,7 @@ import "./styles.css";
 
 const MAPBOXGL_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 const INITIAL_CENTER = [-117.1598199, 32.713659];
-const INITIAL_ZOOM = 11;
+const INITIAL_ZOOM = 12.5;
 
 // San Diego long, lat: -117.2096543, 32.8577702
 // Tacos El Gordo long, lat: 32.713659878220476, -117.15981993970202
@@ -106,9 +106,11 @@ export default function Tipmap() {
             ["linear"],
             ["zoom"],
             0,
-            1,
+            0.8,
+            10,
+            1.7,
             15,
-            3,
+            3.2,
           ],
           // Color ramp based on density
           "heatmap-color": [
@@ -131,7 +133,15 @@ export default function Tipmap() {
           // Radius grows with zoom
           "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 0, 2, 9, 20],
           // Fade heatmap as we zoom in (to reveal points)
-          "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 7, 1, 15, 0],
+          "heatmap-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            12,
+            0.7,
+            16,
+            0.3,
+          ],
         },
         slot: "top",
       });
