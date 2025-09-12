@@ -7,7 +7,6 @@ import { useContentStatus } from "../../globals/contentStatus.jsx";
 export default function ContentWindow() {
   const { contentStatus } = useContentStatus();
 
-  // TODO same conditional used for auth window, use it for content displayed
   switch (contentStatus) {
     case "posts":
       return <PostTiles />;

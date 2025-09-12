@@ -88,7 +88,7 @@ export default function Tipmap() {
         id: "hotspots-heat",
         type: "heatmap",
         source: "hotspots",
-        maxzoom: 15,
+        maxzoom: 16,
         paint: {
           // Weight each point by the "value" property (default 1 if omitted)
           "heatmap-weight": [
