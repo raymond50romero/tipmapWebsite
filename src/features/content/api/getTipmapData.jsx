@@ -10,6 +10,14 @@ export function getData() {
     .then((response) => {
       if (response) {
         console.log("able to get data");
+        return response;
+      } else {
+        console.log("no response");
+        return false;
       }
+    })
+    .catch((error) => {
+      console.log(error);
+      return false;
     });
 }
