@@ -3,6 +3,7 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 import { useHelper } from "../../helper/helperContext.jsx";
+import { getAllPosts } from "../../../features/content/api/getAllPosts.jsx";
 import "./styles.css";
 
 const MAPBOXGL_TOKEN = import.meta.env.VITE_MAP_TOKEN;
@@ -53,35 +54,35 @@ export default function Tipmap() {
       zoom: zoom,
     });
 
+    const defaultPoints = {
+      type: "FeatureCollection",
+      features: [
+        {
+          // petco park
+          type: "Feature",
+          properties: { value: 1 },
+          geometry: { type: "Point", coordinates: [-117.15704, 32.70767] },
+        },
+        {
+          // seaport village
+          type: "Feature",
+          properties: { value: 0.5 },
+          geometry: { type: "Point", coordinates: [-117.17093, 32.70923] },
+        },
+        {
+          // tacos el gordo
+          type: "Feature",
+          properties: { value: 0.8 },
+          geometry: { type: "Point", coordinates: [-117.1598, 32.71362] },
+        },
+      ],
+    };
+
     // set up heatmap
     mapRef.current.on("load", () => {
-      const points = {
-        type: "FeatureCollection",
-        features: [
-          {
-            // petco park
-            type: "Feature",
-            properties: { value: 1 },
-            geometry: { type: "Point", coordinates: [-117.15704, 32.70767] },
-          },
-          {
-            // seaport village
-            type: "Feature",
-            properties: { value: 0.5 },
-            geometry: { type: "Point", coordinates: [-117.17093, 32.70923] },
-          },
-          {
-            // tacos el gordo
-            type: "Feature",
-            properties: { value: 0.8 },
-            geometry: { type: "Point", coordinates: [-117.1598, 32.71362] },
-          },
-        ],
-      };
-
       mapRef.current.addSource("hotspots", {
         type: "geojson",
-        data: points, // or a URL: 'https://example.com/your-data.geojson'
+        data: defaultPoints, // or a URL: 'https://example.com/your-data.geojson'
       });
 
       mapRef.current.addLayer({

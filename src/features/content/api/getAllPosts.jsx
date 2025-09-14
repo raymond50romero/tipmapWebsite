@@ -5,7 +5,7 @@ const port = import.meta.env.VITE_PORT;
 const route = import.meta.env.VITE_POST_ROUTE;
 const getPosts = import.meta.env.VITE_GET_POSTS;
 
-export function getData() {
+export function getAllPosts() {
   axios
     .get(`${host}:${port}/${route}/${getPosts}`, { withCredentials: true })
     .then((response) => {
