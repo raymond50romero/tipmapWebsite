@@ -21,6 +21,7 @@ export default function Tipmap() {
   const [currCenter, setCurrCenter] = useState();
   const [center, setCenter] = useState(INITIAL_CENTER);
   const [zoom, setZoom] = useState(INITIAL_ZOOM);
+  const [userPosition, setUserPosition] = useState(null);
   const setHelper = useHelper();
 
   function goToCurrLocation() {
@@ -37,6 +38,11 @@ export default function Tipmap() {
       (position) => {
         setCenter([position.coords.longitude, position.coords.latitude]);
         setHelper("position set to your location");
+        console.log("position found: ", position);
+        setUserPosition({
+          long: position.coords.longitude,
+          lat: position.coords.latitude,
+        });
       },
       (error) => {
         console.error("unable to set user position", error);
