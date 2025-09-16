@@ -8,7 +8,7 @@ import {
   setButtonClick,
   setButtonGrey,
 } from "../../utils/setHelperColors.jsx";
-import { useHelper } from "../../components/helper/helperContext.jsx";
+import { useHelper } from "../../globals/helper/helperContext.jsx";
 import StarRating from "./starRating.jsx";
 import "./styles.css";
 

@@ -2,7 +2,8 @@ import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-import { useHelper } from "../../helper/helperContext.jsx";
+import { useHelper } from "../../../globals/helper/helperContext.jsx";
+import { useUserLongLat } from "../../../globals/userLongLat.jsx";
 import { getAllPosts } from "../../../features/content/api/getAllPosts.jsx";
 import "./styles.css";
 
@@ -18,10 +19,10 @@ const INITIAL_ZOOM = 12.5;
 export default function Tipmap() {
   const mapRef = useRef();
   const mapContainerRef = useRef();
+  const { setUserLongLat } = useUserLongLat();
   const [currCenter, setCurrCenter] = useState();
   const [center, setCenter] = useState(INITIAL_CENTER);
   const [zoom, setZoom] = useState(INITIAL_ZOOM);
-  const [userPosition, setUserPosition] = useState(null);
   const setHelper = useHelper();
 
   function goToCurrLocation() {
@@ -38,18 +39,15 @@ export default function Tipmap() {
       (position) => {
         setCenter([position.coords.longitude, position.coords.latitude]);
         setHelper("position set to your location");
-        console.log("position found: ", position);
-        setUserPosition({
-          long: position.coords.longitude,
-          lat: position.coords.latitude,
-        });
+        setUserLongLat(position.coords.longitude, position.coords.latitude);
       },
       (error) => {
         console.error("unable to set user position", error);
         setHelper("unable to find your location, defaulting to San Diego");
+        setUserLongLat(null);
       },
     );
-  }, [setHelper]);
+  }, [setHelper, setUserLongLat]);
 
   // create map on startup
   useEffect(() => {

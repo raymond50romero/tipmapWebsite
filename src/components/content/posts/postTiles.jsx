@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import Posts from "../../../features/content/posts/posts.jsx";
 
-import { useHelper } from "../../helper/helperContext.jsx";
+import { useHelper } from "../../../globals/helper/helperContext.jsx";
 import "./styles.css";
 
 export default function PostTiles() {

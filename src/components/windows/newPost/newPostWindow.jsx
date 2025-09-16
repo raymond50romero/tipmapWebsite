@@ -3,7 +3,7 @@ import { CloseOutlined, LeftOutlined } from "@ant-design/icons";
 
 import NewPostForm from "../../../features/newPost/newPostForm.jsx";
 import PostDetailsForm from "../../../features/newPost/postDetailsForm.jsx";
-import { useHelper } from "../../helper/helperContext.jsx";
+import { useHelper } from "../../../globals/helper/helperContext.jsx";
 import newPost from "../../../features/newPost/api/makeNewPost.jsx";
 import "./styles.css";
 

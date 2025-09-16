@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import MainPage from "./pages/mainPage";
-import { HelperProvider } from "./components/helper/helperContext";
+import { HelperProvider } from "./globals/helper/helperContext.jsx";
 import { ContentStatusProvider } from "./globals/contentStatus";
 
 export default function App() {

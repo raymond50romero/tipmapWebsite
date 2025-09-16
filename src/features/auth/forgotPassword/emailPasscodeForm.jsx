@@ -7,7 +7,7 @@ import {
   setButtonClick,
   setButtonGrey,
 } from "../../../utils/setHelperColors.jsx";
-import { useHelper } from "../../../components/helper/helperContext.jsx";
+import { useHelper } from "../../../globals/helper/helperContext.jsx";
 import "./style.css";
 
 export default function EmailPasscodeForm({

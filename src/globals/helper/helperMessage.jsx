@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import ProgressBar from "../progressIndicators/progressBar.jsx";
+import ProgressBar from "./progressIndicators/progressBar.jsx";
 import "./style.css";
 
 export default function HelperMessage({ message, visible }) {
