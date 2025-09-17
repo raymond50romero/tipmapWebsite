@@ -44,6 +44,14 @@ export default function NewPostForm({
       setError("new-post-input-address");
       setHelper("Missing restaurant address");
       return false;
+    } else if (!cCity) {
+      setError("new-post-input-city");
+      setHelper("Missing city name");
+      return false;
+    } else if (!cState) {
+      setError("new-post-input-state");
+      setHelper("Missing state");
+      return false;
     } else if (!cWeekdayTips) {
       setError("weekday-tips-container");
       setHelper("Missing weekday tips average");
@@ -80,6 +88,8 @@ export default function NewPostForm({
     if (
       cName &&
       cAddress &&
+      cCity &&
+      cState &&
       cWeekdayTips &&
       cWeekendTips &&
       cWorkenv &&
@@ -93,6 +103,8 @@ export default function NewPostForm({
   }, [
     cName,
     cAddress,
+    cCity,
+    cState,
     cWeekdayTips,
     cWeekendTips,
     cWorkenv,
@@ -151,6 +163,7 @@ export default function NewPostForm({
         />
         <label>
           <input
+            id="new-post-input-state"
             className="input-field new-post-input"
             list="state-list"
             name="state"
@@ -172,12 +185,30 @@ export default function NewPostForm({
         numbers={["50", "50 - 100", "100 - 150", "150 - 200", "200"]}
         setcTips={setcWeekdayTips}
         setNormalTransparent={setNormalTransparent}
+        idTipsContainer={"weekday-tips-container"}
+        idEach={[
+          "weekday-1",
+          "weekday-2",
+          "weekday-3",
+          "weekday-4",
+          "weekday-5",
+        ]}
+        name={"weekday-tips"}
       />
       <AverageTips
         title={"Average Weekend Tips"}
         numbers={["100", "100 - 150", "150 - 200", "200 - 250", "250"]}
         setcTips={setcWeekendTips}
         setNormalTransparent={setNormalTransparent}
+        idTipsContainer={"weekend-tips-container"}
+        idEach={[
+          "weekend-1",
+          "weekend-2",
+          "weekend-3",
+          "weekend-4",
+          "weekend-5",
+        ]}
+        name={"weekend-tips"}
       />
       <div id="star-rating-container">
         <span
