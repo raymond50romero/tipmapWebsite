@@ -18,6 +18,8 @@ export default function NewPostForm({
   setNextForm,
   setName,
   setAddress,
+  setCity,
+  setState,
   setWeekdayTips,
   setWeekendTips,
   setWorkenv,
@@ -121,6 +123,8 @@ export default function NewPostForm({
           setNextForm(true);
           setName(cName);
           setAddress(cAddress);
+          setCity(cCity);
+          setState(cState);
           setWeekdayTips(cWeekdayTips);
           setWeekendTips(cWeekendTips);
           setWorkenv(cWorkenv);
@@ -261,6 +265,8 @@ NewPostForm.propTypes = {
   setNextForm: PropTypes.func,
   setName: PropTypes.func,
   setAddress: PropTypes.func,
+  setCity: PropTypes.func,
+  setState: PropTypes.func,
   setWeekdayTips: PropTypes.func,
   setWeekendTips: PropTypes.func,
   setWorkenv: PropTypes.func,
