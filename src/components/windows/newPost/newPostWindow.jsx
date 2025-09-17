@@ -3,12 +3,14 @@ import { CloseOutlined, LeftOutlined } from "@ant-design/icons";
 
 import NewPostForm from "../../../features/newPost/newPostForm.jsx";
 import PostDetailsForm from "../../../features/newPost/postDetailsForm.jsx";
+import { useUserLongLat } from "../../../globals/userLongLat.jsx";
 import { useHelper } from "../../../globals/helper/helperContext.jsx";
 import newPost from "../../../features/newPost/api/makeNewPost.jsx";
 import "./styles.css";
 
 export default function NewPostWindow() {
   const setHelper = useHelper();
+  const { userLongLat } = useUserLongLat();
   const [nextForm, setNextForm] = useState(false);
   const [name, setName] = useState();
   const [address, setAddress] = useState();
@@ -35,6 +37,7 @@ export default function NewPostWindow() {
     const newPostResponse = await newPost(
       name,
       address,
+      userLongLat,
       weekdayTips,
       weekendTips,
       workenv,

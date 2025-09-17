@@ -11,7 +11,6 @@ import {
 import { useHelper } from "../../globals/helper/helperContext.jsx";
 import { STATES } from "./states.jsx";
 import StarRating from "./starRating.jsx";
-import AverageTips from "./averageTips.jsx";
 import "./styles.css";
 
 export default function NewPostForm({
@@ -27,8 +26,8 @@ export default function NewPostForm({
   const setHelper = useHelper();
   const [cName, setcName] = useState();
   const [cAddress, setcAddress] = useState();
-  const [cCity, setcCity] = useState();
-  const [cState, setcState] = useState();
+  const [cCity, setcCity] = useState("San Diego");
+  const [cState, setcState] = useState("");
   const [cWeekdayTips, setcWeekdayTips] = useState();
   const [cWeekendTips, setcWeekendTips] = useState();
   const [cWorkenv, setcWorkenv] = useState();
@@ -87,8 +86,6 @@ export default function NewPostForm({
       cClientele
     ) {
       setButtonClick("new-post-next-button");
-    } else {
-      setButtonGrey("new-post-next-button");
     }
   }, [
     cName,
@@ -117,7 +114,7 @@ export default function NewPostForm({
         }
       }}
     >
-      <h6 className="new-post-helper-header">All Required Inputs</h6>
+      <h6 className="new-post-helper-header">* Required</h6>
       <input
         type="text"
         placeholder="Restaurant Name"
@@ -167,18 +164,157 @@ export default function NewPostForm({
           </datalist>
         </label>
       </div>
-      <AverageTips
-        title={"Average Weekday Tips"}
-        numbers={["50", "50 - 100", "100 - 150", "150 - 200", "200"]}
-        setcTips={setcWeekdayTips}
-        setNormalTransparent={setNormalTransparent}
-      />
-      <AverageTips
-        title={"Average Weekend Tips"}
-        numbers={["100", "100 - 150", "150 - 200", "200 - 250", "250"]}
-        setcTips={setcWeekendTips}
-        setNormalTransparent={setNormalTransparent}
-      />
+      <div className="avg-tips-container">
+        <h6 className="avg-tips-header">Average Weekday Tips</h6>
+        <div
+          className="avg-tips-ratings-container"
+          style={{ border: "1px solid transparent" }}
+          id="weekday-tips-container"
+        >
+          <input
+            type="radio"
+            name="weekday-tips"
+            id="weekday-1"
+            className="avg-tips-rating"
+            onClick={() => {
+              setcWeekdayTips(1);
+              setNormalTransparent("weekday-tips-container");
+            }}
+          />
+          <label htmlFor="weekday-1" className="avg-tips-label">
+            {" "}
+            &lt; 50
+          </label>
+          <input
+            type="radio"
+            name="weekday-tips"
+            id="weekday-2"
+            className="avg-tips-rating"
+            onClick={() => {
+              setcWeekdayTips(2);
+              setNormalTransparent("weekday-tips-container");
+            }}
+          />
+          <label htmlFor="weekday-2" className="avg-tips-label">
+            50 - 100
+          </label>
+          <input
+            type="radio"
+            name="weekday-tips"
+            id="weekday-3"
+            className="avg-tips-rating"
+            onClick={() => {
+              setcWeekdayTips(3);
+              setNormalTransparent("weekday-tips-container");
+            }}
+          />
+          <label htmlFor="weekday-3" className="avg-tips-label">
+            100 - 150
+          </label>
+          <input
+            type="radio"
+            name="weekday-tips"
+            id="weekday-4"
+            className="avg-tips-rating"
+            onClick={() => {
+              setcWeekdayTips(4);
+              setNormalTransparent("weekday-tips-container");
+            }}
+          />
+          <label htmlFor="weekday-4" className="avg-tips-label">
+            150 - 200
+          </label>
+          <input
+            type="radio"
+            name="weekday-tips"
+            id="weekday-5"
+            className="avg-tips-rating"
+            onClick={() => {
+              setcWeekdayTips(5);
+              setNormalTransparent("weekday-tips-container");
+            }}
+          />
+          <label htmlFor="weekday-5" className="avg-tips-label">
+            {" "}
+            &gt; 200
+          </label>
+        </div>
+      </div>
+      <div className="avg-tips-container">
+        <h6 className="avg-tips-header">Average Weekend Tips</h6>
+        <div
+          className="avg-tips-ratings-container"
+          style={{ border: "1px solid transparent" }}
+          id="weekend-tips-container"
+        >
+          <input
+            type="radio"
+            name="weekend-tips"
+            id="weekend-1"
+            className="avg-tips-rating"
+            onClick={() => {
+              setcWeekendTips(1);
+              setNormalTransparent("weekend-tips-container");
+            }}
+          />
+          <label htmlFor="weekend-1" className="avg-tips-label">
+            {" "}
+            &lt; 100
+          </label>
+          <input
+            type="radio"
+            name="weekend-tips"
+            id="weekend-2"
+            className="avg-tips-rating"
+            onClick={() => {
+              setcWeekendTips(2);
+              setNormalTransparent("weekend-tips-container");
+            }}
+          />
+          <label htmlFor="weekend-2" className="avg-tips-label">
+            100 - 150
+          </label>
+          <input
+            type="radio"
+            name="weekend-tips"
+            id="weekend-3"
+            className="avg-tips-rating"
+            onClick={() => {
+              setcWeekendTips(3);
+              setNormalTransparent("weekend-tips-container");
+            }}
+          />
+          <label htmlFor="weekend-3" className="avg-tips-label">
+            150 - 200
+          </label>
+          <input
+            type="radio"
+            name="weekend-tips"
+            id="weekend-4"
+            className="avg-tips-rating"
+            onClick={() => {
+              setcWeekendTips(4);
+              setNormalTransparent("weekend-tips-container");
+            }}
+          />
+          <label htmlFor="weekend-4" className="avg-tips-label">
+            200 - 250
+          </label>
+          <input
+            type="radio"
+            name="weekend-tips"
+            id="weekend-5"
+            className="avg-tips-rating"
+            onClick={() => {
+              setcWeekendTips(5);
+              setNormalTransparent("weekend-tips-container");
+            }}
+          />
+          <label htmlFor="weekend-5" className="avg-tips-label">
+            250 &lt;
+          </label>
+        </div>
+      </div>
       <div id="star-rating-container">
         <span
           id="work-env-star-rating"

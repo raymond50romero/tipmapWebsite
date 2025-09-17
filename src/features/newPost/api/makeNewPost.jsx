@@ -21,6 +21,7 @@ const newPostRoute = import.meta.env.VITE_POST_ROUTE;
 export default async function newPost(
   name,
   address,
+  userLongLat,
   weekdayTips,
   weekendTips,
   workenv,
@@ -44,6 +45,7 @@ export default async function newPost(
   const data = {
     name: name,
     address: address,
+    userLongLat: userLongLat,
     weekdayTips: weekdayTips,
     weekendTips: weekendTips,
     workenv: workenv,

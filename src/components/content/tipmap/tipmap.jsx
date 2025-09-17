@@ -39,7 +39,7 @@ export default function Tipmap() {
       (position) => {
         setCenter([position.coords.longitude, position.coords.latitude]);
         setHelper("position set to your location");
-        setUserLongLat(position.coords.longitude, position.coords.latitude);
+        setUserLongLat([position.coords.longitude, position.coords.latitude]);
       },
       (error) => {
         console.error("unable to set user position", error);

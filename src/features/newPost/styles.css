@@ -95,3 +95,10 @@
   color: white;
   width: 50%;
 }
+
+#new-post-city-state-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+}
