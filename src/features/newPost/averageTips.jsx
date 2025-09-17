@@ -83,7 +83,7 @@ export default function AverageTips({
         />
         <label htmlFor={idEach[4]} className="avg-tips-label">
           {" "}
-          {numbers[4]} &lt;
+          &gt; {numbers[4]}
         </label>
       </div>
     </div>
