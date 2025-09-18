@@ -11,6 +11,7 @@ const newPostRoute = import.meta.env.VITE_POST_ROUTE;
  * @param {string} address
  * @param {string} city
  * @param {string} state
+ * @param {Array} userLongLat
  * @param {number} weekdayTips
  * @param {number} weekendTips
  * @param {number} workenv
