@@ -44,11 +44,13 @@ export default async function doCreate(
       withCredentials: true,
     })
     .then((res) => {
-      console.log("response:", res);
-      return res;
+      if (res) {
+        return res;
+      }
+      return false;
     })
     .catch((error) => {
-      console.log("error response:", error);
-      return error;
+      console.error(error);
+      return false;
     });
 }

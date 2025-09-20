@@ -83,8 +83,11 @@ export default function CreateAccountForm({
           if (serverResponse.status === 200) {
             setHelper("Account Created!");
             setStatus("login");
+          } else if (!serverResponse) {
+            setHelper("Unable to create new account");
+          } else {
+            setServerResponse(serverResponse);
           }
-          setServerResponse(serverResponse);
         }
       }}
       id="ca-form-container"
