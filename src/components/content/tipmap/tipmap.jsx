@@ -10,6 +10,9 @@ import "./styles.css";
 const MAPBOXGL_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 const INITIAL_CENTER = [-117.1598199, 32.713659];
 const INITIAL_ZOOM = 12.5;
+const INTERACTION_DEBOUNCE_MS = 250;
+const CENTER_DELTA_THRESHOLD = 0.005;
+const ZOOM_DELTA_THRESHOLD = 0.25;
 
 // San Diego long, lat: -117.2096543, 32.8577702
 // Tacos El Gordo long, lat: 32.713659878220476, -117.15981993970202
@@ -19,7 +22,10 @@ const INITIAL_ZOOM = 12.5;
 export default function Tipmap() {
   const mapRef = useRef();
   const mapContainerRef = useRef();
+  const interactionTimeoutRef = useRef();
+  const lastFetchedParamsRef = useRef({ center: null, zoom: null });
   const { setUserLongLat } = useUserLongLat();
+  const [points, setPoints] = useState();
   const [currCenter, setCurrCenter] = useState();
   const [currZoom, setCurrZoom] = useState();
   const [center, setCenter] = useState(INITIAL_CENTER);
@@ -33,20 +39,48 @@ export default function Tipmap() {
     });
   }
 
+  // demo points for testing
+  const defaultPoints = {
+    type: "FeatureCollection",
+    features: [
+      {
+        // petco park
+        type: "Feature",
+        properties: { value: 1 },
+        geometry: { type: "Point", coordinates: [-117.15704, 32.70767] },
+      },
+      {
+        // seaport village
+        type: "Feature",
+        properties: { value: 0.5 },
+        geometry: { type: "Point", coordinates: [-117.17093, 32.70923] },
+      },
+      {
+        // tacos el gordo
+        type: "Feature",
+        properties: { value: 0.8 },
+        geometry: { type: "Point", coordinates: [-117.1598, 32.71362] },
+      },
+    ],
+  };
+
   async function grabPosts(center, zoom) {
-    console.log("making a request to get all posts\n");
     const thePosts = await getPosts(center, zoom);
     console.log("this is result from getting posts: ", thePosts);
   }
 
   // load all of the points on the map
   useEffect(() => {
-    if (currCenter || currZoom) {
-      grabPosts(center, zoom);
-    }
-  }, [center, zoom, currCenter, currZoom]);
+    if (!currCenter || currCenter.length !== 2 || currZoom === undefined)
+      return;
+    grabPosts(currCenter, currZoom);
+    lastFetchedParamsRef.current = {
+      center: [...currCenter],
+      zoom: currZoom,
+    };
+  }, [currCenter, currZoom]);
 
-  // set users location, default to Tacos El Gordo in San Diego if user does
+  // set users location, default to San Diego if user does
   // not want to share location
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -72,35 +106,11 @@ export default function Tipmap() {
       zoom: zoom,
     });
 
-    const defaultPoints = {
-      type: "FeatureCollection",
-      features: [
-        {
-          // petco park
-          type: "Feature",
-          properties: { value: 1 },
-          geometry: { type: "Point", coordinates: [-117.15704, 32.70767] },
-        },
-        {
-          // seaport village
-          type: "Feature",
-          properties: { value: 0.5 },
-          geometry: { type: "Point", coordinates: [-117.17093, 32.70923] },
-        },
-        {
-          // tacos el gordo
-          type: "Feature",
-          properties: { value: 0.8 },
-          geometry: { type: "Point", coordinates: [-117.1598, 32.71362] },
-        },
-      ],
-    };
-
     // set up heatmap
     mapRef.current.on("load", () => {
       mapRef.current.addSource("hotspots", {
         type: "geojson",
-        data: defaultPoints, // or a URL: 'https://example.com/your-data.geojson'
+        data: points ? points : defaultPoints, // or a URL: 'https://example.com/your-data.geojson'
       });
 
       mapRef.current.addLayer({
