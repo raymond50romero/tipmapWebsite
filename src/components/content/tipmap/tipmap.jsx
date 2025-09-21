@@ -4,7 +4,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 
 import { useHelper } from "../../../globals/helper/helperContext.jsx";
 import { useUserLongLat } from "../../../globals/userLongLat.jsx";
-import { getAllPosts } from "../../../features/content/api/getAllPosts.jsx";
+import { getPosts } from "../../../features/content/api/getPosts.jsx";
 import "./styles.css";
 
 const MAPBOXGL_TOKEN = import.meta.env.VITE_MAP_TOKEN;
@@ -21,6 +21,7 @@ export default function Tipmap() {
   const mapContainerRef = useRef();
   const { setUserLongLat } = useUserLongLat();
   const [currCenter, setCurrCenter] = useState();
+  const [currZoom, setCurrZoom] = useState();
   const [center, setCenter] = useState(INITIAL_CENTER);
   const [zoom, setZoom] = useState(INITIAL_ZOOM);
   const setHelper = useHelper();
@@ -31,6 +32,19 @@ export default function Tipmap() {
       zoom: zoom,
     });
   }
+
+  async function grabPosts(center, zoom) {
+    console.log("making a request to get all posts\n");
+    const thePosts = await getPosts(center, zoom);
+    console.log("this is result from getting posts: ", thePosts);
+  }
+
+  // load all of the points on the map
+  useEffect(() => {
+    if (currCenter || currZoom) {
+      grabPosts(center, zoom);
+    }
+  }, [center, zoom, currCenter, currZoom]);
 
   // set users location, default to Tacos El Gordo in San Diego if user does
   // not want to share location
@@ -168,7 +182,7 @@ export default function Tipmap() {
     });
 
     mapRef.current.on("move", () => {
-      //mapRef.current.getZoom();
+      setCurrZoom(mapRef.current.getZoom());
       setCurrCenter(mapRef.current.getCenter());
     });
 

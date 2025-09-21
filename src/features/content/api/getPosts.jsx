@@ -3,11 +3,23 @@ import axios from "axios";
 const host = import.meta.env.VITE_HOST;
 const port = import.meta.env.VITE_PORT;
 const route = import.meta.env.VITE_POST_ROUTE;
-const getPosts = import.meta.env.VITE_GET_POSTS;
+const getPostsRoute = import.meta.env.VITE_GET_POSTS;
 
-export function getAllPosts() {
-  axios
-    .get(`${host}:${port}/${route}/${getPosts}`, { withCredentials: true })
+export async function getPosts(center, zoom) {
+  const data = {
+    longitude: center[0],
+    latitude: center[1],
+    zoom: zoom,
+  };
+
+  return await axios
+    .get(
+      `${host}:${port}/${route}/${getPostsRoute}`,
+      { params: { data: data } },
+      {
+        withCredentials: true,
+      },
+    )
     .then((response) => {
       if (response) {
         console.log("able to get data");
