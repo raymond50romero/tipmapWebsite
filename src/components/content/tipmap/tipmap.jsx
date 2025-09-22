@@ -39,31 +39,6 @@ export default function Tipmap() {
     });
   }
 
-  // demo points for testing
-  const defaultPoints = {
-    type: "FeatureCollection",
-    features: [
-      {
-        // petco park
-        type: "Feature",
-        properties: { value: 1 },
-        geometry: { type: "Point", coordinates: [-117.15704, 32.70767] },
-      },
-      {
-        // seaport village
-        type: "Feature",
-        properties: { value: 0.5 },
-        geometry: { type: "Point", coordinates: [-117.17093, 32.70923] },
-      },
-      {
-        // tacos el gordo
-        type: "Feature",
-        properties: { value: 0.8 },
-        geometry: { type: "Point", coordinates: [-117.1598, 32.71362] },
-      },
-    ],
-  };
-
   async function grabPosts(center, zoom) {
     const thePosts = await getPosts(center, zoom);
     console.log("this is result from getting posts: ", thePosts);
@@ -105,6 +80,66 @@ export default function Tipmap() {
       center: center,
       zoom: zoom,
     });
+
+    // demo points for testing
+    const defaultPoints = {
+      type: "FeatureCollection",
+      features: [
+        {
+          // petco park
+          type: "Feature",
+          properties: { value: 1 },
+          geometry: { type: "Point", coordinates: [-117.15704, 32.70767] },
+        },
+        {
+          // seaport village
+          type: "Feature",
+          properties: { value: 0.5 },
+          geometry: { type: "Point", coordinates: [-117.17093, 32.70923] },
+        },
+        {
+          // tacos el gordo
+          type: "Feature",
+          properties: { value: 0.8 },
+          geometry: { type: "Point", coordinates: [-117.1598, 32.71362] },
+        },
+      ],
+    };
+
+    // update zoom and center that is sent to backend whenever it passes a certain threshold
+    function updateCenterAndZoom() {
+      const newCenter = mapRef.current.getCenter().toArray();
+      const newZoom = mapRef.current.getZoom();
+      const { center: lastCenter, zoom: lastZoom } =
+        lastFetchedParamsRef.current;
+
+      const centerChanged =
+        !lastCenter ||
+        Math.abs(lastCenter[0] - newCenter[0]) > CENTER_DELTA_THRESHOLD ||
+        Math.abs(lastCenter[1] - newCenter[1]) > CENTER_DELTA_THRESHOLD;
+      const zoomChanged =
+        !lastZoom || Math.abs(lastZoom - newZoom) > ZOOM_DELTA_THRESHOLD;
+
+      if (centerChanged || zoomChanged) {
+        setCurrCenter(newCenter);
+        setCurrZoom(newZoom);
+      }
+    }
+
+    // updates after a certain alloted time
+    function scheduleCenterAndZoomUpdate() {
+      if (interactionTimeoutRef.current) {
+        clearTimeout(interactionTimeoutRef.current);
+      }
+
+      interactionTimeoutRef.current = setTimeout(
+        updateCenterAndZoom,
+        INTERACTION_DEBOUNCE_MS,
+      );
+    }
+
+    mapRef.current.on("move", scheduleCenterAndZoomUpdate);
+    mapRef.current.on("zoom", scheduleCenterAndZoomUpdate);
 
     // set up heatmap
     mapRef.current.on("load", () => {
@@ -192,14 +227,18 @@ export default function Tipmap() {
     });
 
     mapRef.current.on("move", () => {
-      setCurrZoom(mapRef.current.getZoom());
-      setCurrCenter(mapRef.current.getCenter());
+      updateCenterAndZoom();
     });
 
     return () => {
+      if (interactionTimeoutRef.current) {
+        clearTimeout(interactionTimeoutRef.current);
+      }
+      mapRef.current.off("move", scheduleCenterAndZoomUpdate);
+      mapRef.current.off("zoom", scheduleCenterAndZoomUpdate);
       mapRef.current.remove();
     };
-  }, [center, zoom]);
+  }, [center, zoom, points]);
 
   return (
     <>
