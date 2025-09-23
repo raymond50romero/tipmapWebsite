@@ -11,8 +11,10 @@ const MAPBOXGL_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 const INITIAL_CENTER = [-117.1598199, 32.713659];
 const INITIAL_ZOOM = 12.5;
 const INTERACTION_DEBOUNCE_MS = 250;
-const CENTER_DELTA_THRESHOLD = 0.005;
-const ZOOM_DELTA_THRESHOLD = 0.25;
+const CENTER_DELTA_THRESHOLD = 0.025;
+const ZOOM_DELTA_THRESHOLD = 0.5;
+const NORTHEAST_THRESHOLD = 0.025;
+const SOUTHWEST_THRESHOLD = 0.025;
 
 // San Diego long, lat: -117.2096543, 32.8577702
 // Tacos El Gordo long, lat: 32.713659878220476, -117.15981993970202
@@ -20,16 +22,29 @@ const ZOOM_DELTA_THRESHOLD = 0.25;
 // Seaport Village long, lat: -117.17093, 32.70923
 
 export default function Tipmap() {
+  // utils needed for map
   const mapRef = useRef();
   const mapContainerRef = useRef();
   const interactionTimeoutRef = useRef();
   const lastFetchedParamsRef = useRef({ center: null, zoom: null });
+
+  // global variable to get users current longitude and latitude
   const { setUserLongLat } = useUserLongLat();
+
+  // data points given by the backend
   const [points, setPoints] = useState();
+
+  // center and zoom to both calculate current and what to send to the backend
   const [currCenter, setCurrCenter] = useState();
   const [currZoom, setCurrZoom] = useState();
   const [center, setCenter] = useState(INITIAL_CENTER);
   const [zoom, setZoom] = useState(INITIAL_ZOOM);
+
+  // to grab map details so that we know how far to look out
+  const [northEast, setNorthEast] = useState();
+  const [southWest, setSouthWest] = useState();
+
+  // helper popup
   const setHelper = useHelper();
 
   function goToCurrLocation() {
@@ -39,8 +54,13 @@ export default function Tipmap() {
     });
   }
 
-  async function grabPosts(center, zoom) {
-    const thePosts = await getPosts(center, zoom);
+  // get posts from backend
+  async function grabPosts(center, zoom, northEast, southWest) {
+    console.log("this is center: ", center);
+    console.log("this is zoom: ", zoom);
+    console.log("this is northEast: ", northEast);
+    console.log("this is southWest: ", southWest);
+    const thePosts = await getPosts(center, zoom, northEast, southWest);
     console.log("this is result from getting posts: ", thePosts);
   }
 
@@ -112,6 +132,9 @@ export default function Tipmap() {
       const newZoom = mapRef.current.getZoom();
       const { center: lastCenter, zoom: lastZoom } =
         lastFetchedParamsRef.current;
+
+      setNorthEast(mapRef.current.getBounds().getNorthEast().toArray());
+      setSouthWest(mapRef.current.getBounds().getSouthWest().toArray());
 
       const centerChanged =
         !lastCenter ||
