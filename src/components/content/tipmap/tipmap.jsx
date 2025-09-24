@@ -13,8 +13,6 @@ const INITIAL_ZOOM = 12.5;
 const INTERACTION_DEBOUNCE_MS = 250;
 const CENTER_DELTA_THRESHOLD = 0.025;
 const ZOOM_DELTA_THRESHOLD = 0.5;
-const NORTHEAST_THRESHOLD = 0.025;
-const SOUTHWEST_THRESHOLD = 0.025;
 
 // San Diego long, lat: -117.2096543, 32.8577702
 // Tacos El Gordo long, lat: 32.713659878220476, -117.15981993970202
@@ -27,6 +25,7 @@ export default function Tipmap() {
   const mapContainerRef = useRef();
   const interactionTimeoutRef = useRef();
   const lastFetchedParamsRef = useRef({ center: null, zoom: null });
+  const lastFetchedNESWRef = useRef({ ne: null, sw: null });
 
   // global variable to get users current longitude and latitude
   const { setUserLongLat } = useUserLongLat();
