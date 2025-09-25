@@ -2,7 +2,6 @@ import axios from "axios";
 
 const host = import.meta.env.VITE_HOST;
 const port = import.meta.env.VITE_PORT;
-const route = import.meta.env.VITE_POST_ROUTE;
 const newPostRoute = import.meta.env.VITE_NEW_POST;
 
 /**
@@ -65,7 +64,7 @@ export default async function newPost(
   };
 
   return await axios
-    .post(`${host}:${port}/${route}/${newPostRoute}`, data, {
+    .post(`${host}:${port}/${newPostRoute}`, data, {
       withCredentials: true,
     })
     .then((res) => {

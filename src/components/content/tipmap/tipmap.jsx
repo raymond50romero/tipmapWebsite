@@ -25,7 +25,6 @@ export default function Tipmap() {
   const mapContainerRef = useRef();
   const interactionTimeoutRef = useRef();
   const lastFetchedParamsRef = useRef({ center: null, zoom: null });
-  const lastFetchedNESWRef = useRef({ ne: null, sw: null });
 
   // global variable to get users current longitude and latitude
   const { setUserLongLat } = useUserLongLat();
@@ -67,12 +66,12 @@ export default function Tipmap() {
   useEffect(() => {
     if (!currCenter || currCenter.length !== 2 || currZoom === undefined)
       return;
-    grabPosts(currCenter, currZoom);
+    grabPosts(currCenter, currZoom, northEast, southWest);
     lastFetchedParamsRef.current = {
       center: [...currCenter],
       zoom: currZoom,
     };
-  }, [currCenter, currZoom]);
+  }, [currCenter, currZoom]); // giving warning but leave it in till i find a better solution
 
   // set users location, default to San Diego if user does
   // not want to share location
