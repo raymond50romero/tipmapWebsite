@@ -18,20 +18,16 @@ body {
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: 12% 88%;
+  grid-template-columns: 100%;
   grid-template-rows: 8% 92%;
   grid-template-areas:
     "header header"
-    "nav main";
+    "main main";
 }
 
 header {
   grid-area: header;
   height: 100%;
-}
-
-nav {
-  grid-area: nav;
 }
 
 main {

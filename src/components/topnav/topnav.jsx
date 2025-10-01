@@ -11,6 +11,7 @@ import "./styles.css";
 export default function TopNav() {
   const [didLogin, setDidLogin] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentTitle, setCurrentTitle] = useState("Tipmap");
   const { setContentStatus, contentStatus } = useContentStatus();
 
   function handleNavigation(destination) {
@@ -20,7 +21,6 @@ export default function TopNav() {
 
   return (
     <div id="topnav-container">
-      <h1 id="title">Tipmap</h1>
       <div
         className="topnav-title-menu"
         onMouseEnter={() => {
@@ -44,7 +44,7 @@ export default function TopNav() {
             setIsMenuOpen(true);
           }}
         >
-          Tip map
+          {currentTitle}
           <span className={`topnav-dropdown-icon${isMenuOpen ? " open" : ""}`}>
             ▾
           </span>
@@ -55,6 +55,7 @@ export default function TopNav() {
             className={`topnav-dropdown-item${contentStatus === "tipmap" ? " active" : ""}`}
             onClick={() => {
               handleNavigation("tipmap");
+              setCurrentTitle("Tipmap");
             }}
           >
             Tipmap
@@ -64,6 +65,7 @@ export default function TopNav() {
             className={`topnav-dropdown-item${contentStatus === "posts" ? " active" : ""}`}
             onClick={() => {
               handleNavigation("posts");
+              setCurrentTitle("Posts");
             }}
           >
             Posts

@@ -1,7 +1,6 @@
 import React from "react";
 
 import TopNav from "../components/topnav/topnav";
-import SideNav from "../components/sidenav/sidenav";
 import ContentWindow from "../components/content/contentWindow.jsx";
 
 import "../index.css";
@@ -13,9 +12,6 @@ export default function MainPage() {
         <header>
           <TopNav />
         </header>
-        <nav>
-          <SideNav />
-        </nav>
         <main>
           <ContentWindow />
         </main>
