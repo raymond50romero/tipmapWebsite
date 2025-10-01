@@ -12,7 +12,7 @@ export default function TopNav() {
 
   return (
     <div id="topnav-container">
-      <h1 id="title">Tip map</h1>
+      <h1 id="title">Tipmap</h1>
       {
         //<input placeholder="Search" id="search-bar" />
       }

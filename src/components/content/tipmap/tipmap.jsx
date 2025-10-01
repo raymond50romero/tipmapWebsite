@@ -54,10 +54,6 @@ export default function Tipmap() {
 
   // get posts from backend
   async function grabPosts(center, zoom, northEast, southWest) {
-    console.log("this is center: ", center);
-    console.log("this is zoom: ", zoom);
-    console.log("this is northEast: ", northEast);
-    console.log("this is southWest: ", southWest);
     const thePosts = await getPosts(center, zoom, northEast, southWest);
     console.log("this is result from getting posts: ", thePosts);
   }
