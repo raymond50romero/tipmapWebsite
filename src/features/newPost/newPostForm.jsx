@@ -136,7 +136,7 @@ export default function NewPostForm({
       <h6 className="new-post-helper-header">All Required Inputs</h6>
       <input
         type="text"
-        placeholder="Restaurant Name"
+        placeholder="Restaurant name"
         id="new-post-input-name"
         className="input-field new-post-input"
         onChange={(event) => {
@@ -146,7 +146,7 @@ export default function NewPostForm({
       />
       <input
         type="text"
-        placeholder="Address"
+        placeholder="Street address"
         id="new-post-input-address"
         className="input-field new-post-input"
         onChange={(event) => {
