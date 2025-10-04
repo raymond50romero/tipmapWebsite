@@ -17,21 +17,11 @@ body {
 #main-container {
   height: 100%;
   width: 100%;
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: 8% 92%;
-  grid-template-areas:
-    "header header"
-    "main main";
-}
-
-header {
-  grid-area: header;
-  height: 100%;
 }
 
 main {
-  grid-area: main;
+  height: 100%;
+  width: 100%;
   padding: 0.1rem;
   display: flex;
   flex-direction: column;

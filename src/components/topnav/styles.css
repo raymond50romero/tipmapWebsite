@@ -1,3 +1,11 @@
+:root {
+  --edge: 0.5rem; /* distance from top */
+  --nav-h: 64px; /* navbar height */
+  --rounded: 14px;
+}
+
+/*
+ *
 #topnav-container {
   height: 100%;
   width: 100%;
@@ -5,6 +13,31 @@
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 1px solid #bbb;
+}
+*/
+
+#topnav-container {
+  position: fixed; /* sits above the document flow */
+  top: var(--edge); /* 1rem gap from the top */
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1100px, calc(100% - 2 * var(--edge)));
+  height: var(--nav-h);
+  padding: 0 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  /* Glassy look */
+  background: rgba(20, 20, 26, 0.3); /* semi-transparent */
+  backdrop-filter: blur(2px) saturate(100%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--rounded);
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  z-index: 9999; /* ensure it hovers above everything */
+  pointer-events: auto; /* keep navbar interactive */
 }
 
 #topnav-container button {

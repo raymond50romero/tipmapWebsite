@@ -1,5 +1,5 @@
 .topnav-title-menu {
-  margin: 1rem;
+  margin: 0 1rem;
   position: relative;
   display: inline-flex;
   flex-direction: column;
@@ -39,7 +39,7 @@
 
 .topnav-dropdown {
   position: absolute;
-  top: calc(100% + 0.5rem);
+  top: calc(100%);
   left: 0;
   display: none;
   flex-direction: column;
