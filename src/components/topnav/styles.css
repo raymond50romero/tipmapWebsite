@@ -29,13 +29,12 @@
   justify-content: space-between;
 
   /* Glassy look */
-  background: rgba(20, 20, 26, 0.3); /* semi-transparent */
+  background: rgba(100, 100, 100, 0.35); /* semi-transparent */
   backdrop-filter: blur(2px) saturate(100%);
-  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(2px) saturate(100%);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--rounded);
 
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   z-index: 9999; /* ensure it hovers above everything */
   pointer-events: auto; /* keep navbar interactive */
 }
