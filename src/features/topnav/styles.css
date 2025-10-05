@@ -1,5 +1,5 @@
 .topnav-title-menu {
-  margin: 1rem;
+  margin: 0 1rem;
   position: relative;
   display: inline-flex;
   flex-direction: column;
@@ -11,6 +11,7 @@
   color: inherit;
   font-style: italic;
   font-size: xxx-large;
+  font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -39,7 +40,7 @@
 
 .topnav-dropdown {
   position: absolute;
-  top: calc(100% + 0.5rem);
+  top: calc(100%);
   left: 0;
   display: none;
   flex-direction: column;

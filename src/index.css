@@ -1,7 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Ephesis&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playwrite+AU+TAS:wght@100..400&display=swap");
+
 body {
   margin: 0;
   height: 100vh;
   width: 100%;
+}
+
+html,
+body {
+  font-family: "open sans", sans-serif;
 }
 
 #root {
@@ -17,21 +24,11 @@ body {
 #main-container {
   height: 100%;
   width: 100%;
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: 8% 92%;
-  grid-template-areas:
-    "header header"
-    "main main";
-}
-
-header {
-  grid-area: header;
-  height: 100%;
 }
 
 main {
-  grid-area: main;
+  height: 100%;
+  width: 100%;
   padding: 0.1rem;
   display: flex;
   flex-direction: column;
