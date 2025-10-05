@@ -9,16 +9,14 @@ import NavTitle from "../../features/topnav/navTitle.jsx";
 import "./styles.css";
 
 export default function TopNav() {
-  const [didLogin, setDidLogin] = useState(false);
-
   return (
     <div id="topnav-container">
       <NavTitle />
       <div id="topnav-button-container">
         <NewPostButton />
-        <LoginButton didLogin={didLogin} />
+        <LoginButton />
       </div>
-      <AuthWindow setIsLoggedIn={setDidLogin} />
+      <AuthWindow />
       <NewPostWindow />
     </div>
   );

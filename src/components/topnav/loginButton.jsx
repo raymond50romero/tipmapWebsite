@@ -2,12 +2,13 @@ import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 
 import { useContentStatus } from "../../globals/contentStatus.jsx";
+import { useLoginStatus } from "../../globals/loginStatus.jsx";
 
 import "./styles.css";
 
-export default function LoginButton({ didLogin }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+export default function LoginButton() {
   const { setContentStatus } = useContentStatus();
+  const { loginStatus } = useLoginStatus();
 
   function LoggedIn() {
     return (
@@ -48,12 +49,7 @@ export default function LoginButton({ didLogin }) {
     );
   }
 
-  useMemo(() => {
-    if (didLogin) {
-      setIsLoggedIn(true);
-    } else setIsLoggedIn(false);
-  }, [didLogin]);
-  return <>{isLoggedIn ? <LoggedIn /> : <NoLogin />}</>;
+  return <>{loginStatus ? <LoggedIn /> : <NoLogin />}</>;
 }
 
 LoginButton.propTypes = {

@@ -9,17 +9,14 @@ import {
   setButtonClick,
   setButtonGrey,
 } from "../../../utils/setHelperColors.jsx";
+import { useLoginStatus } from "../../../globals/loginStatus.jsx";
 import "./style.css";
 
-export default function LoginForm({
-  setStatus,
-  setIsLoggedIn,
-  setServerResponse,
-  setHelper,
-}) {
+export default function LoginForm({ setStatus, setServerResponse, setHelper }) {
   const [emailOrUser, setEmailOrUser] = useState();
   const [password, setPassword] = useState();
   const [visible, setVisible] = useState(false);
+  const { setLoginStatus } = useLoginStatus();
 
   useEffect(() => {
     if (emailOrUser && password) {
@@ -44,9 +41,9 @@ export default function LoginForm({
         const serverResponse = await doLogin(emailOrUser, password);
         setServerResponse(serverResponse);
         if (serverResponse.status === 200) {
-          setIsLoggedIn(true);
+          setLoginStatus(true);
         } else {
-          setIsLoggedIn(false);
+          setLoginStatus(false);
         }
       }}
     >

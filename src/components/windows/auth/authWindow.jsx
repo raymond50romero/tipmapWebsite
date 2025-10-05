@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import HandleAuthForm from "./handleAuthForm.jsx";
 import "./style.css";
 
-export default function AuthWindow({ setIsLoggedIn }) {
+export default function AuthWindow() {
   const [header, setHeader] = useState();
   const [goBack, setGoBack] = useState(false);
   const [status, setStatus] = useState("login");
@@ -54,7 +54,6 @@ export default function AuthWindow({ setIsLoggedIn }) {
         <HandleAuthForm
           setGoBack={setGoBack}
           setHeader={setHeader}
-          setIsLoggedIn={setIsLoggedIn}
           status={status}
           setStatus={setStatus}
           setClose={setClose}

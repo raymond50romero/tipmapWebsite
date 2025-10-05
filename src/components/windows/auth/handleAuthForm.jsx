@@ -9,7 +9,6 @@ import ForgotPasswordForm from "../../../features/auth/forgotPassword/forgotPass
 export default function HandleAuthForm({
   setGoBack,
   setHeader,
-  setIsLoggedIn,
   status,
   setStatus,
   setClose,
@@ -71,7 +70,6 @@ export default function HandleAuthForm({
       return (
         <LoginForm
           setStatus={setStatus}
-          setIsLoggedIn={setIsLoggedIn}
           setServerResponse={setServerResponse}
           setHelper={setHelper}
         />
