@@ -2,6 +2,8 @@ import React from "react";
 
 import TopNav from "../components/topnav/topnav";
 import ContentWindow from "../components/content/contentWindow.jsx";
+import AuthWindow from "../components/windows/auth/authWindow.jsx";
+import NewPostWindow from "../components/windows/newPost/newPostWindow.jsx";
 
 import "../index.css";
 
@@ -16,6 +18,8 @@ export default function MainPage() {
           <ContentWindow />
         </main>
         <div id="blur-background" />
+        <AuthWindow />
+        <NewPostWindow />
       </div>
     </>
   );

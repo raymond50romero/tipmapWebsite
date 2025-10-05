@@ -2,8 +2,6 @@ import React, { useState } from "react";
 
 import LoginButton from "./loginButton";
 import NewPostButton from "./newPostButton.jsx";
-import AuthWindow from "../windows/auth/authWindow.jsx";
-import NewPostWindow from "../windows/newPost/newPostWindow.jsx";
 import NavTitle from "../../features/topnav/navTitle.jsx";
 
 import "./styles.css";
@@ -16,8 +14,6 @@ export default function TopNav() {
         <NewPostButton />
         <LoginButton />
       </div>
-      <AuthWindow />
-      <NewPostWindow />
     </div>
   );
 }
