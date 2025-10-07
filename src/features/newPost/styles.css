@@ -1,7 +1,3 @@
-.new-post-form-container {
-  margin-top: 2rem;
-}
-
 .new-post-helper-header {
   font-size: medium;
   font-style: italic;
@@ -38,7 +34,7 @@
 }
 
 .avg-tips-label {
-  padding: 1rem;
+  padding: 0.5rem;
   display: inline-block;
   border: 2px solid transparent;
   border-radius: 32px;
