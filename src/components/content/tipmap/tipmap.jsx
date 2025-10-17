@@ -5,6 +5,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { useHelper } from "../../../globals/helper/helperContext.jsx";
 import { useUserLongLat } from "../../../globals/userLongLat.jsx";
 import { getPosts } from "../../../features/content/api/getPosts.jsx";
+import organizeWeights from "../../../features/content/tipmap/organizeWeights.jsx";
 import "./styles.css";
 
 const MAPBOXGL_TOKEN = import.meta.env.VITE_MAP_TOKEN;
@@ -54,8 +55,8 @@ export default function Tipmap() {
 
   // get posts from backend
   async function grabPosts(center, zoom, northEast, southWest) {
-    const thePosts = await getPosts(center, zoom, northEast, southWest);
-    console.log("this is result from getting posts: ", thePosts);
+    const rawPoints = await getPosts(center, zoom, northEast, southWest);
+    setPoints(organizeWeights(rawPoints.data.weightsData, "weekdayWeight"));
   }
 
   // load all of the points on the map
@@ -160,6 +161,8 @@ export default function Tipmap() {
 
     // set up heatmap
     mapRef.current.on("load", () => {
+      console.log("this is points: ", points);
+      console.log("this is default points: ", defaultPoints);
       mapRef.current.addSource("hotspots", {
         type: "geojson",
         data: points ? points : defaultPoints, // or a URL: 'https://example.com/your-data.geojson'
@@ -255,7 +258,7 @@ export default function Tipmap() {
       mapRef.current.off("zoom", scheduleCenterAndZoomUpdate);
       mapRef.current.remove();
     };
-  }, [center, zoom, points]);
+  }, [center, zoom]);
 
   return (
     <>
