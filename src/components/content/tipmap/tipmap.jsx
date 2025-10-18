@@ -156,8 +156,14 @@ export default function Tipmap() {
       );
     }
 
-    mapRef.current.on("move", scheduleCenterAndZoomUpdate);
-    mapRef.current.on("zoom", scheduleCenterAndZoomUpdate);
+    mapRef.current.on("move", () => {
+      scheduleCenterAndZoomUpdate();
+      setCenter(mapRef.current.getCenter());
+    });
+    mapRef.current.on("zoom", () => {
+      scheduleCenterAndZoomUpdate();
+      setZoom(mapRef.current.getZoom());
+    });
 
     // set up heatmap
     mapRef.current.on("load", () => {
@@ -258,7 +264,7 @@ export default function Tipmap() {
       mapRef.current.off("zoom", scheduleCenterAndZoomUpdate);
       mapRef.current.remove();
     };
-  }, [center, zoom]);
+  }, [center, zoom, points]);
 
   return (
     <>
