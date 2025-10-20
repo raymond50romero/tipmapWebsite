@@ -31,11 +31,11 @@ export default function Tipmap() {
   const { setUserLongLat } = useUserLongLat();
 
   // data points given by the backend
-  const [points, setPoints] = useState();
+  const [points, setPoints] = useState(null);
 
   // center and zoom to both calculate current and what to send to the backend
   const [currCenter, setCurrCenter] = useState();
-  const [currZoom, setCurrZoom] = useState();
+  const [currZoom, setCurrZoom] = useState(INITIAL_ZOOM);
   const [center, setCenter] = useState(INITIAL_CENTER);
   const [zoom, setZoom] = useState(INITIAL_ZOOM);
 
@@ -46,38 +46,42 @@ export default function Tipmap() {
   // helper popup
   const setHelper = useHelper();
 
-  function goToCurrLocation() {
-    mapRef.current.flyTo({
-      center: center,
-      zoom: zoom,
-    });
-  }
-
-  // get posts from backend
-  async function grabPosts(center, zoom, northEast, southWest) {
-    const rawPoints = await getPosts(center, zoom, northEast, southWest);
-    setPoints(organizeWeights(rawPoints.data.weightsData, "weekdayWeight"));
-  }
-
   // load all of the points on the map
   useEffect(() => {
+    console.log("loading all points on map...");
     if (!currCenter || currCenter.length !== 2 || currZoom === undefined)
       return;
-    grabPosts(currCenter, currZoom, northEast, southWest);
-    lastFetchedParamsRef.current = {
-      center: [...currCenter],
-      zoom: currZoom,
-    };
-  }, [currCenter, currZoom]); // giving warning but leave it in till i find a better solution
+
+    console.log("made it past if statement on startup");
+    async function fetchPosts() {
+      const rawPoints = await getPosts(
+        currCenter,
+        currZoom,
+        northEast,
+        southWest,
+      );
+      setPoints(organizeWeights(rawPoints.data.weightsData, "weekdayWeight"));
+      lastFetchedParamsRef.current = {
+        center: [...currCenter],
+        zoom: currZoom,
+      };
+    }
+    fetchPosts();
+  }, [currCenter, currZoom, northEast, southWest]);
 
   // set users location, default to San Diego if user does
   // not want to share location
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setCenter([position.coords.longitude, position.coords.latitude]);
+        const userLocation = [
+          position.coords.longitude,
+          position.coords.latitude,
+        ];
+        setCenter(userLocation);
+        setCurrCenter(userLocation);
         setHelper("position set to your location");
-        setUserLongLat([position.coords.longitude, position.coords.latitude]);
+        setUserLongLat(userLocation);
       },
       (error) => {
         console.error("unable to set user position", error);
@@ -167,11 +171,9 @@ export default function Tipmap() {
 
     // set up heatmap
     mapRef.current.on("load", () => {
-      console.log("this is points: ", points);
-      console.log("this is default points: ", defaultPoints);
       mapRef.current.addSource("hotspots", {
         type: "geojson",
-        data: points ? points : defaultPoints, // or a URL: 'https://example.com/your-data.geojson'
+        data: points, // or a URL: 'https://example.com/your-data.geojson'
       });
 
       mapRef.current.addLayer({
@@ -264,7 +266,18 @@ export default function Tipmap() {
       mapRef.current.off("zoom", scheduleCenterAndZoomUpdate);
       mapRef.current.remove();
     };
-  }, [center, zoom, points]);
+  }, []);
+
+  useEffect(() => {
+    if (!mapRef.current) return;
+    const source = mapRef.current.getSource("hotspots");
+    if (!source) {
+      console.log("no source found");
+      return;
+    }
+    console.log("source found: ", source);
+    source.setData(points);
+  });
 
   return (
     <>
