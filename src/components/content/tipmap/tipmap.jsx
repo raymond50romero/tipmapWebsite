@@ -19,6 +19,30 @@ const ZOOM_DELTA_THRESHOLD = 0.5;
 // Tacos El Gordo long, lat: 32.713659878220476, -117.15981993970202
 // Petco Park long, lat: -117.15704, 32.70767
 // Seaport Village long, lat: -117.17093, 32.70923
+// demo points for testing
+const defaultPoints = {
+  type: "FeatureCollection",
+  features: [
+    {
+      // petco park
+      type: "Feature",
+      properties: { value: 1 },
+      geometry: { type: "Point", coordinates: [-117.15704, 32.70767] },
+    },
+    {
+      // seaport village
+      type: "Feature",
+      properties: { value: 0.5 },
+      geometry: { type: "Point", coordinates: [-117.17093, 32.70923] },
+    },
+    {
+      // tacos el gordo
+      type: "Feature",
+      properties: { value: 0.8 },
+      geometry: { type: "Point", coordinates: [-117.1598, 32.71362] },
+    },
+  ],
+};
 
 export default function Tipmap() {
   // utils needed for map
@@ -99,31 +123,6 @@ export default function Tipmap() {
       center: center,
       zoom: zoom,
     });
-
-    // demo points for testing
-    const defaultPoints = {
-      type: "FeatureCollection",
-      features: [
-        {
-          // petco park
-          type: "Feature",
-          properties: { value: 1 },
-          geometry: { type: "Point", coordinates: [-117.15704, 32.70767] },
-        },
-        {
-          // seaport village
-          type: "Feature",
-          properties: { value: 0.5 },
-          geometry: { type: "Point", coordinates: [-117.17093, 32.70923] },
-        },
-        {
-          // tacos el gordo
-          type: "Feature",
-          properties: { value: 0.8 },
-          geometry: { type: "Point", coordinates: [-117.1598, 32.71362] },
-        },
-      ],
-    };
 
     // update zoom and center that is sent to backend whenever it passes a certain threshold
     function updateCenterAndZoom() {
