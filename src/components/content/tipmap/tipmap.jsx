@@ -72,12 +72,11 @@ export default function Tipmap() {
 
   // load all of the points on the map
   useEffect(() => {
-    console.log("loading all points on map...");
     if (!currCenter || currCenter.length !== 2 || currZoom === undefined)
       return;
 
-    console.log("made it past if statement on startup");
     async function fetchPosts() {
+      if (!currCenter || !currZoom || !northEast || !southWest) return;
       const rawPoints = await getPosts(
         currCenter,
         currZoom,
@@ -170,24 +169,13 @@ export default function Tipmap() {
       updateCenterAndZoom();
     });
 
-    return () => {
-      if (interactionTimeoutRef.current) {
-        clearTimeout(interactionTimeoutRef.current);
-      }
-      mapRef.current.off("move", scheduleCenterAndZoomUpdate);
-      mapRef.current.off("zoom", scheduleCenterAndZoomUpdate);
-      mapRef.current.remove();
-    };
-  }, [center, zoom]);
-
-  // set up heatmap
-  useEffect(() => {
     mapRef.current.on("load", () => {
       mapRef.current.addSource("hotspots", {
         type: "geojson",
         data: points, // or a URL: 'https://example.com/your-data.geojson'
       });
 
+      // set up heatmap
       mapRef.current.addLayer({
         id: "hotspots-heat",
         type: "heatmap",
@@ -265,7 +253,15 @@ export default function Tipmap() {
         slot: "top",
       });
     });
-  }, [points]);
+    return () => {
+      if (interactionTimeoutRef.current) {
+        clearTimeout(interactionTimeoutRef.current);
+      }
+      mapRef.current.off("move", scheduleCenterAndZoomUpdate);
+      mapRef.current.off("zoom", scheduleCenterAndZoomUpdate);
+      mapRef.current.remove();
+    };
+  }, [center, zoom]);
 
   useEffect(() => {
     if (!mapRef.current) return;
