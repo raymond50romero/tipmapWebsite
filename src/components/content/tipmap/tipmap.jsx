@@ -161,14 +161,27 @@ export default function Tipmap() {
 
     mapRef.current.on("move", () => {
       scheduleCenterAndZoomUpdate();
-      setCenter(mapRef.current.getCenter());
     });
     mapRef.current.on("zoom", () => {
       scheduleCenterAndZoomUpdate();
-      setZoom(mapRef.current.getZoom());
     });
 
-    // set up heatmap
+    mapRef.current.on("move", () => {
+      updateCenterAndZoom();
+    });
+
+    return () => {
+      if (interactionTimeoutRef.current) {
+        clearTimeout(interactionTimeoutRef.current);
+      }
+      mapRef.current.off("move", scheduleCenterAndZoomUpdate);
+      mapRef.current.off("zoom", scheduleCenterAndZoomUpdate);
+      mapRef.current.remove();
+    };
+  }, [center, zoom]);
+
+  // set up heatmap
+  useEffect(() => {
     mapRef.current.on("load", () => {
       mapRef.current.addSource("hotspots", {
         type: "geojson",
@@ -252,20 +265,7 @@ export default function Tipmap() {
         slot: "top",
       });
     });
-
-    mapRef.current.on("move", () => {
-      updateCenterAndZoom();
-    });
-
-    return () => {
-      if (interactionTimeoutRef.current) {
-        clearTimeout(interactionTimeoutRef.current);
-      }
-      mapRef.current.off("move", scheduleCenterAndZoomUpdate);
-      mapRef.current.off("zoom", scheduleCenterAndZoomUpdate);
-      mapRef.current.remove();
-    };
-  }, []);
+  }, [points]);
 
   useEffect(() => {
     if (!mapRef.current) return;

@@ -1,7 +1,5 @@
 export default function organizeWeights(weightsData, weightsType) {
   if (!weightsData) return false;
-  console.log("this is weights data: ", weightsData);
-  console.log("this is weights type: ", weightsType);
 
   const points = { type: "FeatureCollection", features: [] };
   for (let i in weightsData) {
@@ -15,6 +13,5 @@ export default function organizeWeights(weightsData, weightsType) {
     });
   }
 
-  console.log("this is the returned organized points: ", points);
   return points;
 }
