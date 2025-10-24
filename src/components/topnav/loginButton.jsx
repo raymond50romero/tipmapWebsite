@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 import { useContentStatus } from "../../globals/contentStatus.jsx";
@@ -49,15 +49,7 @@ export default function LoginButton() {
     );
   }
 
-  return (
-    <>
-      {console.log(
-        "this is login status inside of login button: ",
-        loginStatus,
-      )}
-      {loginStatus ? <LoggedIn /> : <NoLogin />}
-    </>
-  );
+  return <>{loginStatus ? <LoggedIn /> : <NoLogin />}</>;
 }
 
 LoginButton.propTypes = {

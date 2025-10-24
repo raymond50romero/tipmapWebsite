@@ -1,7 +1,7 @@
 import React, { useContext, createContext, useState } from "react";
 import PropTypes from "prop-types";
 
-const LoginStatus = createContext(() => {});
+const LoginStatus = createContext(null);
 
 export function LoginStatusProvider({ children }) {
   const [loginStatus, setLoginStatus] = useState(false);

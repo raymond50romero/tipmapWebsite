@@ -41,7 +41,6 @@ export default function LoginForm({ setStatus, setServerResponse, setHelper }) {
         const serverResponse = await doLogin(emailOrUser, password);
         setServerResponse(serverResponse);
         if (serverResponse.status === 200) {
-          console.log("setting login status to true");
           setLoginStatus(true);
         } else {
           setLoginStatus(false);
