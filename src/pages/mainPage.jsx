@@ -1,7 +1,7 @@
 import React from "react";
 
 import TopNav from "../components/topnav/topnav";
-import ContentWindow from "../components/content/contentWindow.jsx";
+import Tipmap from "../components/tipmap/tipmap.jsx";
 import AuthWindow from "../components/windows/auth/authWindow.jsx";
 import NewPostWindow from "../components/windows/newPost/newPostWindow.jsx";
 
@@ -15,7 +15,7 @@ export default function MainPage() {
           <TopNav />
         </header>
         <main>
-          <ContentWindow />
+          <Tipmap />
         </main>
         <div id="blur-background" />
         <AuthWindow />

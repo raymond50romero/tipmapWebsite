@@ -2,10 +2,10 @@ import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-import { useHelper } from "../../../globals/helper/helperContext.jsx";
-import { useUserLongLat } from "../../../globals/userLongLat.jsx";
-import { getPosts } from "../../../features/content/api/getPosts.jsx";
-import organizeWeights from "../../../features/content/tipmap/organizeWeights.jsx";
+import { useHelper } from "../../globals/helper/helperContext.jsx";
+import { useUserLongLat } from "../../globals/userLongLat.jsx";
+import { getPosts } from "../../features/tipmap/api/getPosts.jsx";
+import organizeWeights from "../../features/tipmap/organizeWeights.jsx";
 import "./styles.css";
 
 const MAPBOXGL_TOKEN = import.meta.env.VITE_MAP_TOKEN;

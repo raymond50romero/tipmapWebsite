@@ -49,7 +49,15 @@ export default function LoginButton() {
     );
   }
 
-  return <>{loginStatus ? <LoggedIn /> : <NoLogin />}</>;
+  return (
+    <>
+      {console.log(
+        "this is login status inside of login button: ",
+        loginStatus,
+      )}
+      {loginStatus ? <LoggedIn /> : <NoLogin />}
+    </>
+  );
 }
 
 LoginButton.propTypes = {
