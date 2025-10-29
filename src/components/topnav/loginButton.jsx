@@ -11,12 +11,21 @@ export default function LoginButton() {
   const { loginStatus } = useLoginStatus();
 
   function LoggedIn() {
+    function openWindow() {
+      const profileWindow = document.getElementById("profile-window");
+      const blurBackground = document.getElementById("blur-background");
+      if (profileWindow) {
+        profileWindow.style.display = "block";
+        blurBackground.style.display = "block";
+      }
+    }
     return (
       <div className="login-buttons-container">
         <button
           className="topnav-buttons"
           onClick={() => {
             setContentStatus("profile");
+            openWindow();
           }}
         >
           Profile
