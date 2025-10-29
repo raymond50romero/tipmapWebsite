@@ -80,7 +80,6 @@ export default function HandleAuthForm({
 HandleAuthForm.propTypes = {
   setGoBack: PropTypes.func.isRequired,
   setHeader: PropTypes.func.isRequired,
-  setIsLoggedIn: PropTypes.func.isRequired,
   status: PropTypes.string.isRequired,
   setStatus: PropTypes.func.isRequired,
   setClose: PropTypes.func,

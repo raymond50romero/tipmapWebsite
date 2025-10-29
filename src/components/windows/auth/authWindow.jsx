@@ -62,7 +62,3 @@ export default function AuthWindow() {
     </section>
   );
 }
-
-AuthWindow.propTypes = {
-  setIsLoggedIn: PropTypes.func.isRequired,
-};
