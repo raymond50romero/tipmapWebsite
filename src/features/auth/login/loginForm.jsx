@@ -10,13 +10,16 @@ import {
   setButtonGrey,
 } from "../../../utils/setHelperColors.jsx";
 import { useLoginStatus } from "../../../globals/loginStatus.jsx";
+import { useProfileStatus } from "../../../globals/profileStatus.jsx";
 import "./style.css";
+import { useInternalMessage } from "antd/es/message/useMessage.js";
 
-export default function LoginForm({ setStatus, setServerResponse, setHelper }) {
+export default function LoginForm({ setStatus, setClose, setHelper }) {
   const [emailOrUser, setEmailOrUser] = useState();
   const [password, setPassword] = useState();
   const [visible, setVisible] = useState(false);
   const { setLoginStatus } = useLoginStatus();
+  const { setProfileStatus } = useProfileStatus();
 
   useEffect(() => {
     if (emailOrUser && password) {
@@ -39,9 +42,15 @@ export default function LoginForm({ setStatus, setServerResponse, setHelper }) {
           setHelper("Password required");
         }
         const serverResponse = await doLogin(emailOrUser, password);
-        setServerResponse(serverResponse);
         if (serverResponse.status === 200) {
+          setHelper(serverResponse.data.message);
           setLoginStatus(true);
+          setClose(true);
+          setProfileStatus((prev) => ({
+            ...prev,
+            username: serverResponse.data.payload.username,
+            email: serverResponse.data.payload.email,
+          }));
         } else {
           setLoginStatus(false);
         }
@@ -115,6 +124,6 @@ export default function LoginForm({ setStatus, setServerResponse, setHelper }) {
 LoginForm.propTypes = {
   setStatus: PropTypes.func.isRequired,
   setIsLoggedIn: PropTypes.func.isRequired,
-  setServerResponse: PropTypes.func.isRequired,
+  setClose: PropTypes.func.isRequired,
   setHelper: PropTypes.func.isRequired,
 };

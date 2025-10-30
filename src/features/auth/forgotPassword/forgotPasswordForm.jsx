@@ -4,11 +4,7 @@ import PropTypes from "prop-types";
 import EmailPasscodeForm from "./emailPasscodeForm.jsx";
 import ChangePasswordForm from "./changePasswordForm.jsx";
 
-export default function ForgotPasswordForm({
-  setStatus,
-  setServerResponse,
-  setHelper,
-}) {
+export default function ForgotPasswordForm({ setStatus, setClose, setHelper }) {
   const [emailSent, setEmailSent] = useState(false);
 
   return (
@@ -16,13 +12,13 @@ export default function ForgotPasswordForm({
       {emailSent ? (
         <ChangePasswordForm
           setStatus={setStatus}
-          setServerResponse={setServerResponse}
+          setClose={setClose}
           setHelper={setHelper}
         />
       ) : (
         <EmailPasscodeForm
           setEmailSent={setEmailSent}
-          setServerResponse={setServerResponse}
+          setClose={setClose}
           setHelper={setHelper}
         />
       )}
@@ -32,6 +28,6 @@ export default function ForgotPasswordForm({
 
 ForgotPasswordForm.propTypes = {
   setStatus: PropTypes.func.isRequired,
-  setServerResponse: PropTypes.func.isRequired,
+  setClose: PropTypes.func.isRequired,
   setHelper: PropTypes.func.isRequired,
 };

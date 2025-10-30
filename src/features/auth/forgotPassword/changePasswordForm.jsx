@@ -10,11 +10,7 @@ import {
 } from "../../../utils/setHelperColors.jsx";
 import "./style.css";
 
-export default function ChangePasswordForm({
-  setStatus,
-  setServerResponse,
-  setHelper,
-}) {
+export default function ChangePasswordForm({ setStatus, setClose, setHelper }) {
   const [passcode, setPasscode] = useState();
   const [newPassword, setNewPassword] = useState();
   const [confirmNewPassword, setConfirmNewPassword] = useState();
@@ -97,6 +93,6 @@ export default function ChangePasswordForm({
 
 ChangePasswordForm.propTypes = {
   setStatus: PropTypes.func.isRequired,
-  setServerResponse: PropTypes.func.isRequired,
+  setClose: PropTypes.func.isRequired,
   setHelper: PropTypes.func.isRequired,
 };

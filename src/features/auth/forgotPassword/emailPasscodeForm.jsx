@@ -12,7 +12,7 @@ import "./style.css";
 
 export default function EmailPasscodeForm({
   setEmailSent,
-  setServerResponse,
+  setClose,
   setHelper,
 }) {
   const [email, setEmail] = useState();
@@ -66,6 +66,6 @@ export default function EmailPasscodeForm({
 
 EmailPasscodeForm.propTypes = {
   setEmailSent: PropTypes.func.isRequired,
-  setServerResponse: PropTypes.func.isRequired,
+  setClose: PropTypes.func.isRequired,
   setHelper: PropTypes.func.isRequired,
 };

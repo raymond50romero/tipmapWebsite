@@ -20,9 +20,6 @@ export default function HandleAuthForm({
   useEffect(() => {
     if (helper) {
       showHelper(helper);
-    } else if (serverResponse) {
-      showHelper(serverResponse.data);
-      setClose(true);
     }
 
     switch (status) {
@@ -39,22 +36,14 @@ export default function HandleAuthForm({
         setGoBack(false);
         break;
     }
-  }, [
-    helper,
-    showHelper,
-    serverResponse,
-    status,
-    setHeader,
-    setGoBack,
-    setClose,
-  ]);
+  }, [helper, showHelper, serverResponse, status, setHeader, setGoBack]);
 
   switch (status) {
     case "createAccount":
       return (
         <CreatAccountForm
           setStatus={setStatus}
-          setServerResponse={setServerResponse}
+          setClose={setClose}
           setHelper={setHelper}
         />
       );
@@ -62,7 +51,7 @@ export default function HandleAuthForm({
       return (
         <ForgotPasswordForm
           setStatus={setStatus}
-          setServerResponse={setServerResponse}
+          setClose={setClose}
           setHelper={setHelper}
         />
       );
@@ -70,7 +59,7 @@ export default function HandleAuthForm({
       return (
         <LoginForm
           setStatus={setStatus}
-          setServerResponse={setServerResponse}
+          setClose={setClose}
           setHelper={setHelper}
         />
       );

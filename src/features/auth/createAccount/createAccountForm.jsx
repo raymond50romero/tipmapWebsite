@@ -12,11 +12,7 @@ import {
 } from "../../../utils/setHelperColors.jsx";
 import "./style.css";
 
-export default function CreateAccountForm({
-  setStatus,
-  setServerResponse,
-  setHelper,
-}) {
+export default function CreateAccountForm({ setStatus, setClose, setHelper }) {
   const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -86,7 +82,7 @@ export default function CreateAccountForm({
           } else if (!serverResponse) {
             setHelper("Unable to create new account");
           } else {
-            setServerResponse(serverResponse);
+            setHelper("Error occured while creating new account");
           }
         }
       }}
@@ -204,6 +200,6 @@ export default function CreateAccountForm({
 
 CreateAccountForm.propTypes = {
   setStatus: PropTypes.func.isRequired,
-  setServerResponse: PropTypes.func.isRequired,
+  setClose: PropTypes.func.isRequired,
   setHelper: PropTypes.func.isRequired,
 };

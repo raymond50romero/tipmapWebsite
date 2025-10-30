@@ -4,7 +4,14 @@ import PropTypes from "prop-types";
 const ProfileStatus = createContext(null);
 
 export function ProfileStatusProvider({ children }) {
-  const [profileStatus, setProfileStatus] = useState(null);
+  const profileTypes = {
+    username: "test username",
+    email: "test email",
+    occupation: ["bartender", "server"],
+    posts: {},
+  };
+
+  const [profileStatus, setProfileStatus] = useState(profileTypes);
 
   return (
     <ProfileStatus.Provider value={{ profileStatus, setProfileStatus }}>

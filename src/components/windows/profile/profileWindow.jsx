@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { CloseOutlined, LeftOutlined } from "@ant-design/icons";
 
+import { useProfileStatus } from "../../../globals/profileStatus.jsx";
 import "./styles.css";
 
 export default function ProfileWindow() {
-  const [username, setUsername] = useState();
+  const { profileStatus } = useProfileStatus();
 
   function closeWindow() {
     const profileWindow = document.getElementById("profile-window");
@@ -28,7 +29,8 @@ export default function ProfileWindow() {
         />
       </div>
       <>
-        <h3>Hi! {username}</h3>
+        <h3>Hi! {profileStatus.username}</h3>
+        <h4>{...profileStatus.occupation}</h4>
         <div>this is container of all the users info</div>
       </>
     </section>
