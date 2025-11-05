@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CloseOutlined, LeftOutlined } from "@ant-design/icons";
 
 import ProfileInfo from "../../../features/profile/profileInfo.jsx";
+import OccupationPill from "../../occupationPill/occupationPill.jsx";
 import { useProfileStatus } from "../../../globals/profileStatus.jsx";
 import "./styles.css";
 
@@ -20,7 +21,7 @@ export default function ProfileWindow() {
   return (
     <section className="window" id="profile-window">
       <div id="profile-window-header-container">
-        <h3 id="profile-window-header">Hi! {profileStatus.username}</h3>
+        <h3 id="profile-window-header">{profileStatus.username}</h3>
         <CloseOutlined
           className="auth-window-header-buttons"
           id="profile-close-window"

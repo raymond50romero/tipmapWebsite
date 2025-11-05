@@ -1,0 +1,12 @@
+#profile-info-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#profile-info-email {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
