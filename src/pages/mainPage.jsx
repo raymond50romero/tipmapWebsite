@@ -4,7 +4,8 @@ import TopNav from "../components/topnav/topnav";
 import Tipmap from "../components/tipmap/tipmap.jsx";
 import AuthWindow from "../components/windows/auth/authWindow.jsx";
 import NewPostWindow from "../components/windows/newPost/newPostWindow.jsx";
-import Profile from "../components/windows/profile/profileWindow.jsx";
+import ProfileWindow from "../components/windows/profile/profileWindow.jsx";
+import Posts from "../components/posts/posts.jsx";
 
 import "../index.css";
 
@@ -21,7 +22,8 @@ export default function MainPage() {
         <div id="blur-background" />
         <AuthWindow />
         <NewPostWindow />
-        <Profile />
+        <ProfileWindow />
+        <Posts />
       </div>
     </>
   );

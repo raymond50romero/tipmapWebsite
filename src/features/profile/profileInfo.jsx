@@ -11,7 +11,7 @@ export default function ProfileInfo() {
     <section>
       <div id="profile-info-header">
         <OccupationPill />
-        <p id="proile-info-email">{profileStatus.email}</p>
+        <p id="profile-info-email">{profileStatus.email}</p>
       </div>
     </section>
   );
