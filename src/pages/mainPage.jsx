@@ -17,13 +17,13 @@ export default function MainPage() {
           <TopNav />
         </header>
         <main>
+          <Posts />
           <Tipmap />
         </main>
         <div id="blur-background" />
         <AuthWindow />
         <NewPostWindow />
         <ProfileWindow />
-        <Posts />
       </div>
     </>
   );

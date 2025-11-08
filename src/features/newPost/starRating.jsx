@@ -17,7 +17,6 @@ export default function StarRating({ max = 5, onChange }) {
         const value = i + 1;
         return (
           <svg
-            className="stars"
             key={i}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

@@ -1,0 +1,16 @@
+.stars {
+  width: 1em;
+  height: 1em;
+}
+
+.each-post-container {
+  margin-top: 0.5rem;
+  padding: 1em;
+  border: 1px solid #000;
+  border-radius: 16px;
+  background-color: rgba(245, 255, 250, 0.7);
+}
+
+.each-post-header {
+  margin: 0;
+}
