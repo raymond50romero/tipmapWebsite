@@ -1,9 +1,12 @@
+import { useState } from "react";
 import EachPost from "../../features/posts/eachPost.jsx";
 import LeftArrow from "./leftArrow.jsx";
 import RightArrow from "./rightArrow.jsx";
 import "./styles.css";
 
 export default function Posts() {
+  const [showPosts, setShowPosts] = useState(false);
+
   return (
     <div id="posts-container">
       <section id="posts">
@@ -11,7 +14,11 @@ export default function Posts() {
         <EachPost />
       </section>
       <section id="posts-show-arrow">
-        <LeftArrow />
+        {showPosts ? (
+          <LeftArrow setShowPosts={setShowPosts} />
+        ) : (
+          <RightArrow setShowPosts={setShowPosts} />
+        )}
       </section>
     </div>
   );

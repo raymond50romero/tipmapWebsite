@@ -1,14 +1,23 @@
-export default function RightArrow() {
+export default function RightArrow({ setShowPosts }) {
   return (
     <div>
       <svg
+        className="posts-arrows"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        width="48"
-        height="48"
         fill="#fbbf24"
+        onClick={() => {
+          setShowPosts(true);
+        }}
       >
-        <path d="M9 6l6 6-6 6" />
+        <path
+          d="M9 6 L15 12 L9 18"
+          fill="none"
+          stroke="#000"
+          strokeWidth="4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     </div>
   );
