@@ -4,24 +4,20 @@
   flex-direction: row;
   z-index: 10;
   top: 10vh;
-  left: 1vw;
   max-height: 85vh;
   max-width: 30vw;
   height: 85vh;
   width: 30vw;
-
-  /*
   transform: translateX(-50%);
-  transition: bottom 0.5s ease;
-  left: -290px;
-  */
+  transition: left 0.5s ease;
+  left: -190px;
 
   /* fully transparent container */
-  background: rgba(0, 0, 0 0);
+  background: rgba(0, 0, 0, 0);
 }
 
 #posts-container.show {
-  left: 1vw;
+  left: 16vw;
 }
 
 #posts {
@@ -30,7 +26,7 @@
   display: inline-flex;
   flex-direction: column;
 
-  background: rgba(100, 100, 100, 0.3);
+  background: rgba(100, 100, 100, 30%);
   backdrop-filter: blur(2px) saturate(100%);
   -webkit-backdrop-filter: blur(2px) saturate(100%);
   border: 1px solid rgba(255, 255, 255, 0.18);

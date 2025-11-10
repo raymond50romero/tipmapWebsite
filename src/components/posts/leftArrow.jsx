@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export default function LeftArrow({ setShowPosts }) {
   return (
     <div>
@@ -22,3 +24,7 @@ export default function LeftArrow({ setShowPosts }) {
     </div>
   );
 }
+
+LeftArrow.propTypes = {
+  setShowPosts: PropTypes.func,
+};
