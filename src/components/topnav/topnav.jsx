@@ -9,7 +9,7 @@ import "./styles.css";
 export default function TopNav() {
   return (
     <div id="topnav-container">
-      <NavTitle />
+      <h1 id="topnav-title">Tipmap</h1>
       <div id="topnav-button-container">
         <NewPostButton />
         <LoginButton />

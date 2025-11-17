@@ -26,11 +26,10 @@ export default async function doLogin(emailOrUser, password) {
   return await axios
     .post(`${host}:${port}/${route}`, data, { withCredentials: true })
     .then((res) => {
-      console.log("response:", res);
       return res;
     })
     .catch((error) => {
-      console.log("error response:", error);
-      return error;
+      console.log("error:", error);
+      return false;
     });
 }
