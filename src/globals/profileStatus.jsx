@@ -5,8 +5,8 @@ const ProfileStatus = createContext(null);
 
 export function ProfileStatusProvider({ children }) {
   const profileTypes = {
-    username: "test username",
-    email: "test email",
+    username: "username",
+    email: "email",
     occupation: ["bartender", "server"],
     posts: {},
   };

@@ -3,11 +3,16 @@ import { CloseOutlined, LeftOutlined } from "@ant-design/icons";
 
 import ProfileInfo from "../../../features/profile/profileInfo.jsx";
 import OccupationPill from "../../occupationPill/occupationPill.jsx";
+import doLogout from "../../../features/auth/api/doLogout.jsx";
+import { useHelper } from "../../../globals/helper/helperContext.jsx";
+import { useLoginStatus } from "../../../globals/loginStatus.jsx";
 import { useProfileStatus } from "../../../globals/profileStatus.jsx";
 import "./styles.css";
 
 export default function ProfileWindow() {
-  const { profileStatus } = useProfileStatus();
+  const { setLoginStatus } = useLoginStatus();
+  const { profileStatus, setProfileStatus } = useProfileStatus();
+  const showHelper = useHelper();
 
   function closeWindow() {
     const profileWindow = document.getElementById("profile-window");
@@ -16,6 +21,25 @@ export default function ProfileWindow() {
       profileWindow.style.display = "none";
       blurBackground.style.display = "none";
     }
+  }
+
+  async function logout() {
+    const logoutResult = await doLogout();
+    if (!logoutResult) {
+      console.log("unable to logout");
+      showHelper("unable to logout");
+      return false;
+    }
+    closeWindow();
+    setLoginStatus(false);
+    setProfileStatus(() => ({
+      username: "",
+      email: "",
+      occupation: ["", ""],
+      posts: {},
+    }));
+    showHelper("logout successful");
+    return true;
   }
 
   return (
@@ -31,6 +55,10 @@ export default function ProfileWindow() {
         />
       </div>
       <ProfileInfo />
+      <div>this is a container for users posts</div>
+      <button id="logout-button" onClick={() => logout()}>
+        Logout
+      </button>
     </section>
   );
 }

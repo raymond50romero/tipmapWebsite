@@ -12,7 +12,6 @@ import {
 import { useLoginStatus } from "../../../globals/loginStatus.jsx";
 import { useProfileStatus } from "../../../globals/profileStatus.jsx";
 import "./style.css";
-import { useInternalMessage } from "antd/es/message/useMessage.js";
 
 export default function LoginForm({ setStatus, setClose, setHelper }) {
   const [emailOrUser, setEmailOrUser] = useState();
@@ -46,6 +45,7 @@ export default function LoginForm({ setStatus, setClose, setHelper }) {
           setHelper(serverResponse.data.message);
           setLoginStatus(true);
           setClose(true);
+          console.log("this is server response", serverResponse.data.payload);
           setProfileStatus((prev) => ({
             ...prev,
             username: serverResponse.data.payload.username,
