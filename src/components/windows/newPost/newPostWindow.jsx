@@ -50,6 +50,10 @@ export default function NewPostWindow() {
       title,
       comment,
     );
+    if (newPostResponse === 403) {
+      setHelper("Cannot create post, no user logged in");
+      return;
+    }
     if (newPostResponse) {
       setHelper(newPostResponse.data);
     } else {

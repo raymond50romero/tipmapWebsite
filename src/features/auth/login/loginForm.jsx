@@ -50,6 +50,7 @@ export default function LoginForm({ setStatus, setClose, setHelper }) {
             ...prev,
             username: serverResponse.data.payload.username,
             email: serverResponse.data.payload.email,
+            occupation: serverResponse.data.payload.occupations,
           }));
         } else {
           setLoginStatus(false);

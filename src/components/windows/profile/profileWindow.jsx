@@ -56,7 +56,11 @@ export default function ProfileWindow() {
       </div>
       <ProfileInfo />
       <div>this is a container for users posts</div>
-      <button id="logout-button" onClick={() => logout()}>
+      <button
+        id="logout-button"
+        className="login-button"
+        onClick={() => logout()}
+      >
         Logout
       </button>
     </section>

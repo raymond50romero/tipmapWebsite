@@ -77,6 +77,9 @@ export default async function newPost(
     })
     .catch((error) => {
       console.error(error);
+      if (error.status === 403) {
+        return 403;
+      }
       return false;
     });
 }
