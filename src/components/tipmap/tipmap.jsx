@@ -12,7 +12,7 @@ const MAPBOXGL_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 const INITIAL_CENTER = [-117.1598199, 32.713659];
 const INITIAL_ZOOM = 12.5;
 const INTERACTION_DEBOUNCE_MS = 1000;
-const CENTER_DELTA_THRESHOLD = 0.05;
+const CENTER_DELTA_THRESHOLD = 0.025;
 const ZOOM_DELTA_THRESHOLD = 0.5;
 
 // demo points for testing
@@ -26,7 +26,10 @@ export default function Tipmap() {
   const mapRef = useRef();
   const mapContainerRef = useRef();
   const interactionTimeoutRef = useRef();
-  const lastFetchedParamsRef = useRef({ center: null, zoom: null });
+  const lastFetchedParamsRef = useRef({
+    center: INITIAL_CENTER,
+    zoom: INITIAL_ZOOM,
+  });
 
   // global variable to get users current longitude and latitude
   const { setUserLongLat } = useUserLongLat();
@@ -49,11 +52,13 @@ export default function Tipmap() {
 
   // load all of the points on the map
   useEffect(() => {
-    if (!currCenter || currCenter.length !== 2 || currZoom === undefined)
+    if (!currCenter || currCenter.length !== 2 || currZoom === undefined) {
       return;
+    }
 
     async function fetchPosts() {
       if (!currCenter || !currZoom || !northEast || !southWest) return;
+      console.log("calling get posts...");
       const rawPoints = await getPosts(
         currCenter,
         currZoom,
@@ -67,7 +72,7 @@ export default function Tipmap() {
       };
     }
     fetchPosts();
-  }, [currCenter, currZoom, northEast, southWest]);
+  }, [currCenter, currZoom]);
 
   // set users location, default to San Diego if user does
   // not want to share location
@@ -82,6 +87,10 @@ export default function Tipmap() {
         setCurrCenter(userLocation);
         setHelper("position set to your location");
         setUserLongLat(userLocation);
+        lastFetchedParamsRef.current = {
+          center: userLocation,
+          zoom: INITIAL_ZOOM,
+        };
       },
       (error) => {
         console.error("unable to set user position", error);
@@ -247,9 +256,8 @@ export default function Tipmap() {
       console.log("no source found");
       return;
     }
-    console.log("source found: ", source);
     source.setData(points);
-  });
+  }, []);
 
   return (
     <>
