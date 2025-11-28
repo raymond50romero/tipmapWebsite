@@ -13,5 +13,6 @@ export default function organizeWeights(weightsData, weightsType) {
     });
   }
 
+  console.log("these are the points: ", points);
   return points;
 }

@@ -58,7 +58,6 @@ export default function Tipmap() {
 
     async function fetchPosts() {
       if (!currCenter || !currZoom || !northEast || !southWest) return;
-      console.log("calling get posts...");
       const rawPoints = await getPosts(
         currCenter,
         currZoom,
@@ -257,7 +256,7 @@ export default function Tipmap() {
       return;
     }
     source.setData(points);
-  }, []);
+  }, [points]);
 
   return (
     <>

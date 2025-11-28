@@ -25,11 +25,9 @@ export async function getPosts(center, zoom, northEast, southWest) {
     )
     .then((response) => {
       if (response) {
-        console.log("able to get data");
-        console.log(response);
         return response;
       } else {
-        console.log("no response");
+        console.log("no response when getting posts");
         return false;
       }
     })
