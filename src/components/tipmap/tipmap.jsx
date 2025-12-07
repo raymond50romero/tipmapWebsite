@@ -69,6 +69,7 @@ export default function Tipmap() {
         center: [...currCenter],
         zoom: currZoom,
       };
+      console.log("this is points after setting: ", points);
     }
     fetchPosts();
   }, [currCenter, currZoom]);
@@ -155,6 +156,7 @@ export default function Tipmap() {
     });
 
     mapRef.current.on("load", () => {
+      console.log("map ref current is on load");
       mapRef.current.addSource("hotspots", {
         type: "geojson",
         data: points, // or a URL: 'https://example.com/your-data.geojson'
@@ -174,8 +176,8 @@ export default function Tipmap() {
             ["get", "value"],
             0,
             0,
-            6,
-            6,
+            10,
+            12,
           ],
           // Intensify with zoom
           "heatmap-intensity": [
@@ -195,17 +197,26 @@ export default function Tipmap() {
             ["linear"],
             ["heatmap-density"],
             0,
-            "rgba(0,0,255,0)",
-            0.1,
-            "blue",
+            "rgba(0,0,0,0)",
+            0.2,
+            "rgb(0, 0, 90)", // dark blue
+
+            // Main gradient range
             0.3,
-            "cyan",
+            "rgb(0, 0, 255)", // blue
+            0.4,
+            "rgb(0, 150, 255)", // sky blue
             0.5,
-            "lime",
+            "rgb(0, 255, 180)", // teal
+            0.6,
+            "rgb(0, 255, 0)", // green
             0.7,
-            "yellow",
-            1,
-            "red",
+            "rgb(255, 255, 0)", // yellow
+            0.8,
+            "rgb(255, 128, 0)", // orange
+
+            1.0,
+            "rgb(120, 0, 0)", // dark red
           ],
           // Radius grows with zoom
           "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 0, 2, 9, 20],
@@ -223,7 +234,7 @@ export default function Tipmap() {
         slot: "top",
       });
 
-      // 3) Optional: show points as circles when zoomed in
+      // show points as circles when zoomed in
       mapRef.current.addLayer({
         id: "hotspots-point",
         type: "circle",
@@ -255,6 +266,7 @@ export default function Tipmap() {
       console.log("no source found");
       return;
     }
+    console.log("source found: ", source);
     source.setData(points);
   }, [points]);
 
