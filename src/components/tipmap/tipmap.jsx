@@ -4,6 +4,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 
 import { useHelper } from "../../globals/helper/helperContext.jsx";
 import { useUserLongLat } from "../../globals/userLongLat.jsx";
+import { useMapState } from "../../globals/mapState.jsx";
 import { getPosts } from "../../features/tipmap/api/getPosts.jsx";
 import organizeWeights from "../../features/tipmap/organizeWeights.jsx";
 import "./styles.css";
@@ -33,6 +34,7 @@ export default function Tipmap() {
 
   // global variable to get users current longitude and latitude
   const { setUserLongLat } = useUserLongLat();
+  const { setMapCenter } = useMapState();
 
   // data points given by the backend
   const [points, setPoints] = useState(null);
@@ -153,6 +155,10 @@ export default function Tipmap() {
 
     mapRef.current.on("move", () => {
       updateCenterAndZoom();
+    });
+
+    mapRef.current.on("moveend", () => {
+      setMapCenter(mapRef.current.getCenter().toArray());
     });
 
     mapRef.current.on("load", () => {

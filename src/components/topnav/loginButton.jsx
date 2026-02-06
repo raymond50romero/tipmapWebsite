@@ -62,5 +62,5 @@ export default function LoginButton() {
 }
 
 LoginButton.propTypes = {
-  didLogin: PropTypes.bool.isRequired,
+  didLogin: PropTypes.bool,
 };

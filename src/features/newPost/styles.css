@@ -98,3 +98,11 @@
   justify-content: space-between;
   gap: 1rem;
 }
+
+#new-post-input-name {
+  margin-bottom: 1.5rem;
+}
+
+mapbox-search-box::part(input) {
+  padding: 1rem;
+}

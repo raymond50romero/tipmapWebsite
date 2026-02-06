@@ -8,11 +8,16 @@ import {
   setButtonClick,
   setButtonGrey,
 } from "../../utils/setHelperColors.jsx";
+import { SearchBox } from "@mapbox/search-js-react";
+import { useUserLongLat } from "../../globals/userLongLat.jsx";
+import { useMapState } from "../../globals/mapState.jsx";
 import { useHelper } from "../../globals/helper/helperContext.jsx";
 import { STATES } from "./states.jsx";
 import StarRating from "./starRating.jsx";
 import AverageTips from "./averageTips.jsx";
 import "./styles.css";
+
+const MAP_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 
 export default function NewPostForm({
   setNextForm,
@@ -27,6 +32,8 @@ export default function NewPostForm({
   setClientele,
 }) {
   const setHelper = useHelper();
+  const { userLongLat } = useUserLongLat();
+  const { mapCenter } = useMapState();
   const [cName, setcName] = useState();
   const [cAddress, setcAddress] = useState();
   const [cCity, setcCity] = useState();
@@ -134,55 +141,51 @@ export default function NewPostForm({
       }}
     >
       <h6 className="new-post-helper-header">All Required Inputs</h6>
-      <input
-        type="text"
-        placeholder="Restaurant name"
-        id="new-post-input-name"
-        className="input-field new-post-input"
-        onChange={(event) => {
-          setcName(event.target.value);
-          setNormal("new-post-input-name");
-        }}
-      />
-      <input
-        type="text"
-        placeholder="Street address"
-        id="new-post-input-address"
-        className="input-field new-post-input"
-        onChange={(event) => {
-          setcAddress(event.target.value);
-          setNormal("new-post-input-address");
-        }}
-      />
-      <div id="new-post-city-state-container">
-        <input
-          type="text"
-          placeholder="City"
-          id="new-post-input-city"
-          className="input-field new-post-input"
-          onChange={(event) => {
-            setcCity(event.target.value);
-            setNormal("new-post-input-city");
+      <div id="new-post-input-name">
+        <SearchBox
+          accessToken={MAP_TOKEN}
+          options={{
+            types: "poi",
+            proximity: userLongLat || mapCenter,
+            poi_category: ["restaurant", "bar", "cafe"],
+          }}
+          onRetrieve={(res) => {
+            const feature = res.features[0];
+            const { name, address, place, region, postcode } =
+              feature.properties;
+            console.log("this is feature", feature);
+            console.log("this is feature properties", feature.properties);
+            setcName(name);
+            setcAddress(address);
+            if (place) setcCity(place);
+            if (region) {
+              // Try to match state abbr from region name or code if available
+              // Mapbox region usually gives full name or code. We need 2-letter code.
+              // Assuming region_code might be available or we just take the first 2 letters if it matches our STATES logic
+              // Better: check if region matches any STATE name or abbr
+              const stateObj = STATES.find(
+                (s) => s.name === region || s.abbr === region,
+              );
+              if (stateObj) setcState(stateObj.abbr);
+              else if (region.length === 2) setcState(region);
+            }
+          }}
+          placeholder="Restaurant name"
+          theme={{
+            variables: {
+              unit: "1rem",
+              fontFamily: "inherit",
+              border: "1px solid #ccc",
+              borderRadius: "16px",
+              boxShadow: "none",
+              padding: "50px",
+            },
+          }}
+          value={cName || ""}
+          onChange={(val) => {
+            setcName(val);
           }}
         />
-        <label>
-          <input
-            id="new-post-input-state"
-            className="input-field new-post-input"
-            list="state-list"
-            name="state"
-            placeholder="State"
-            onChange={handleStateChange}
-            inputMode="text"
-            pattern="[A-Za-z]{2}"
-            title="Use the 2-letter state code (e.g., CA)"
-          />
-          <datalist id="state-list">
-            {STATES.map((s) => (
-              <option key={s.abbr} value={s.abbr}>{`${s.name}`}</option>
-            ))}
-          </datalist>
-        </label>
       </div>
       <AverageTips
         title={"Average Weekday Tips"}
