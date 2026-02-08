@@ -16,6 +16,7 @@ export default function NewPostWindow() {
   const [address, setAddress] = useState();
   const [city, setCity] = useState();
   const [state, setState] = useState();
+  const [longLat, setlongLat] = useState();
   const [weekdayTips, setWeekdayTips] = useState();
   const [weekendTips, setWeekendTips] = useState();
   const [workenv, setWorkenv] = useState();
@@ -41,6 +42,7 @@ export default function NewPostWindow() {
       address,
       city,
       state,
+      longLat,
       userLongLat,
       weekdayTips,
       weekendTips,
@@ -117,6 +119,7 @@ export default function NewPostWindow() {
             setAddress={setAddress}
             setCity={setCity}
             setState={setState}
+            setlongLat={setlongLat}
             setWeekdayTips={setWeekdayTips}
             setWeekendTips={setWeekendTips}
             setWorkenv={setWorkenv}

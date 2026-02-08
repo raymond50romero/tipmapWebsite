@@ -25,6 +25,7 @@ export default function NewPostForm({
   setAddress,
   setCity,
   setState,
+  setlongLat,
   setWeekdayTips,
   setWeekendTips,
   setWorkenv,
@@ -38,6 +39,7 @@ export default function NewPostForm({
   const [cAddress, setcAddress] = useState();
   const [cCity, setcCity] = useState();
   const [cState, setcState] = useState();
+  const [cLongLat, setcLongLat] = useState();
   const [cWeekdayTips, setcWeekdayTips] = useState();
   const [cWeekendTips, setcWeekendTips] = useState();
   const [cWorkenv, setcWorkenv] = useState();
@@ -178,7 +180,6 @@ export default function NewPostForm({
               border: "1px solid #ccc",
               borderRadius: "16px",
               boxShadow: "none",
-              padding: "50px",
             },
           }}
           value={cName || ""}
