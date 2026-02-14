@@ -23,8 +23,6 @@ export default function NewPostForm({
   setNextForm,
   setName,
   setAddress,
-  setCity,
-  setState,
   setlongLat,
   setWeekdayTips,
   setWeekendTips,
@@ -37,8 +35,6 @@ export default function NewPostForm({
   const { mapCenter } = useMapState();
   const [cName, setcName] = useState();
   const [cAddress, setcAddress] = useState();
-  const [cCity, setcCity] = useState();
-  const [cState, setcState] = useState();
   const [cLongLat, setcLongLat] = useState();
   const [cWeekdayTips, setcWeekdayTips] = useState();
   const [cWeekendTips, setcWeekendTips] = useState();
@@ -54,14 +50,6 @@ export default function NewPostForm({
     } else if (!cAddress) {
       setError("new-post-input-address");
       setHelper("Missing restaurant address");
-      return false;
-    } else if (!cCity) {
-      setError("new-post-input-city");
-      setHelper("Missing city name");
-      return false;
-    } else if (!cState) {
-      setError("new-post-input-state");
-      setHelper("Missing state");
       return false;
     } else if (!cWeekdayTips) {
       setError("weekday-tips-container");
@@ -99,8 +87,6 @@ export default function NewPostForm({
     if (
       cName &&
       cAddress &&
-      cCity &&
-      cState &&
       cWeekdayTips &&
       cWeekendTips &&
       cWorkenv &&
@@ -114,8 +100,6 @@ export default function NewPostForm({
   }, [
     cName,
     cAddress,
-    cCity,
-    cState,
     cWeekdayTips,
     cWeekendTips,
     cWorkenv,
@@ -132,8 +116,6 @@ export default function NewPostForm({
           setNextForm(true);
           setName(cName);
           setAddress(cAddress);
-          setCity(cCity);
-          setState(cState);
           setWeekdayTips(cWeekdayTips);
           setWeekendTips(cWeekendTips);
           setWorkenv(cWorkenv);
@@ -153,13 +135,21 @@ export default function NewPostForm({
           }}
           onRetrieve={(res) => {
             const feature = res.features[0];
-            const { name, address, place, region, postcode } =
+            const { name, address, place_formatted, brand_id, mapbox_id } =
               feature.properties;
+            const { longitude, latitude } = feature.properties.coordinates;
             console.log("this is feature", feature);
             console.log("this is feature properties", feature.properties);
+            console.log("name: ", name);
+            console.log("address: ", address);
+            console.log("place_formatted: ", place_formatted);
+            console.log("brand_id: ", brand_id);
+            console.log("mapbox_id: ", mapbox_id);
+            console.log("longitude: ", longitude);
+            console.log("latitude: ", latitude);
             setcName(name);
             setcAddress(address);
-            if (place) setcCity(place);
+            /*
             if (region) {
               // Try to match state abbr from region name or code if available
               // Mapbox region usually gives full name or code. We need 2-letter code.
@@ -171,6 +161,7 @@ export default function NewPostForm({
               if (stateObj) setcState(stateObj.abbr);
               else if (region.length === 2) setcState(region);
             }
+            */
           }}
           placeholder="Restaurant name"
           theme={{

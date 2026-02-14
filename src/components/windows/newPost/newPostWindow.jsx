@@ -14,9 +14,8 @@ export default function NewPostWindow() {
   const [nextForm, setNextForm] = useState(false);
   const [name, setName] = useState();
   const [address, setAddress] = useState();
-  const [city, setCity] = useState();
-  const [state, setState] = useState();
-  const [longLat, setlongLat] = useState();
+  const [longitude, setLongitude] = useState();
+  const [latitude, setLatitude] = useState();
   const [weekdayTips, setWeekdayTips] = useState();
   const [weekendTips, setWeekendTips] = useState();
   const [workenv, setWorkenv] = useState();
@@ -40,9 +39,8 @@ export default function NewPostWindow() {
     const newPostResponse = await newPost(
       name,
       address,
-      city,
-      state,
-      longLat,
+      longitude,
+      latitude,
       userLongLat,
       weekdayTips,
       weekendTips,
@@ -70,8 +68,8 @@ export default function NewPostWindow() {
       if (
         name &&
         address &&
-        city &&
-        state &&
+        longitude &&
+        latitude &&
         weekdayTips &&
         weekendTips &&
         workenv &&
@@ -117,9 +115,8 @@ export default function NewPostWindow() {
             setNextForm={setNextForm}
             setName={setName}
             setAddress={setAddress}
-            setCity={setCity}
-            setState={setState}
-            setlongLat={setlongLat}
+            setLongitude={setLongitude}
+            setLatitude={setLatitude}
             setWeekdayTips={setWeekdayTips}
             setWeekendTips={setWeekendTips}
             setWorkenv={setWorkenv}

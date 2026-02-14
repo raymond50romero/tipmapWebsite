@@ -8,8 +8,7 @@ const newPostRoute = import.meta.env.VITE_NEW_POST;
  *
  * @param {string} name
  * @param {string} address
- * @param {string} city
- * @param {string} state
+ * @param {Array} longLat
  * @param {Array} userLongLat
  * @param {number} weekdayTips
  * @param {number} weekendTips
@@ -23,8 +22,7 @@ const newPostRoute = import.meta.env.VITE_NEW_POST;
 export default async function newPost(
   name,
   address,
-  city,
-  state,
+  longLat,
   userLongLat,
   weekdayTips,
   weekendTips,
@@ -37,8 +35,7 @@ export default async function newPost(
   if (
     !name ||
     !address ||
-    !city ||
-    !state ||
+    !longLat ||
     !weekdayTips ||
     !weekendTips ||
     !workenv ||
@@ -51,9 +48,8 @@ export default async function newPost(
   const data = {
     name: name,
     address: address,
-    city: city,
-    state: state.state,
-    userLongLat: userLongLat,
+    longLat: longLat,
+    userLongLat: userLongLat ? userLongLat : null,
     weekdayTips: weekdayTips,
     weekendTips: weekendTips,
     workenv: workenv,
