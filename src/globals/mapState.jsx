@@ -1,22 +1,22 @@
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import PropTypes from "prop-types";
 
 const MapStateContext = createContext();
 
 export function useMapState() {
-    return useContext(MapStateContext);
+  return useContext(MapStateContext);
 }
 
 export function MapStateProvider({ children }) {
-    const [mapCenter, setMapCenter] = useState(null);
+  const [mapCenter, setMapCenter] = useState(null);
 
-    return (
-        <MapStateContext.Provider value={{ mapCenter, setMapCenter }}>
-            {children}
-        </MapStateContext.Provider>
-    );
+  return (
+    <MapStateContext.Provider value={{ mapCenter, setMapCenter }}>
+      {children}
+    </MapStateContext.Provider>
+  );
 }
 
 MapStateProvider.propTypes = {
-    children: PropTypes.node,
+  children: PropTypes.node,
 };

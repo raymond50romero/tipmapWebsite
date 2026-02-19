@@ -5,10 +5,14 @@ const port = import.meta.env.VITE_PORT;
 const newPostRoute = import.meta.env.VITE_NEW_POST;
 
 /**
- *
+ * @param {*} mapCenter
+ * @param {string} brandId
+ * @param {string} mapboxId
  * @param {string} name
  * @param {string} address
- * @param {Array} longLat
+ * @param {string} place
+ * @param {number} longitude
+ * @param {number} latitude
  * @param {Array} userLongLat
  * @param {number} weekdayTips
  * @param {number} weekendTips
@@ -20,9 +24,14 @@ const newPostRoute = import.meta.env.VITE_NEW_POST;
  * @returns {Promise<object>} returns object containing returned data from server, false otherwise
  */
 export default async function newPost(
+  mapCenter,
+  brandId,
+  mapboxId,
   name,
   address,
-  longLat,
+  place,
+  longitude,
+  latitude,
   userLongLat,
   weekdayTips,
   weekendTips,
@@ -33,9 +42,13 @@ export default async function newPost(
   comment,
 ) {
   if (
+    !brandId ||
+    !mapboxId ||
     !name ||
     !address ||
-    !longLat ||
+    !place ||
+    !longitude ||
+    !latitude ||
     !weekdayTips ||
     !weekendTips ||
     !workenv ||
@@ -46,9 +59,14 @@ export default async function newPost(
   }
 
   const data = {
+    mapCenter: mapCenter,
+    brandId: brandId,
+    mapboxId: mapboxId,
     name: name,
     address: address,
-    longLat: longLat,
+    place: place,
+    longitude: longitude,
+    latitude: latitude,
     userLongLat: userLongLat ? userLongLat : null,
     weekdayTips: weekdayTips,
     weekendTips: weekendTips,

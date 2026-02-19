@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 import {
   setError,
-  setNormal,
   setNormalTransparent,
   setButtonClick,
   setButtonGrey,
@@ -12,7 +11,6 @@ import { SearchBox } from "@mapbox/search-js-react";
 import { useUserLongLat } from "../../globals/userLongLat.jsx";
 import { useMapState } from "../../globals/mapState.jsx";
 import { useHelper } from "../../globals/helper/helperContext.jsx";
-import { STATES } from "./states.jsx";
 import StarRating from "./starRating.jsx";
 import AverageTips from "./averageTips.jsx";
 import "./styles.css";
@@ -21,9 +19,13 @@ const MAP_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 
 export default function NewPostForm({
   setNextForm,
+  setBrandId,
+  setMapboxId,
   setName,
   setAddress,
-  setlongLat,
+  setPlace,
+  setLongitude,
+  setLatitude,
   setWeekdayTips,
   setWeekendTips,
   setWorkenv,
@@ -33,54 +35,67 @@ export default function NewPostForm({
   const setHelper = useHelper();
   const { userLongLat } = useUserLongLat();
   const { mapCenter } = useMapState();
+
+  // the purpose of having these 'c hooks' is to catch errors
+  // before being sent to backend, reducing api calls
+  const [cBrandId, setcBrandId] = useState();
+  const [cMapboxId, setcMapboxId] = useState();
   const [cName, setcName] = useState();
   const [cAddress, setcAddress] = useState();
-  const [cLongLat, setcLongLat] = useState();
+  const [cPlace, setcPlace] = useState();
+  const [cLongitude, setcLongitude] = useState();
+  const [cLatitude, setcLatitude] = useState();
   const [cWeekdayTips, setcWeekdayTips] = useState();
   const [cWeekendTips, setcWeekendTips] = useState();
   const [cWorkenv, setcWorkenv] = useState();
   const [cManagement, setcManagement] = useState();
   const [cClientele, setcClientele] = useState();
 
+  // border red sets input box to red if no restaurant is given
+  // full address is to set the value of the input box
+  const [borderRed, setBorderRed] = useState(false);
+  const [fullAddress, setFullAddress] = useState();
+
   function checkInputs() {
+    function checkInputsHelper(error, helper) {
+      setError(error);
+      setHelper(helper);
+      return false;
+    }
     if (!cName) {
-      setError("new-post-input-name");
-      setHelper("Missing restaurant name");
+      checkInputsHelper("new-post-input-name", "Missing restaurant name");
+      setBorderRed(true);
       return false;
     } else if (!cAddress) {
-      setError("new-post-input-address");
-      setHelper("Missing restaurant address");
+      checkInputsHelper("new-post-input-address", "Missing restaurant address");
+      setBorderRed(true);
       return false;
     } else if (!cWeekdayTips) {
-      setError("weekday-tips-container");
-      setHelper("Missing weekday tips average");
-      return false;
+      return checkInputsHelper(
+        "weekday-tips-container",
+        "Missing weekday tips average",
+      );
     } else if (!cWeekendTips) {
-      setError("weekend-tips-container");
-      setHelper("Missing weekend tips average");
-      return false;
+      return checkInputsHelper(
+        "weekend-tips-container",
+        "Missing weekend tips average",
+      );
     } else if (!cWorkenv) {
-      setError("work-env-star-rating");
-      setHelper("Missing work environment star rating");
-      return false;
+      return checkInputsHelper(
+        "work-env-star-rating",
+        "Missing work environment star rating",
+      );
     } else if (!cManagement) {
-      setError("management-star-rating");
-      setHelper("Missing management star rating");
-      return false;
+      return checkInputsHelper(
+        "management-star-rating",
+        "Missing management star rating",
+      );
     } else if (!cClientele) {
-      setError("clientele-star-rating");
-      setHelper("Missing clientele star rating");
-      return false;
+      return checkInputsHelper(
+        "clientele-star-rating",
+        "Missing clientele star rating",
+      );
     } else return true;
-  }
-
-  function handleStateChange(e) {
-    const { name, value } = e.target;
-    if (name === "state") {
-      setcState((f) => ({ ...f, state: value.toUpperCase().slice(0, 2) }));
-    } else {
-      setcState((f) => ({ ...f, [name]: value }));
-    }
   }
 
   useEffect(() => {
@@ -114,8 +129,13 @@ export default function NewPostForm({
         event.preventDefault();
         if (checkInputs()) {
           setNextForm(true);
+          setBrandId(cBrandId);
+          setMapboxId(cMapboxId);
           setName(cName);
           setAddress(cAddress);
+          setPlace(cPlace);
+          setLongitude(cLongitude);
+          setLatitude(cLatitude);
           setWeekdayTips(cWeekdayTips);
           setWeekendTips(cWeekendTips);
           setWorkenv(cWorkenv);
@@ -135,8 +155,14 @@ export default function NewPostForm({
           }}
           onRetrieve={(res) => {
             const feature = res.features[0];
-            const { name, address, place_formatted, brand_id, mapbox_id } =
-              feature.properties;
+            const {
+              name,
+              address,
+              full_address,
+              place_formatted,
+              brand_id,
+              mapbox_id,
+            } = feature.properties;
             const { longitude, latitude } = feature.properties.coordinates;
             console.log("this is feature", feature);
             console.log("this is feature properties", feature.properties);
@@ -147,33 +173,26 @@ export default function NewPostForm({
             console.log("mapbox_id: ", mapbox_id);
             console.log("longitude: ", longitude);
             console.log("latitude: ", latitude);
+            setcBrandId(brand_id);
+            setcMapboxId(mapbox_id);
             setcName(name);
             setcAddress(address);
-            /*
-            if (region) {
-              // Try to match state abbr from region name or code if available
-              // Mapbox region usually gives full name or code. We need 2-letter code.
-              // Assuming region_code might be available or we just take the first 2 letters if it matches our STATES logic
-              // Better: check if region matches any STATE name or abbr
-              const stateObj = STATES.find(
-                (s) => s.name === region || s.abbr === region,
-              );
-              if (stateObj) setcState(stateObj.abbr);
-              else if (region.length === 2) setcState(region);
-            }
-            */
+            setcPlace(place_formatted);
+            setcLongitude(longitude);
+            setcLatitude(latitude);
+            setFullAddress(full_address);
           }}
           placeholder="Restaurant name"
           theme={{
             variables: {
               unit: "1rem",
               fontFamily: "inherit",
-              border: "1px solid #ccc",
+              border: borderRed ? "1px solid red" : "1px solid #ccc",
               borderRadius: "16px",
               boxShadow: "none",
             },
           }}
-          value={cName || ""}
+          value={cName ? (fullAddress ? cName + " " + fullAddress : cName) : ""}
           onChange={(val) => {
             setcName(val);
           }}
@@ -258,10 +277,13 @@ export default function NewPostForm({
 
 NewPostForm.propTypes = {
   setNextForm: PropTypes.func,
+  setBrandId: PropTypes.func,
+  setMapboxId: PropTypes.func,
   setName: PropTypes.func,
   setAddress: PropTypes.func,
-  setCity: PropTypes.func,
-  setState: PropTypes.func,
+  setPlace: PropTypes.func,
+  setLongitude: PropTypes.func,
+  setLatitude: PropTypes.func,
   setWeekdayTips: PropTypes.func,
   setWeekendTips: PropTypes.func,
   setWorkenv: PropTypes.func,

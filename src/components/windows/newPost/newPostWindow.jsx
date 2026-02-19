@@ -5,15 +5,20 @@ import NewPostForm from "../../../features/newPost/newPostForm.jsx";
 import PostDetailsForm from "../../../features/newPost/postDetailsForm.jsx";
 import { useUserLongLat } from "../../../globals/userLongLat.jsx";
 import { useHelper } from "../../../globals/helper/helperContext.jsx";
+import { useMapState } from "../../../globals/mapState.jsx";
 import newPost from "../../../features/newPost/api/makeNewPost.jsx";
 import "./styles.css";
 
 export default function NewPostWindow() {
   const setHelper = useHelper();
   const { userLongLat } = useUserLongLat();
+  const { mapCenter } = useMapState();
   const [nextForm, setNextForm] = useState(false);
+  const [brandId, setBrandId] = useState();
+  const [mapboxId, setMapboxId] = useState();
   const [name, setName] = useState();
   const [address, setAddress] = useState();
+  const [place, setPlace] = useState();
   const [longitude, setLongitude] = useState();
   const [latitude, setLatitude] = useState();
   const [weekdayTips, setWeekdayTips] = useState();
@@ -36,9 +41,14 @@ export default function NewPostWindow() {
   }
 
   async function createNewPost() {
+    console.log("this is mapCenter", mapCenter);
     const newPostResponse = await newPost(
+      mapCenter,
+      brandId,
+      mapboxId,
       name,
       address,
+      place,
       longitude,
       latitude,
       userLongLat,
@@ -113,8 +123,11 @@ export default function NewPostWindow() {
         ) : (
           <NewPostForm
             setNextForm={setNextForm}
+            setBrandId={setBrandId}
+            setMapboxId={setMapboxId}
             setName={setName}
             setAddress={setAddress}
+            setPlace={setPlace}
             setLongitude={setLongitude}
             setLatitude={setLatitude}
             setWeekdayTips={setWeekdayTips}
