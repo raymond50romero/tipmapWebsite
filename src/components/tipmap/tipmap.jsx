@@ -34,7 +34,7 @@ export default function Tipmap() {
 
   // global variable to get users current longitude and latitude
   const { setUserLongLat } = useUserLongLat();
-  const { setMapCenter } = useMapState();
+  const { setMapCenter, searchedPlace } = useMapState();
 
   // data points given by the backend
   const [points, setPoints] = useState(null);
@@ -280,6 +280,28 @@ export default function Tipmap() {
     console.log("source found: ", source);
     source.setData(points);
   }, [points]);
+
+  const searchedMarkerRef = useRef(null);
+
+  useEffect(() => {
+    if (searchedPlace && mapRef.current) {
+      const { longitude, latitude } = searchedPlace;
+
+      mapRef.current.flyTo({
+        center: [longitude, latitude],
+        zoom: 16,
+        essential: true,
+      });
+
+      if (!searchedMarkerRef.current) {
+        searchedMarkerRef.current = new mapboxgl.Marker({ color: "#FF0000" })
+          .setLngLat([longitude, latitude])
+          .addTo(mapRef.current);
+      } else {
+        searchedMarkerRef.current.setLngLat([longitude, latitude]);
+      }
+    }
+  }, [searchedPlace]);
 
   return (
     <>

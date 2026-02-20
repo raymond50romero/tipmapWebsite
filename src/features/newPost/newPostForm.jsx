@@ -35,7 +35,7 @@ export default function NewPostForm({
 }) {
   const setHelper = useHelper();
   const { userLongLat } = useUserLongLat();
-  const { mapCenter } = useMapState();
+  const { mapCenter, setSearchedPlace } = useMapState();
   const { loginStatus } = useLoginStatus();
 
   // the purpose of having these 'c hooks' is to catch errors
@@ -184,6 +184,9 @@ export default function NewPostForm({
             setcLongitude(longitude);
             setcLatitude(latitude);
             setFullAddress(full_address);
+            if (setSearchedPlace) {
+              setSearchedPlace({ longitude, latitude });
+            }
           }}
           placeholder="Restaurant name"
           theme={{
