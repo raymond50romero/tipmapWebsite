@@ -41,7 +41,6 @@ export default function NewPostWindow() {
   }
 
   async function createNewPost() {
-    console.log("this is mapCenter", mapCenter);
     const newPostResponse = await newPost(
       mapCenter,
       brandId,

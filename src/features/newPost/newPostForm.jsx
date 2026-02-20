@@ -11,6 +11,7 @@ import { SearchBox } from "@mapbox/search-js-react";
 import { useUserLongLat } from "../../globals/userLongLat.jsx";
 import { useMapState } from "../../globals/mapState.jsx";
 import { useHelper } from "../../globals/helper/helperContext.jsx";
+import { useLoginStatus } from "../../globals/loginStatus.jsx";
 import StarRating from "./starRating.jsx";
 import AverageTips from "./averageTips.jsx";
 import "./styles.css";
@@ -35,6 +36,7 @@ export default function NewPostForm({
   const setHelper = useHelper();
   const { userLongLat } = useUserLongLat();
   const { mapCenter } = useMapState();
+  const { loginStatus } = useLoginStatus();
 
   // the purpose of having these 'c hooks' is to catch errors
   // before being sent to backend, reducing api calls
@@ -95,6 +97,9 @@ export default function NewPostForm({
         "clientele-star-rating",
         "Missing clientele star rating",
       );
+    } else if (!loginStatus) {
+      setHelper("Need to login to make a post");
+      return false;
     } else return true;
   }
 
@@ -106,7 +111,8 @@ export default function NewPostForm({
       cWeekendTips &&
       cWorkenv &&
       cManagement &&
-      cClientele
+      cClientele &&
+      loginStatus
     ) {
       setButtonClick("new-post-next-button");
     } else {
@@ -120,6 +126,7 @@ export default function NewPostForm({
     cWorkenv,
     cManagement,
     cClientele,
+    loginStatus,
   ]);
 
   return (
@@ -144,7 +151,12 @@ export default function NewPostForm({
         }
       }}
     >
-      <h6 className="new-post-helper-header">All Required Inputs</h6>
+      <h6 className="new-post-helper-header">
+        All Required Inputs
+        <span id="new-post-login-header-helper">
+          {loginStatus ? "" : " Must be logged in to create a post"}
+        </span>
+      </h6>
       <div id="new-post-input-name">
         <SearchBox
           accessToken={MAP_TOKEN}
@@ -164,15 +176,6 @@ export default function NewPostForm({
               mapbox_id,
             } = feature.properties;
             const { longitude, latitude } = feature.properties.coordinates;
-            console.log("this is feature", feature);
-            console.log("this is feature properties", feature.properties);
-            console.log("name: ", name);
-            console.log("address: ", address);
-            console.log("place_formatted: ", place_formatted);
-            console.log("brand_id: ", brand_id);
-            console.log("mapbox_id: ", mapbox_id);
-            console.log("longitude: ", longitude);
-            console.log("latitude: ", latitude);
             setcBrandId(brand_id);
             setcMapboxId(mapbox_id);
             setcName(name);

@@ -5,6 +5,11 @@
   margin-bottom: 1em;
 }
 
+#new-post-login-header-helper {
+  font-weight: 400;
+  color: red;
+}
+
 .new-post-input {
   width: 100%;
 }

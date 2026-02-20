@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import MainPage from "./pages/mainPage";
@@ -12,10 +11,10 @@ import { MapStateProvider } from "./globals/mapState.jsx";
 export default function App() {
   return (
     <>
-      <MapStateProvider>
-        <HelperProvider>
-          <LoginStatusProvider>
-            <ProfileStatusProvider>
+      <HelperProvider>
+        <LoginStatusProvider>
+          <ProfileStatusProvider>
+            <MapStateProvider>
               <UserLongLatProvider>
                 <ContentStatusProvider>
                   <BrowserRouter>
@@ -25,10 +24,10 @@ export default function App() {
                   </BrowserRouter>
                 </ContentStatusProvider>
               </UserLongLatProvider>
-            </ProfileStatusProvider>
-          </LoginStatusProvider>
-        </HelperProvider>
-      </MapStateProvider>
+            </MapStateProvider>
+          </ProfileStatusProvider>
+        </LoginStatusProvider>
+      </HelperProvider>
     </>
   );
 }

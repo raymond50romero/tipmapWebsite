@@ -111,6 +111,9 @@ export default function Tipmap() {
       zoom: zoom,
     });
 
+    // Initialize the global map center
+    setMapCenter(center);
+
     // update zoom and center that is sent to backend whenever it passes a certain threshold
     function updateCenterAndZoom() {
       const newCenter = mapRef.current.getCenter().toArray();
@@ -118,6 +121,7 @@ export default function Tipmap() {
       const { center: lastCenter, zoom: lastZoom } =
         lastFetchedParamsRef.current;
 
+      // get the bounds of the visible map to get all of the posts within the bounds
       setNorthEast(mapRef.current.getBounds().getNorthEast().toArray());
       setSouthWest(mapRef.current.getBounds().getSouthWest().toArray());
 
@@ -159,6 +163,7 @@ export default function Tipmap() {
 
     mapRef.current.on("moveend", () => {
       setMapCenter(mapRef.current.getCenter().toArray());
+      console.log("new map center", mapRef.current.getCenter().toArray());
     });
 
     mapRef.current.on("load", () => {
