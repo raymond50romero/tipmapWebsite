@@ -103,6 +103,28 @@ export default function NewPostForm({
     } else return true;
   }
 
+  /**
+   * reset hooks to default values (null) when clearing search
+   */
+  function handleClear() {
+    setcBrandId(null);
+    setcMapboxId(null);
+    setcName(null);
+    setcAddress(null);
+    setcPlace(null);
+    setcLongitude(null);
+    setcLatitude(null);
+    setcWeekdayTips(null);
+    setcWeekendTips(null);
+    setcWorkenv(null);
+    setcManagement(null);
+    setcClientele(null);
+    setBorderRed(false);
+    setFullAddress(null);
+  }
+
+  // checks if all fields have been filled
+  // if yes then turn next button blue
   useEffect(() => {
     if (
       cName &&
@@ -202,6 +224,7 @@ export default function NewPostForm({
           onChange={(val) => {
             setcName(val);
           }}
+          onClear={handleClear}
         />
       </div>
       <AverageTips
