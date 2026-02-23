@@ -10,9 +10,19 @@ export function useMapState() {
 export function MapStateProvider({ children }) {
   const [mapCenter, setMapCenter] = useState(null);
   const [searchedPlace, setSearchedPlace] = useState(null);
+  const [clickedRestaurant, setClickedRestaurant] = useState(null);
 
   return (
-    <MapStateContext.Provider value={{ mapCenter, setMapCenter, searchedPlace, setSearchedPlace }}>
+    <MapStateContext.Provider
+      value={{
+        mapCenter,
+        setMapCenter,
+        searchedPlace,
+        setSearchedPlace,
+        clickedRestaurant,
+        setClickedRestaurant,
+      }}
+    >
       {children}
     </MapStateContext.Provider>
   );

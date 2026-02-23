@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import ReactDOM from "react-dom/client";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
@@ -7,6 +8,7 @@ import { useUserLongLat } from "../../globals/userLongLat.jsx";
 import { useMapState } from "../../globals/mapState.jsx";
 import { getPosts } from "../../features/tipmap/api/getPosts.jsx";
 import organizeWeights from "../../features/tipmap/organizeWeights.jsx";
+import RestaurantPopup from "./RestaurantPopup.jsx";
 import "./styles.css";
 
 const MAPBOXGL_TOKEN = import.meta.env.VITE_MAP_TOKEN;
@@ -31,10 +33,11 @@ export default function Tipmap() {
     center: INITIAL_CENTER,
     zoom: INITIAL_ZOOM,
   });
+  const selectedPinRef = useRef(null);
 
   // global variable to get users current longitude and latitude
   const { setUserLongLat } = useUserLongLat();
-  const { setMapCenter, searchedPlace } = useMapState();
+  const { setMapCenter, searchedPlace, setClickedRestaurant } = useMapState();
 
   // data points given by the backend
   const [points, setPoints] = useState(null);
@@ -66,6 +69,10 @@ export default function Tipmap() {
         northEast,
         southWest,
       );
+      if (!rawPoints) {
+        console.log("no points found", rawPoints);
+        return false;
+      }
       setPoints(organizeWeights(rawPoints.data.weightsData, "weekdayWeight"));
       lastFetchedParamsRef.current = {
         center: [...currCenter],
@@ -164,6 +171,76 @@ export default function Tipmap() {
     mapRef.current.on("moveend", () => {
       setMapCenter(mapRef.current.getCenter().toArray());
       console.log("new map center", mapRef.current.getCenter().toArray());
+    });
+
+    mapRef.current.on("click", (e) => {
+      const features = mapRef.current.queryRenderedFeatures(e.point);
+
+      // Clear existing selected pin if any
+      if (selectedPinRef.current) {
+        selectedPinRef.current.remove();
+        selectedPinRef.current = null;
+      }
+
+      // Find a POI feature if clicked
+      let restaurantName;
+      let restaurantAddress;
+
+      if (features.length > 0) {
+        restaurantName = features[0].properties.name;
+        // Mapbox vector tiles don't always contain full address in poi-label,
+        // but we can try to grab what's available or leave it blank
+        // features[0].properties often has 'address' or similar fields
+        restaurantAddress = features[0].properties.address || "";
+      }
+
+      console.log("this is restaurant name: ", restaurantName);
+
+      if (restaurantName) {
+        setClickedRestaurant(restaurantName);
+
+        // Create a popup container
+        const popupNode = document.createElement("div");
+        const root = ReactDOM.createRoot(popupNode);
+
+        // Render our React component into the popup
+        root.render(
+          <RestaurantPopup
+            name={restaurantName}
+            address={restaurantAddress}
+            onLeaveReview={() => {
+              // Open the new post window programmatically
+              const newPostWindow = document.getElementById("new-post-window");
+              const blurBackground = document.getElementById("blur-background");
+              if (newPostWindow && blurBackground) {
+                newPostWindow.style.display = "block";
+                blurBackground.style.display = "block";
+              }
+            }}
+            onSeeReviews={() => {
+              console.log("See reviews clicked for", restaurantName);
+              // TODO: Implement see reviews logic
+            }}
+          />,
+        );
+
+        // Create the popup
+        const popup = new mapboxgl.Popup({ offset: 25 })
+          .setDOMContent(popupNode)
+          .setMaxWidth("300px");
+
+        // Create and add the marker with the popup
+        const marker = new mapboxgl.Marker({ color: "#FF0000" }) // Distinct red color
+          .setLngLat(e.lngLat)
+          .setPopup(popup)
+          .addTo(mapRef.current);
+
+        // Open the popup immediately
+        marker.togglePopup();
+
+        // Save reference to remove later
+        selectedPinRef.current = marker;
+      }
     });
 
     mapRef.current.on("load", () => {
@@ -285,7 +362,8 @@ export default function Tipmap() {
 
   useEffect(() => {
     if (searchedPlace && mapRef.current) {
-      const { longitude, latitude } = searchedPlace;
+      const { longitude, latitude, place_name, text } = searchedPlace;
+      const name = text || place_name; // 'text' is usually the short name, 'place_name' is full address
 
       mapRef.current.flyTo({
         center: [longitude, latitude],
@@ -293,13 +371,55 @@ export default function Tipmap() {
         essential: true,
       });
 
-      if (!searchedMarkerRef.current) {
-        searchedMarkerRef.current = new mapboxgl.Marker({ color: "#FF0000" })
-          .setLngLat([longitude, latitude])
-          .addTo(mapRef.current);
-      } else {
-        searchedMarkerRef.current.setLngLat([longitude, latitude]);
+      // Clear existing selected pin if any
+      if (selectedPinRef.current) {
+        selectedPinRef.current.remove();
+        selectedPinRef.current = null;
       }
+
+      setClickedRestaurant(name);
+
+      // Create a popup container
+      const popupNode = document.createElement("div");
+      const root = ReactDOM.createRoot(popupNode);
+
+      // Render our React component into the popup
+      root.render(
+        <RestaurantPopup
+          name={name}
+          address={place_name}
+          onLeaveReview={() => {
+            // Open the new post window programmatically
+            const newPostWindow = document.getElementById("new-post-window");
+            const blurBackground = document.getElementById("blur-background");
+            if (newPostWindow && blurBackground) {
+              newPostWindow.style.display = "block";
+              blurBackground.style.display = "block";
+            }
+          }}
+          onSeeReviews={() => {
+            console.log("See reviews clicked for", name);
+            // TODO: Implement see reviews logic
+          }}
+        />,
+      );
+
+      // Create the popup
+      const popup = new mapboxgl.Popup({ offset: 25 })
+        .setDOMContent(popupNode)
+        .setMaxWidth("300px");
+
+      // Create and add the marker with the popup
+      const marker = new mapboxgl.Marker({ color: "#FF0000" }) // Distinct red color
+        .setLngLat([longitude, latitude])
+        .setPopup(popup)
+        .addTo(mapRef.current);
+
+      // Open the popup immediately
+      marker.togglePopup();
+
+      // Save reference to remove later
+      selectedPinRef.current = marker;
     }
   }, [searchedPlace]);
 
