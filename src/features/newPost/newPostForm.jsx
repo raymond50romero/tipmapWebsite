@@ -186,6 +186,7 @@ export default function NewPostForm({
             types: "poi",
             proximity: userLongLat || mapCenter,
             poi_category: ["restaurant", "bar", "cafe"],
+            country: "US",
           }}
           onRetrieve={(res) => {
             const feature = res.features[0];
@@ -207,7 +208,12 @@ export default function NewPostForm({
             setcLatitude(latitude);
             setFullAddress(full_address);
             if (setSearchedPlace) {
-              setSearchedPlace({ longitude, latitude });
+              setSearchedPlace({
+                longitude,
+                latitude,
+                text: name,
+                place_name: place_formatted,
+              });
             }
           }}
           placeholder="Restaurant name"

@@ -8,7 +8,7 @@ import { useUserLongLat } from "../../globals/userLongLat.jsx";
 import { useMapState } from "../../globals/mapState.jsx";
 import { getPosts } from "../../features/tipmap/api/getPosts.jsx";
 import organizeWeights from "../../features/tipmap/organizeWeights.jsx";
-import RestaurantPopup from "./RestaurantPopup.jsx";
+import RestaurantPopup from "./restaurantPopup.jsx";
 import "./styles.css";
 
 const MAPBOXGL_TOKEN = import.meta.env.VITE_MAP_TOKEN;
@@ -227,7 +227,7 @@ export default function Tipmap() {
         // Create the popup
         const popup = new mapboxgl.Popup({ offset: 25 })
           .setDOMContent(popupNode)
-          .setMaxWidth("300px");
+          .setMaxWidth("20rem");
 
         // Create and add the marker with the popup
         const marker = new mapboxgl.Marker({ color: "#FF0000" }) // Distinct red color

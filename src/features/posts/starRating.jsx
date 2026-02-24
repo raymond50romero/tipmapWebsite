@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 import "./styles.css";
 
-export default function StarRating() {
-  const [rating, setRating] = useState(2.4); // final selected rating
-
+export default function StarRating({ rating }) {
   return (
     <div style={{ display: "flex", cursor: "pointer" }}>
       {Array.from({ length: 5 }, (_, i) => {
@@ -35,3 +33,7 @@ export default function StarRating() {
     </div>
   );
 }
+
+StarRating.propTypes = {
+  rating: PropTypes.func,
+};
