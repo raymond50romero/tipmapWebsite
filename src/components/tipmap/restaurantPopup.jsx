@@ -14,14 +14,10 @@ function RestaurantPopup({ name, address, onLeaveReview, onSeeReviews }) {
         {name ? (address ? name + ", " + address : name) : " "}
       </h6>
       <section id="restaurant-popup-section-container">
-        <StarRating rating={rating} id="restaurant-popup-star-rating" />
+        <div id="restaurant-popup-star-rating">
+          <StarRating rating={rating} />
+        </div>
         <div id="restaurant-popup-button-container">
-          <button
-            id="restaurant-popup-leave-review-button"
-            onClick={onLeaveReview}
-          >
-            Leave Review
-          </button>
           <button
             id="restaurant-popup-see-review-button"
             onClick={onSeeReviews}
@@ -29,6 +25,9 @@ function RestaurantPopup({ name, address, onLeaveReview, onSeeReviews }) {
             See Reviews
           </button>
         </div>
+        <p id="restaurant-popup-post-helper">
+          Click on New Post button above to leave a review
+        </p>
       </section>
     </div>
   );

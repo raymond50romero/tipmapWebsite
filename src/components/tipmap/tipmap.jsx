@@ -195,6 +195,7 @@ export default function Tipmap() {
       }
 
       console.log("this is restaurant name: ", restaurantName);
+      console.log("this is features: ", features);
 
       if (restaurantName) {
         setClickedRestaurant(restaurantName);

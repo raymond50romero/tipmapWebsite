@@ -184,7 +184,7 @@ export default function NewPostForm({
           accessToken={MAP_TOKEN}
           options={{
             types: "poi",
-            proximity: userLongLat || mapCenter,
+            proximity: mapCenter || userLongLat, // should always default to map center, but just in case
             poi_category: ["restaurant", "bar", "cafe"],
             country: "US",
           }}
