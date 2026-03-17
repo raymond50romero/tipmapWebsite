@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback } from "react";
-import HelperMessage from "./helperMessage.jsx";
+import HelperMessage from "../components/helper/helperMessage.jsx";
 import PropTypes from "prop-types";
 
 const DURATION = "3000";

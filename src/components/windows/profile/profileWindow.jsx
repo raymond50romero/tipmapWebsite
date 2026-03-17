@@ -4,9 +4,9 @@ import { CloseOutlined, LeftOutlined } from "@ant-design/icons";
 import ProfileInfo from "../../../features/profile/profileInfo.jsx";
 import OccupationPill from "../../occupationPill/occupationPill.jsx";
 import doLogout from "../../../features/auth/api/doLogout.jsx";
-import { useHelper } from "../../../globals/helper/helperContext.jsx";
-import { useLoginStatus } from "../../../globals/loginStatus.jsx";
-import { useProfileStatus } from "../../../globals/profileStatus.jsx";
+import { useHelper } from "../../../contexts/helperContext.jsx";
+import { useLoginStatus } from "../../../contexts/loginStatus.jsx";
+import { useProfileStatus } from "../../../contexts/profileStatus.jsx";
 import "./styles.css";
 
 export default function ProfileWindow() {

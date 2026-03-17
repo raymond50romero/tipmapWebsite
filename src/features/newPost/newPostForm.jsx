@@ -8,10 +8,10 @@ import {
   setButtonGrey,
 } from "../../utils/setHelperColors.jsx";
 import { SearchBox } from "@mapbox/search-js-react";
-import { useUserLongLat } from "../../globals/userLongLat.jsx";
-import { useMapState } from "../../globals/mapState.jsx";
-import { useHelper } from "../../globals/helper/helperContext.jsx";
-import { useLoginStatus } from "../../globals/loginStatus.jsx";
+import { useUserLongLat } from "../../contexts/userLongLat.jsx";
+import { useMapState } from "../../contexts/mapState.jsx";
+import { useHelper } from "../../contexts/helperContext.jsx";
+import { useLoginStatus } from "../../contexts/loginStatus.jsx";
 import StarRating from "./starRating.jsx";
 import AverageTips from "./averageTips.jsx";
 import "./styles.css";

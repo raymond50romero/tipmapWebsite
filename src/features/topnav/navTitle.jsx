@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useContentStatus } from "../../globals/contentStatus.jsx";
+import { useContentStatus } from "../../contexts/contentStatus.jsx";
 import "./styles.css";
 
 export default function NavTitle() {

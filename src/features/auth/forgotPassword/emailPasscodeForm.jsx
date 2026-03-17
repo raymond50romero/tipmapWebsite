@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-import {
-  setError,
+import { setError,
   setNormal,
   setButtonClick,
   setButtonGrey,
 } from "../../../utils/setHelperColors.jsx";
-import { useHelper } from "../../../globals/helper/helperContext.jsx";
+import { useHelper } from "../../../contexts/helperContext.jsx";
 import "./style.css";
 
 export default function EmailPasscodeForm({

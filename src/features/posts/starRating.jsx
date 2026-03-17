@@ -35,5 +35,5 @@ export default function StarRating({ rating }) {
 }
 
 StarRating.propTypes = {
-  rating: PropTypes.func,
+  rating: PropTypes.number,
 };

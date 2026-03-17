@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-import { useContentStatus } from "../../globals/contentStatus.jsx";
-import { useLoginStatus } from "../../globals/loginStatus.jsx";
+import { useContentStatus } from "../../contexts/contentStatus.jsx";
+import { useLoginStatus } from "../../contexts/loginStatus.jsx";
 
 import "./styles.css";
 

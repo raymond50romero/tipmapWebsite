@@ -9,8 +9,8 @@ import {
   setButtonClick,
   setButtonGrey,
 } from "../../../utils/setHelperColors.jsx";
-import { useLoginStatus } from "../../../globals/loginStatus.jsx";
-import { useProfileStatus } from "../../../globals/profileStatus.jsx";
+import { useLoginStatus } from "../../../contexts/loginStatus.jsx";
+import { useProfileStatus } from "../../../contexts/profileStatus.jsx";
 import "./style.css";
 
 export default function LoginForm({ setStatus, setClose, setHelper }) {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import OccupationPill from "../../components/occupationPill/occupationPill.jsx";
-import { useProfileStatus } from "../../globals/profileStatus.jsx";
+import { useProfileStatus } from "../../contexts/profileStatus.jsx";
 import "./styles.css";
 
 export default function ProfileInfo() {

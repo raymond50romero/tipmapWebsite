@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 
 import "./styles.css";
 
@@ -35,3 +36,8 @@ export default function StarRating({ max = 5, onChange }) {
     </div>
   );
 }
+
+StarRating.propTypes = {
+  max: PropTypes.any,
+  onChange: PropTypes.func,
+};

@@ -1,19 +1,19 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-import { useHelper } from "../../globals/helper/helperContext.jsx";
-import { useUserLongLat } from "../../globals/userLongLat.jsx";
-import { useMapState } from "../../globals/mapState.jsx";
-import { getPosts } from "../../features/tipmap/api/getPosts.jsx";
+import { useHelper } from "../../contexts/helperContext.jsx";
+import { useUserLongLat } from "../../contexts/userLongLat.jsx";
+import { useMapState } from "../../contexts/mapState.jsx";
+import { useRestaurants } from "../../hooks/useRestaurants.jsx";
 import organizeWeights from "../../features/tipmap/organizeWeights.jsx";
 import RestaurantPopup from "./restaurantPopup.jsx";
 import "./styles.css";
 
 const MAPBOXGL_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 const INITIAL_CENTER = [-117.1598199, 32.713659];
-const INITIAL_ZOOM = 12.5;
+const INITIAL_ZOOM = 12;
 const INTERACTION_DEBOUNCE_MS = 1000;
 const CENTER_DELTA_THRESHOLD = 0.025;
 const ZOOM_DELTA_THRESHOLD = 0.5;
@@ -35,12 +35,11 @@ export default function Tipmap() {
   });
   const selectedPinRef = useRef(null);
 
+  const [weightFilter, setWeightFilter] = useState("weekendWeight");
+
   // global variable to get users current longitude and latitude
   const { setUserLongLat } = useUserLongLat();
   const { setMapCenter, searchedPlace, setClickedRestaurant } = useMapState();
-
-  // data points given by the backend
-  const [points, setPoints] = useState(null);
 
   // center and zoom to both calculate current and what to send to the backend
   const [currCenter, setCurrCenter] = useState();
@@ -55,33 +54,18 @@ export default function Tipmap() {
   // helper popup
   const setHelper = useHelper();
 
-  // load all of the points on the map
-  useEffect(() => {
-    if (!currCenter || currCenter.length !== 2 || currZoom === undefined) {
-      return;
-    }
+  // fetch raw restaurant data via TanStack Query
+  const rawPoints = useRestaurants(currCenter, currZoom, northEast, southWest);
+  console.log("this is what tanstack returns: ", rawPoints);
 
-    async function fetchPosts() {
-      if (!currCenter || !currZoom || !northEast || !southWest) return;
-      const rawPoints = await getPosts(
-        currCenter,
-        currZoom,
-        northEast,
-        southWest,
-      );
-      if (!rawPoints) {
-        console.log("no points found", rawPoints);
-        return false;
-      }
-      setPoints(organizeWeights(rawPoints.data.weightsData, "weekdayWeight"));
-      lastFetchedParamsRef.current = {
-        center: [...currCenter],
-        zoom: currZoom,
-      };
-      console.log("this is points after setting: ", points);
-    }
-    fetchPosts();
-  }, [currCenter, currZoom]);
+  // organize raw data for use on our map
+  /**
+  const { data: points } = organizeWeights(
+    rawPoints.data.weightsData,
+    weightFilter,
+  );
+  */
+  const points = organizeWeights(null, weightFilter);
 
   // set users location, default to San Diego if user does
   // not want to share location
@@ -173,6 +157,7 @@ export default function Tipmap() {
       console.log("new map center", mapRef.current.getCenter().toArray());
     });
 
+    // handle logic for user clicking on a restaurant
     mapRef.current.on("click", (e) => {
       const features = mapRef.current.queryRenderedFeatures(e.point);
 
@@ -244,11 +229,12 @@ export default function Tipmap() {
       }
     });
 
+    // once map is in place, load the points
     mapRef.current.on("load", () => {
       console.log("map ref current is on load");
       mapRef.current.addSource("hotspots", {
         type: "geojson",
-        data: points, // or a URL: 'https://example.com/your-data.geojson'
+        data: points,
       });
 
       // set up heatmap
@@ -348,6 +334,7 @@ export default function Tipmap() {
     };
   }, [center, zoom]);
 
+  // set data points for heatmap
   useEffect(() => {
     if (!mapRef.current) return;
     const source = mapRef.current.getSource("hotspots");
@@ -361,6 +348,7 @@ export default function Tipmap() {
 
   const searchedMarkerRef = useRef(null);
 
+  // logic for restaurant popup
   useEffect(() => {
     if (searchedPlace && mapRef.current) {
       const { longitude, latitude, place_name, text } = searchedPlace;
@@ -368,7 +356,7 @@ export default function Tipmap() {
 
       mapRef.current.flyTo({
         center: [longitude, latitude],
-        zoom: 16,
+        zoom: 15,
         essential: true,
       });
 
@@ -388,16 +376,6 @@ export default function Tipmap() {
       root.render(
         <RestaurantPopup
           name={name}
-          address={place_name}
-          onLeaveReview={() => {
-            // Open the new post window programmatically
-            const newPostWindow = document.getElementById("new-post-window");
-            const blurBackground = document.getElementById("blur-background");
-            if (newPostWindow && blurBackground) {
-              newPostWindow.style.display = "block";
-              blurBackground.style.display = "block";
-            }
-          }}
           onSeeReviews={() => {
             console.log("See reviews clicked for", name);
             // TODO: Implement see reviews logic
@@ -408,7 +386,7 @@ export default function Tipmap() {
       // Create the popup
       const popup = new mapboxgl.Popup({ offset: 25 })
         .setDOMContent(popupNode)
-        .setMaxWidth("300px");
+        .setMaxWidth("450px");
 
       // Create and add the marker with the popup
       const marker = new mapboxgl.Marker({ color: "#FF0000" }) // Distinct red color

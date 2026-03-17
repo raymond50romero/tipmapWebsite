@@ -1,4 +1,4 @@
-import { useProfileStatus } from "../../globals/profileStatus.jsx";
+import { useProfileStatus } from "../../contexts/profileStatus.jsx";
 import PropTypes from "prop-types";
 
 import "./styles.css";

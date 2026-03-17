@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 
-import { useLoginStatus } from "../globals/loginStatus.jsx";
-import { useProfileStatus } from "../globals/profileStatus.jsx";
+import { useLoginStatus } from "../contexts/loginStatus.jsx";
+import { useProfileStatus } from "../contexts/profileStatus.jsx";
 
 import TopNav from "../components/topnav/topnav";
 import Tipmap from "../components/tipmap/tipmap.jsx";
