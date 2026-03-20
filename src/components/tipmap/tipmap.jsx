@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import ReactDOM from "react-dom/client";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -55,17 +55,22 @@ export default function Tipmap() {
   const setHelper = useHelper();
 
   // fetch raw restaurant data via TanStack Query
-  const rawPoints = useRestaurants(currCenter, currZoom, northEast, southWest);
-  console.log("this is what tanstack returns: ", rawPoints);
+  const { data: rawPoints } = useRestaurants(
+    currCenter,
+    currZoom,
+    northEast,
+    southWest,
+  );
 
   // organize raw data for use on our map
-  /**
-  const { data: points } = organizeWeights(
-    rawPoints.data.weightsData,
-    weightFilter,
-  );
-  */
-  const points = organizeWeights(null, weightFilter);
+  const points = useMemo(() => {
+    return (
+      organizeWeights(rawPoints?.weightsData, weightFilter) || {
+        type: "FeatureCollection",
+        features: [],
+      }
+    );
+  }, [rawPoints, weightFilter]);
 
   // set users location, default to San Diego if user does
   // not want to share location

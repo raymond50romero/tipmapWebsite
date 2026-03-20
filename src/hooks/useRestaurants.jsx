@@ -6,12 +6,12 @@ export function useRestaurants(center, zoom, northEast, southWest) {
   return useQuery({
     queryKey: ["restaurants", center, zoom, northEast, southWest],
     queryFn: async () => {
-      const rawPoints = await getPosts(center, zoom, northEast, southWest);
-      if (!rawPoints) {
-        return null;
+      const response = await getPosts(center, zoom, northEast, southWest);
+      console.log("this is raw response inside useRestaurants", response);
+      if (!response || !response.data) {
+        return { weightsData: [] };
       }
-      //return organizeWeights(rawPoints.data.weightsData, "weekdayWeight");
-      return rawPoints.data.weightsData;
+      return response.data;
     },
     enabled: !!(
       center &&
