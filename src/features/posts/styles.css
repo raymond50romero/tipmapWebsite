@@ -23,11 +23,24 @@
   font-style: italic;
 }
 
+.ratings-group {
+  margin: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
 .each-post-rating {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin: 0.3rem 0;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.rating-label {
+  font-size: 0.85rem;
+  color: #555;
+  white-space: nowrap;
 }
 
 .each-post-comment {
