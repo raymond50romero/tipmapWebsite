@@ -1,17 +1,29 @@
-import { useState } from "react";
+import PropTypes from "prop-types";
 import StarRating from "./starRating.jsx";
 
 import "./styles.css";
 
-export default function EachPost() {
-  const [rating, setRating] = useState(2.4);
+export default function EachPost({ post }) {
+  if (!post) return null;
 
   return (
     <div className="each-post-container">
-      <h6 className="each-post-header">Title</h6>
-      <div>
-        <StarRating rating={rating} />
+      <h6 className="each-post-header">{post.restaurant_name}</h6>
+      <p className="each-post-title">{post.title}</p>
+      <div className="each-post-rating">
+        <span>Clientele:</span>
+        <StarRating rating={post.clientele} />
       </div>
+      <p className="each-post-comment">{post.comment}</p>
     </div>
   );
 }
+
+EachPost.propTypes = {
+  post: PropTypes.shape({
+    restaurant_name: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    clientele: PropTypes.number.isRequired,
+    comment: PropTypes.string,
+  }).isRequired,
+};

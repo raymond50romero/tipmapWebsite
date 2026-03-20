@@ -39,17 +39,23 @@ export default function Tipmap() {
 
   // global variable to get users current longitude and latitude
   const { setUserLongLat } = useUserLongLat();
-  const { setMapCenter, searchedPlace, setClickedRestaurant } = useMapState();
+  const {
+    setMapCenter,
+    searchedPlace,
+    setClickedRestaurant,
+    currCenter,
+    setCurrCenter,
+    currZoom,
+    setCurrZoom,
+    northEast,
+    setNorthEast,
+    southWest,
+    setSouthWest,
+  } = useMapState();
 
   // center and zoom to both calculate current and what to send to the backend
-  const [currCenter, setCurrCenter] = useState();
-  const [currZoom, setCurrZoom] = useState(INITIAL_ZOOM);
   const [center, setCenter] = useState(INITIAL_CENTER);
   const [zoom, setZoom] = useState(INITIAL_ZOOM);
-
-  // to grab map details so that we know how far to look out
-  const [northEast, setNorthEast] = useState();
-  const [southWest, setSouthWest] = useState();
 
   // helper popup
   const setHelper = useHelper();
@@ -159,7 +165,6 @@ export default function Tipmap() {
 
     mapRef.current.on("moveend", () => {
       setMapCenter(mapRef.current.getCenter().toArray());
-      console.log("new map center", mapRef.current.getCenter().toArray());
     });
 
     // handle logic for user clicking on a restaurant
@@ -183,9 +188,6 @@ export default function Tipmap() {
         // features[0].properties often has 'address' or similar fields
         restaurantAddress = features[0].properties.address || "";
       }
-
-      console.log("this is restaurant name: ", restaurantName);
-      console.log("this is features: ", features);
 
       if (restaurantName) {
         setClickedRestaurant(restaurantName);
@@ -236,7 +238,6 @@ export default function Tipmap() {
 
     // once map is in place, load the points
     mapRef.current.on("load", () => {
-      console.log("map ref current is on load");
       mapRef.current.addSource("hotspots", {
         type: "geojson",
         data: points,
@@ -344,10 +345,8 @@ export default function Tipmap() {
     if (!mapRef.current) return;
     const source = mapRef.current.getSource("hotspots");
     if (!source) {
-      console.log("no source found");
       return;
     }
-    console.log("source found: ", source);
     source.setData(points);
   }, [points]);
 

@@ -12,6 +12,12 @@ export function MapStateProvider({ children }) {
   const [searchedPlace, setSearchedPlace] = useState(null);
   const [clickedRestaurant, setClickedRestaurant] = useState(null);
 
+  // map bounds and view state for data fetching
+  const [currCenter, setCurrCenter] = useState(null);
+  const [currZoom, setCurrZoom] = useState(12);
+  const [northEast, setNorthEast] = useState(null);
+  const [southWest, setSouthWest] = useState(null);
+
   return (
     <MapStateContext.Provider
       value={{
@@ -21,6 +27,14 @@ export function MapStateProvider({ children }) {
         setSearchedPlace,
         clickedRestaurant,
         setClickedRestaurant,
+        currCenter,
+        setCurrCenter,
+        currZoom,
+        setCurrZoom,
+        northEast,
+        setNorthEast,
+        southWest,
+        setSouthWest,
       }}
     >
       {children}
