@@ -34,13 +34,49 @@
   pointer-events: auto;
 }
 
+#posts-header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
 #posts-header {
   margin: 0;
   width: 100%;
   display: flex;
-  flex-direction: row;
   justify-content: center;
-  align-items: center;
+}
+
+#posts-filters {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.sort-dropdown {
+  flex-grow: 1;
+  padding: 0.3rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: white;
+  font-size: 0.9rem;
+}
+
+.sort-order-btn {
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#posts-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 0.5rem;
 }
 
 #posts-show-arrow {

@@ -11,8 +11,11 @@ export default function EachPost({ post }) {
     <div className="each-post-container">
       <h6 className="each-post-header">{post.restaurant_name}</h6>
       <p className="each-post-title">{post.title}</p>
-
       <div className="ratings-group">
+        <div className="each-post-rating">
+          <span className="rating-label">Clientele:</span>
+          <StarRating rating={post.clientele} />
+        </div>
         <div className="each-post-rating">
           <span className="rating-label">Weekday Tips:</span>
           <DollarRating rating={post.weekday_tips} />
@@ -20,10 +23,6 @@ export default function EachPost({ post }) {
         <div className="each-post-rating">
           <span className="rating-label">Weekend Tips:</span>
           <DollarRating rating={post.weekend_tips} />
-        </div>
-        <div className="each-post-rating">
-          <span className="rating-label">Clientele:</span>
-          <StarRating rating={post.clientele} />
         </div>
       </div>
 

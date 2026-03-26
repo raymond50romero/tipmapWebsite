@@ -8,6 +8,9 @@ import "./styles.css";
 
 export default function Posts() {
   const [showPosts, setShowPosts] = useState(false);
+  const [sortCategory, setSortCategory] = useState("overall_average");
+  const [sortOrder, setSortOrder] = useState("desc"); // 'desc' for highest to lowest, 'asc' for lowest to highest
+
   const { currCenter, currZoom, northEast, southWest } = useMapState();
 
   // Fetch posts using the same hook as the map
@@ -18,17 +21,49 @@ export default function Posts() {
     southWest,
   );
 
-  // Sort posts by clientele descending
+  // Sort posts based on category and order
   const sortedPosts = useMemo(() => {
     if (!rawData?.posts) return [];
-    // Slice to create a copy before sorting
-    return [...rawData.posts].sort((a, b) => b.clientele - a.clientele);
-  }, [rawData]);
+    
+    return [...rawData.posts].sort((a, b) => {
+      const valA = a.averages?.[sortCategory] || 0;
+      const valB = b.averages?.[sortCategory] || 0;
+      
+      if (sortOrder === "desc") {
+        return valB - valA;
+      } else {
+        return valA - valB;
+      }
+    });
+  }, [rawData, sortCategory, sortOrder]);
 
   return (
     <div id="posts-container" className={showPosts ? "show" : ""}>
       <section id="posts">
-        <h2 id="posts-header">Posts</h2>
+        <div id="posts-header-container">
+          <h2 id="posts-header">Posts</h2>
+          <div id="posts-filters">
+            <select 
+              value={sortCategory} 
+              onChange={(e) => setSortCategory(e.target.value)}
+              className="sort-dropdown"
+            >
+              <option value="overall_average">Overall Average</option>
+              <option value="weekday_tips_average">Weekday Tips</option>
+              <option value="weekend_tips_average">Weekend Tips</option>
+              <option value="management_average">Management</option>
+              <option value="work_environment_average">Environment</option>
+              <option value="clientele_average">Clientele</option>
+            </select>
+            <button 
+              onClick={() => setSortOrder(prev => prev === "desc" ? "asc" : "desc")}
+              className="sort-order-btn"
+              title={sortOrder === "desc" ? "Highest to Lowest" : "Lowest to Highest"}
+            >
+              {sortOrder === "desc" ? "↓" : "↑"}
+            </button>
+          </div>
+        </div>
         <div id="posts-list">
           {isLoading ? (
             <p>Loading posts...</p>
