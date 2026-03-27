@@ -25,11 +25,17 @@ export default function Posts() {
   const sortedPosts = useMemo(() => {
     if (!rawData?.posts) return [];
 
-    // Filter to keep only one post per restaurant (using mapbox_id)
+    // Group all posts for each restaurant (using mapbox_id)
     const uniqueRestaurantsMap = new Map();
     rawData.posts.forEach((post) => {
       if (!uniqueRestaurantsMap.has(post.mapbox_id)) {
-        uniqueRestaurantsMap.set(post.mapbox_id, post);
+        uniqueRestaurantsMap.set(post.mapbox_id, {
+          ...post,
+          allPosts: [post]
+        });
+      } else {
+        const existing = uniqueRestaurantsMap.get(post.mapbox_id);
+        existing.allPosts.push(post);
       }
     });
 

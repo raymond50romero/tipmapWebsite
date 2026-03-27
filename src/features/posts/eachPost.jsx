@@ -1,11 +1,24 @@
 import PropTypes from "prop-types";
+import { useMapState } from "../../contexts/mapState.jsx";
 import StarRating from "./starRating.jsx";
 import DollarRating from "./dollarRating.jsx";
 
 import "./styles.css";
 
 export default function EachPost({ post, currentCategory }) {
+  const { setIsDetailWindowOpen, setSelectedRestaurantData } = useMapState();
+
   if (!post) return null;
+
+  const handleClick = () => {
+    setSelectedRestaurantData(post);
+    setIsDetailWindowOpen(true);
+    // Show blur background
+    const blurBackground = document.getElementById("blur-background");
+    if (blurBackground) {
+      blurBackground.style.display = "block";
+    }
+  };
 
   const renderRating = (category) => {
     const value = post.averages?.[category] || 0;
@@ -75,7 +88,7 @@ export default function EachPost({ post, currentCategory }) {
   };
 
   return (
-    <div className="each-post-container">
+    <div className="each-post-container" onClick={handleClick} style={{ cursor: 'pointer' }}>
       <h6 className="each-post-header">{post.restaurant_name}</h6>
       <p className="each-post-title">{post.title}</p>
 

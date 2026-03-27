@@ -9,6 +9,7 @@ import Tipmap from "../components/tipmap/tipmap.jsx";
 import AuthWindow from "../components/windows/auth/authWindow.jsx";
 import NewPostWindow from "../components/windows/newPost/newPostWindow.jsx";
 import ProfileWindow from "../components/windows/profile/profileWindow.jsx";
+import RestaurantDetailWindow from "../components/windows/restaurantDetail/restaurantDetailWindow.jsx";
 import Posts from "../components/posts/posts.jsx";
 
 import "../index.css";
@@ -63,6 +64,7 @@ export default function MainPage() {
         <AuthWindow />
         <NewPostWindow />
         <ProfileWindow />
+        <RestaurantDetailWindow />
       </div>
     </>
   );

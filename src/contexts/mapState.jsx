@@ -18,6 +18,9 @@ export function MapStateProvider({ children }) {
   const [northEast, setNorthEast] = useState(null);
   const [southWest, setSouthWest] = useState(null);
 
+  const [selectedRestaurantData, setSelectedRestaurantData] = useState(null);
+  const [isDetailWindowOpen, setIsDetailWindowOpen] = useState(false);
+
   return (
     <MapStateContext.Provider
       value={{
@@ -35,6 +38,10 @@ export function MapStateProvider({ children }) {
         setNorthEast,
         southWest,
         setSouthWest,
+        selectedRestaurantData,
+        setSelectedRestaurantData,
+        isDetailWindowOpen,
+        setIsDetailWindowOpen,
       }}
     >
       {children}
