@@ -21,14 +21,24 @@ export default function Posts() {
     southWest,
   );
 
-  // Sort posts based on category and order
+  // Filter and sort posts based on unique restaurants, category, and order
   const sortedPosts = useMemo(() => {
     if (!rawData?.posts) return [];
-    
-    return [...rawData.posts].sort((a, b) => {
+
+    // Filter to keep only one post per restaurant (using mapbox_id)
+    const uniqueRestaurantsMap = new Map();
+    rawData.posts.forEach((post) => {
+      if (!uniqueRestaurantsMap.has(post.mapbox_id)) {
+        uniqueRestaurantsMap.set(post.mapbox_id, post);
+      }
+    });
+
+    const uniquePosts = Array.from(uniqueRestaurantsMap.values());
+
+    return uniquePosts.sort((a, b) => {
       const valA = a.averages?.[sortCategory] || 0;
       const valB = b.averages?.[sortCategory] || 0;
-      
+
       if (sortOrder === "desc") {
         return valB - valA;
       } else {
@@ -69,7 +79,11 @@ export default function Posts() {
             <p>Loading posts...</p>
           ) : sortedPosts.length > 0 ? (
             sortedPosts.map((post, index) => (
-              <EachPost key={`${post.restaurant_name}-${index}`} post={post} />
+              <EachPost 
+                key={`${post.restaurant_name}-${index}`} 
+                post={post} 
+                currentCategory={sortCategory}
+              />
             ))
           ) : (
             <p>No posts found in this area.</p>
