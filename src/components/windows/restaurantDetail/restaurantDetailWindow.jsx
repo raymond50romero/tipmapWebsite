@@ -1,5 +1,5 @@
-import React from "react";
-import { CloseOutlined } from "@ant-design/icons";
+import React, { useState } from "react";
+import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useMapState } from "../../../contexts/mapState.jsx";
 import StarRating from "../../../features/posts/starRating.jsx";
 import DollarRating from "../../../features/posts/dollarRating.jsx";
@@ -16,6 +16,8 @@ export default function RestaurantDetailWindow() {
     southWest,
   } = useMapState();
 
+  const [showRatings, setShowRatings] = useState(false);
+
   // If not open or no data, don't show
   if (!isDetailWindowOpen || !selectedRestaurantData) return null;
 
@@ -27,6 +29,13 @@ export default function RestaurantDetailWindow() {
     mapbox_id,
     allPosts,
   } = selectedRestaurantData;
+
+  console.log("this is all posts: ", allPosts);
+
+  const tipsAverage =
+    (parseFloat(averages?.weekday_tips_average || 0) +
+      parseFloat(averages?.weekend_tips_average || 0)) /
+    2;
 
   const parts = restaurant_place.split(", ");
   parts.pop(); // removes the country from place
@@ -47,46 +56,67 @@ export default function RestaurantDetailWindow() {
         <CloseOutlined className="close-btn" onClick={closeWindow} />
       </div>
       <div id="restaurant-detail-window-info">
-        <div className="overall-rating-item">
+        <div className="header-ratings">
           <StarRating rating={parseFloat(averages?.overall_average || 0)} />
+          <DollarRating rating={tipsAverage} />
         </div>
         <p className="detail-address">{restaurant_address}</p>
         <p className="detail-address">{formattedPlace}</p>
       </div>
       <div className="restaurant-detail-content">
-        <div className="detail-ratings">
-          <div className="ratings-grid">
-            <div className="detail-rating-item">
-              <span>Weekday Tips:</span>
-              <DollarRating
-                rating={parseFloat(averages?.weekday_tips_average || 0)}
-              />
+        <div className="ratings-dropdown">
+          <button
+            className="dropdown-toggle"
+            onClick={() => setShowRatings(!showRatings)}
+          >
+            <span>Ratings</span>
+            {showRatings ? <UpOutlined /> : <DownOutlined />}
+          </button>
+
+          {showRatings && (
+            <div className="detail-ratings">
+              <div className="overall-rating-item">
+                <span className="detail-rating-item-label">Overall:</span>
+                <div className="overall-rating-values">
+                  <StarRating
+                    rating={parseFloat(averages?.overall_average || 0)}
+                  />
+                </div>
+              </div>
+              <div className="ratings-grid">
+                <div className="detail-rating-item tips-rating-item">
+                  <span>Weekday Tips:</span>
+                  <DollarRating
+                    rating={parseFloat(averages?.weekday_tips_average || 0)}
+                  />
+                </div>
+                <div className="detail-rating-item tips-rating-item">
+                  <span>Weekend Tips:</span>
+                  <DollarRating
+                    rating={parseFloat(averages?.weekend_tips_average || 0)}
+                  />
+                </div>
+                <div className="detail-rating-item">
+                  <span>Management:</span>
+                  <StarRating
+                    rating={parseFloat(averages?.management_average || 0)}
+                  />
+                </div>
+                <div className="detail-rating-item">
+                  <span>Environment:</span>
+                  <StarRating
+                    rating={parseFloat(averages?.work_environment_average || 0)}
+                  />
+                </div>
+                <div className="detail-rating-item">
+                  <span>Clientele:</span>
+                  <StarRating
+                    rating={parseFloat(averages?.clientele_average || 0)}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="detail-rating-item">
-              <span>Weekend Tips:</span>
-              <DollarRating
-                rating={parseFloat(averages?.weekend_tips_average || 0)}
-              />
-            </div>
-            <div className="detail-rating-item">
-              <span>Management:</span>
-              <StarRating
-                rating={parseFloat(averages?.management_average || 0)}
-              />
-            </div>
-            <div className="detail-rating-item">
-              <span>Environment:</span>
-              <StarRating
-                rating={parseFloat(averages?.work_environment_average || 0)}
-              />
-            </div>
-            <div className="detail-rating-item">
-              <span>Clientele:</span>
-              <StarRating
-                rating={parseFloat(averages?.clientele_average || 0)}
-              />
-            </div>
-          </div>
+          )}
         </div>
 
         <div className="detail-posts">

@@ -15,6 +15,10 @@
   overflow-y: auto;
 }
 
+#restaurant-detail-window-info {
+  margin-bottom: 1rem;
+}
+
 .show-window {
   display: block !important;
 }
@@ -55,6 +59,18 @@
   color: #666;
 }
 
+.header-ratings {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.header-ratings .stars {
+  width: 2rem;
+  height: 2rem;
+}
+
 .detail-section-header {
   font-size: 1.4rem;
   font-weight: 600;
@@ -63,9 +79,64 @@
   padding-bottom: 0.3rem;
 }
 
+.ratings-dropdown {
+  width: 100%;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.dropdown-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  transition: background 0.2s;
+}
+
+.dropdown-toggle:hover {
+  background: #fafafa;
+}
+
+.detail-ratings {
+  padding: 1rem;
+  background: #fff;
+  border-top: 1px solid #f0f0f0;
+}
+
+.overall-rating-item {
+  background: #f0f7ff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  padding: 0.8rem 1rem;
+}
+
+.overall-rating-values {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.detail-rating-item-label {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #333;
+}
+
 .ratings-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 .detail-rating-item {
@@ -77,23 +148,8 @@
   border-radius: 10px;
 }
 
-.overall-rating-item {
-  background: #f0f7ff; /* Give it a slightly different background */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 10px;
-  margin-bottom: 0.5rem;
-}
-
-.overall-rating-item span {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.overall-rating-item .stars {
-  width: 2rem;
-  height: 2rem;
+.tips-rating-item {
+  background: #f0fff4;
 }
 
 .detail-rating-item span {
