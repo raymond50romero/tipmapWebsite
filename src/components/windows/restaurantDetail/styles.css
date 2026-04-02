@@ -20,15 +20,15 @@
 }
 
 .window-header {
-...
-  justify-content: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin-bottom: 0.5rem;
 }
 
 .close-btn {
   font-size: 1.5rem;
   cursor: pointer;
-  color: #666;
 }
 
 .close-btn:hover {
@@ -66,7 +66,6 @@
 .ratings-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
 }
 
 .detail-rating-item {
@@ -76,6 +75,25 @@
   background: #f9f9f9;
   padding: 0.8rem 1rem;
   border-radius: 10px;
+}
+
+.overall-rating-item {
+  background: #f0f7ff; /* Give it a slightly different background */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+}
+
+.overall-rating-item span {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.overall-rating-item .stars {
+  width: 2rem;
+  height: 2rem;
 }
 
 .detail-rating-item span {
@@ -94,7 +112,7 @@
   border: 1px solid #eee;
   padding: 1rem;
   border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
 }
 
 .detail-post-title {
