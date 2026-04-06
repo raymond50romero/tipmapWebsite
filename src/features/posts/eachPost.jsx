@@ -22,7 +22,7 @@ export default function EachPost({ post, currentCategory }) {
 
   const renderRating = (category) => {
     const value = post.averages?.[category] || 0;
-    
+
     switch (category) {
       case "weekday_tips_average":
         return (
@@ -72,14 +72,16 @@ export default function EachPost({ post, currentCategory }) {
 
   // Logic to show exactly 3 ratings (or 2 if tips are filtered)
   const getOrderedCategories = () => {
-    const isTipCategory = currentCategory === "weekday_tips_average" || 
-                          currentCategory === "weekend_tips_average";
+    const isTipCategory =
+      currentCategory === "weekday_tips_average" ||
+      currentCategory === "weekend_tips_average";
 
     if (isTipCategory) {
       // If a tip category is chosen, only show the 2 tips in order
-      const otherTip = currentCategory === "weekday_tips_average" 
-        ? "weekend_tips_average" 
-        : "weekday_tips_average";
+      const otherTip =
+        currentCategory === "weekday_tips_average"
+          ? "weekend_tips_average"
+          : "weekday_tips_average";
       return [currentCategory, otherTip];
     }
 
@@ -88,15 +90,16 @@ export default function EachPost({ post, currentCategory }) {
   };
 
   return (
-    <div className="each-post-container" onClick={handleClick} style={{ cursor: 'pointer' }}>
+    <div
+      className="each-post-container"
+      onClick={handleClick}
+      style={{ cursor: "pointer" }}
+    >
       <h6 className="each-post-header">{post.restaurant_name}</h6>
-      <p className="each-post-title">{post.title}</p>
 
       <div className="ratings-group">
         {getOrderedCategories().map((cat) => renderRating(cat))}
       </div>
-
-      <p className="each-post-comment">{post.comment}</p>
     </div>
   );
 }
