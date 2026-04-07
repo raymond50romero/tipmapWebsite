@@ -13,6 +13,11 @@
   border-radius: 16px;
   z-index: 1001;
   overflow-y: auto;
+  transition: left 0.3s ease-in-out;
+}
+
+#restaurant-detail-window.shifted-left {
+  left: calc(50% - 21rem);
 }
 
 #restaurant-detail-window-info {
@@ -182,4 +187,21 @@
   margin: 0;
   color: #555;
   line-height: 1.5;
+}
+
+.see-all-btn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: center;
+  margin-top: 1rem;
+}
+
+.see-all-btn:hover {
+  background: #2563eb;
 }

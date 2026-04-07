@@ -20,6 +20,7 @@ export function MapStateProvider({ children }) {
 
   const [selectedRestaurantData, setSelectedRestaurantData] = useState(null);
   const [isDetailWindowOpen, setIsDetailWindowOpen] = useState(false);
+  const [isAllReviewsWindowOpen, setIsAllReviewsWindowOpen] = useState(false);
 
   return (
     <MapStateContext.Provider
@@ -42,6 +43,8 @@ export function MapStateProvider({ children }) {
         setSelectedRestaurantData,
         isDetailWindowOpen,
         setIsDetailWindowOpen,
+        isAllReviewsWindowOpen,
+        setIsAllReviewsWindowOpen,
       }}
     >
       {children}

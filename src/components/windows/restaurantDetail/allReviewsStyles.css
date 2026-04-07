@@ -1,0 +1,45 @@
+#all-reviews-window {
+  width: 40rem;
+  max-width: 95vw;
+  max-height: 85vh;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
+  z-index: 1002; /* Higher than restaurant detail */
+  display: flex;
+  flex-direction: column;
+  transition: left 0.3s ease-in-out;
+}
+
+#all-reviews-window.shifted-right {
+  left: calc(50% + 18.5rem);
+}
+
+.all-posts-list {
+  overflow-y: auto;
+  margin-top: 1rem;
+  padding-right: 0.5rem;
+}
+
+.see-all-btn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: center;
+  margin-top: 0.5rem;
+}
+
+.see-all-btn:hover {
+  background: #2563eb;
+}

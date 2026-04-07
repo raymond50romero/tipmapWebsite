@@ -10,6 +10,7 @@ import AuthWindow from "../components/windows/auth/authWindow.jsx";
 import NewPostWindow from "../components/windows/newPost/newPostWindow.jsx";
 import ProfileWindow from "../components/windows/profile/profileWindow.jsx";
 import RestaurantDetailWindow from "../components/windows/restaurantDetail/restaurantDetailWindow.jsx";
+import AllReviewsWindow from "../components/windows/restaurantDetail/AllReviewsWindow.jsx";
 import Posts from "../components/posts/posts.jsx";
 
 import "../index.css";
@@ -65,6 +66,7 @@ export default function MainPage() {
         <NewPostWindow />
         <ProfileWindow />
         <RestaurantDetailWindow />
+        <AllReviewsWindow />
       </div>
     </>
   );

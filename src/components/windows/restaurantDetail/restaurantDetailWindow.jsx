@@ -10,6 +10,8 @@ export default function RestaurantDetailWindow() {
   const {
     isDetailWindowOpen,
     setIsDetailWindowOpen,
+    isAllReviewsWindowOpen,
+    setIsAllReviewsWindowOpen,
     selectedRestaurantData,
     currCenter,
     currZoom,
@@ -31,6 +33,8 @@ export default function RestaurantDetailWindow() {
     allPosts,
   } = selectedRestaurantData;
 
+  const displayPosts = allPosts?.slice(0, 3) || [];
+
   console.log("this is all posts: ", allPosts);
 
   const tipsAverage =
@@ -44,14 +48,22 @@ export default function RestaurantDetailWindow() {
 
   const closeWindow = () => {
     setIsDetailWindowOpen(false);
+    setIsAllReviewsWindowOpen(false);
     const blurBackground = document.getElementById("blur-background");
     if (blurBackground) {
       blurBackground.style.display = "none";
     }
   };
 
+  const openAllReviews = () => {
+    setIsAllReviewsWindowOpen(true);
+  };
+
   return (
-    <section className="window show-window" id="restaurant-detail-window">
+    <section
+      className={`window show-window ${isAllReviewsWindowOpen ? "shifted-left" : ""}`}
+      id="restaurant-detail-window"
+    >
       <div className="window-header">
         <h1 className="detail-name">{restaurant_name}</h1>
         <CloseOutlined className="close-btn" onClick={closeWindow} />
@@ -184,8 +196,8 @@ export default function RestaurantDetailWindow() {
 
         <div className="detail-posts">
           <h2 className="detail-section-header">Reviews</h2>
-          {allPosts && allPosts.length > 0 ? (
-            allPosts.map((post, index) => (
+          {displayPosts.length > 0 ? (
+            displayPosts.map((post, index) => (
               <div key={index} className="detail-post-tag">
                 <h3 className="detail-post-title">{post.title}</h3>
                 <p className="detail-post-comment">{post.comment}</p>
@@ -193,6 +205,11 @@ export default function RestaurantDetailWindow() {
             ))
           ) : (
             <p>No reviews yet.</p>
+          )}
+          {allPosts && allPosts.length > 3 && (
+            <button className="see-all-btn" onClick={openAllReviews}>
+              See All Reviews
+            </button>
           )}
         </div>
       </div>
