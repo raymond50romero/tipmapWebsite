@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
+import { Tooltip } from "antd";
 import { useMapState } from "../../../contexts/mapState.jsx";
 import StarRating from "../../../features/posts/starRating.jsx";
 import DollarRating from "../../../features/posts/dollarRating.jsx";
@@ -57,8 +58,20 @@ export default function RestaurantDetailWindow() {
       </div>
       <div id="restaurant-detail-window-info">
         <div className="header-ratings">
-          <StarRating rating={parseFloat(averages?.overall_average || 0)} />
-          <DollarRating rating={tipsAverage} />
+          <Tooltip
+            title={`Overall: ${parseFloat(
+              averages?.overall_average || 0,
+            ).toFixed(1)}`}
+          >
+            <div>
+              <StarRating rating={parseFloat(averages?.overall_average || 0)} />
+            </div>
+          </Tooltip>
+          <Tooltip title={`Tips: ${tipsAverage.toFixed(1)}`}>
+            <div>
+              <DollarRating rating={tipsAverage} />
+            </div>
+          </Tooltip>
         </div>
         <p className="detail-address">{restaurant_address}</p>
         <p className="detail-address">{formattedPlace}</p>
@@ -75,45 +88,95 @@ export default function RestaurantDetailWindow() {
 
           {showRatings && (
             <div className="detail-ratings">
-              <div className="overall-rating-item">
-                <span className="detail-rating-item-label">Overall:</span>
-                <div className="overall-rating-values">
-                  <StarRating
-                    rating={parseFloat(averages?.overall_average || 0)}
-                  />
+              <Tooltip
+                title={`Overall: ${parseFloat(
+                  averages?.overall_average || 0,
+                ).toFixed(1)}`}
+              >
+                <div className="overall-rating-item">
+                  <span className="detail-rating-item-label">Overall:</span>
+                  <div className="overall-rating-values">
+                    <div>
+                      <StarRating
+                        rating={parseFloat(averages?.overall_average || 0)}
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </Tooltip>
               <div className="ratings-grid">
-                <div className="detail-rating-item tips-rating-item">
-                  <span>Weekday Tips:</span>
-                  <DollarRating
-                    rating={parseFloat(averages?.weekday_tips_average || 0)}
-                  />
-                </div>
-                <div className="detail-rating-item tips-rating-item">
-                  <span>Weekend Tips:</span>
-                  <DollarRating
-                    rating={parseFloat(averages?.weekend_tips_average || 0)}
-                  />
-                </div>
-                <div className="detail-rating-item">
-                  <span>Management:</span>
-                  <StarRating
-                    rating={parseFloat(averages?.management_average || 0)}
-                  />
-                </div>
-                <div className="detail-rating-item">
-                  <span>Environment:</span>
-                  <StarRating
-                    rating={parseFloat(averages?.work_environment_average || 0)}
-                  />
-                </div>
-                <div className="detail-rating-item">
-                  <span>Clientele:</span>
-                  <StarRating
-                    rating={parseFloat(averages?.clientele_average || 0)}
-                  />
-                </div>
+                <Tooltip
+                  title={`Weekday Tips: ${parseFloat(
+                    averages?.weekday_tips_average || 0,
+                  ).toFixed(1)}`}
+                >
+                  <div className="detail-rating-item tips-rating-item">
+                    <span>Weekday Tips:</span>
+                    <div>
+                      <DollarRating
+                        rating={parseFloat(averages?.weekday_tips_average || 0)}
+                      />
+                    </div>
+                  </div>
+                </Tooltip>
+                <Tooltip
+                  title={`Weekend Tips: ${parseFloat(
+                    averages?.weekend_tips_average || 0,
+                  ).toFixed(1)}`}
+                >
+                  <div className="detail-rating-item tips-rating-item">
+                    <span>Weekend Tips:</span>
+                    <div>
+                      <DollarRating
+                        rating={parseFloat(averages?.weekend_tips_average || 0)}
+                      />
+                    </div>
+                  </div>
+                </Tooltip>
+                <Tooltip
+                  title={`Management: ${parseFloat(
+                    averages?.management_average || 0,
+                  ).toFixed(1)}`}
+                >
+                  <div className="detail-rating-item">
+                    <span>Management:</span>
+                    <div>
+                      <StarRating
+                        rating={parseFloat(averages?.management_average || 0)}
+                      />
+                    </div>
+                  </div>
+                </Tooltip>
+                <Tooltip
+                  title={`Environment: ${parseFloat(
+                    averages?.work_environment_average || 0,
+                  ).toFixed(1)}`}
+                >
+                  <div className="detail-rating-item">
+                    <span>Environment:</span>
+                    <div>
+                      <StarRating
+                        rating={parseFloat(
+                          averages?.work_environment_average || 0,
+                        )}
+                      />
+                    </div>
+                  </div>
+                </Tooltip>
+                <Tooltip
+                  title={`Clientele: ${parseFloat(
+                    averages?.clientele_average || 0,
+                  ).toFixed(1)}`}
+                >
+                  <div className="detail-rating-item">
+                    <span>Clientele:</span>
+                    <div>
+                      <StarRating
+                        rating={parseFloat(averages?.clientele_average || 0)}
+                      />
+                    </div>
+                  </div>
+                </Tooltip>
               </div>
             </div>
           )}
