@@ -2,7 +2,7 @@ import { useState } from "react";
 import { CloseOutlined, LeftOutlined } from "@ant-design/icons";
 
 import ProfileInfo from "../../../features/profile/profileInfo.jsx";
-import OccupationPill from "../../occupationPill/occupationPill.jsx";
+import UserPosts from "../../../features/profile/userPosts.jsx";
 import doLogout from "../../../features/auth/api/doLogout.jsx";
 import { useHelper } from "../../../contexts/helperContext.jsx";
 import { useLoginStatus } from "../../../contexts/loginStatus.jsx";
@@ -55,7 +55,7 @@ export default function ProfileWindow() {
         />
       </div>
       <ProfileInfo />
-      <div>this is a container for users posts</div>
+      <UserPosts />
       <button
         id="logout-button"
         className="login-button"

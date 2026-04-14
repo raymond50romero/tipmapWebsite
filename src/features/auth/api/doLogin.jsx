@@ -32,6 +32,8 @@ export default async function doLogin(emailOrUser, password) {
       try {
         if (error?.status === 401) {
           return error;
+        } else {
+          return false;
         }
       } catch (tryError) {
         console.error("login error: ", tryError);

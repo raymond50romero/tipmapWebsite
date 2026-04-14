@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import OccupationPill from "../../components/occupationPill/occupationPill.jsx";
 import { useProfileStatus } from "../../contexts/profileStatus.jsx";
 import "./styles.css";
