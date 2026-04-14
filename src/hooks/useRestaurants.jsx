@@ -7,7 +7,6 @@ export function useRestaurants(center, zoom, northEast, southWest) {
     queryKey: ["restaurants", center, zoom, northEast, southWest],
     queryFn: async () => {
       const response = await getPosts(center, zoom, northEast, southWest);
-      console.log("this is raw response inside useRestaurants", response);
       if (!response || !response.data) {
         return { weightsData: [] };
       }

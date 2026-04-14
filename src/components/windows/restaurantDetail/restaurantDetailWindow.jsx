@@ -35,7 +35,7 @@ export default function RestaurantDetailWindow() {
 
   const displayPosts = allPosts?.slice(0, 3) || [];
 
-  console.log("this is all posts: ", allPosts);
+  console.log("this is all posts: ", displayPosts);
 
   const tipsAverage =
     (parseFloat(averages?.weekday_tips_average || 0) +

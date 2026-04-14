@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 import { useHelper } from "../../../contexts/helperContext.jsx";
@@ -13,7 +13,6 @@ export default function HandleAuthForm({
   setStatus,
   setClose,
 }) {
-  const [serverResponse, setServerResponse] = useState();
   const [helper, setHelper] = useState();
   const showHelper = useHelper();
 
@@ -36,7 +35,7 @@ export default function HandleAuthForm({
         setGoBack(false);
         break;
     }
-  }, [helper, showHelper, serverResponse, status, setHeader, setGoBack]);
+  }, [helper, showHelper, status, setHeader, setGoBack]);
 
   switch (status) {
     case "createAccount":

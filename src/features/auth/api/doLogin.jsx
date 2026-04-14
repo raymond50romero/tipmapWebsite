@@ -29,7 +29,13 @@ export default async function doLogin(emailOrUser, password) {
       return res;
     })
     .catch((error) => {
-      console.log("error:", error);
-      return false;
+      try {
+        if (error?.status === 401) {
+          return error;
+        }
+      } catch (tryError) {
+        console.error("login error: ", tryError);
+        return false;
+      }
     });
 }

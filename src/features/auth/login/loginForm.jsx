@@ -41,19 +41,22 @@ export default function LoginForm({ setStatus, setClose, setHelper }) {
           setHelper("Password required");
         }
         const serverResponse = await doLogin(emailOrUser, password);
-        if (serverResponse.status === 200) {
+        if (serverResponse?.status === 200) {
           setHelper(serverResponse.data.message);
           setLoginStatus(true);
           setClose(true);
-          console.log("this is server response", serverResponse.data.payload);
           setProfileStatus((prev) => ({
             ...prev,
             username: serverResponse.data.payload.username,
             email: serverResponse.data.payload.email,
             occupation: serverResponse.data.payload.occupations,
           }));
+        } else if (serverResponse?.status === 401) {
+          setHelper(serverResponse.response.data);
+          setLoginStatus(false);
         } else {
           setLoginStatus(false);
+          setHelper("An error has occured with our servers");
         }
       }}
     >
