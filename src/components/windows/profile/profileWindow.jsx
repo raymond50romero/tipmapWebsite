@@ -44,25 +44,27 @@ export default function ProfileWindow() {
 
   return (
     <section className="window" id="profile-window">
-      <div id="profile-window-header-container">
-        <h3 id="profile-window-header">{profileStatus.username}</h3>
-        <CloseOutlined
-          className="auth-window-header-buttons"
-          id="profile-close-window"
-          onClick={() => {
-            closeWindow();
-          }}
-        />
+      <div id="profile-window-inner-container">
+        <div id="profile-window-header-container">
+          <h3 id="profile-window-header">{profileStatus.username}</h3>
+          <CloseOutlined
+            className="auth-window-header-buttons"
+            id="profile-close-window"
+            onClick={() => {
+              closeWindow();
+            }}
+          />
+        </div>
+        <ProfileInfo />
+        <UserPosts />
+        <button
+          id="logout-button"
+          className="login-button"
+          onClick={() => logout()}
+        >
+          Logout
+        </button>
       </div>
-      <ProfileInfo />
-      <UserPosts />
-      <button
-        id="logout-button"
-        className="login-button"
-        onClick={() => logout()}
-      >
-        Logout
-      </button>
     </section>
   );
 }

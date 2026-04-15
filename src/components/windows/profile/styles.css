@@ -1,3 +1,17 @@
+#profile-window {
+  min-width: 40vw;
+  max-width: 50vw;
+  height: 80vh;
+  overflow-y: auto;
+}
+
+#profile-window-inner-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 #profile-window-header-container {
   display: flex;
   flex-direction: row;
