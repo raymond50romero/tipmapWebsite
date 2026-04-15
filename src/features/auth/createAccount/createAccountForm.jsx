@@ -76,9 +76,22 @@ export default function CreateAccountForm({ setStatus, setClose, setHelper }) {
             occupation,
             other,
           );
-          if (serverResponse.status === 200) {
+          if (serverResponse?.status === 200) {
             setHelper("Account Created!");
             setStatus("login");
+            setClose(true);
+          } else if (serverResponse?.status === 400) {
+            setHelper(
+              serverResponse.response?.data
+                ? serverResponse.response.data
+                : "no response from server",
+            );
+          } else if (serverResponse?.status === 409) {
+            setHelper(
+              serverResponse.response?.data
+                ? serverResponse.response.data
+                : "no response from server",
+            );
           } else if (!serverResponse) {
             setHelper("Unable to create new account");
           } else {

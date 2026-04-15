@@ -47,10 +47,14 @@ export default async function doCreate(
       if (res) {
         return res;
       }
+      console.log("no response given when creating account: ", res);
       return false;
     })
     .catch((error) => {
-      console.error(error);
+      console.error("error when creating:", error);
+      if (error?.status) {
+        return error;
+      }
       return false;
     });
 }
