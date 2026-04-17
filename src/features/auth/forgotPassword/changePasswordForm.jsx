@@ -10,7 +10,16 @@ import {
 } from "../../../utils/setHelperColors.jsx";
 import "./style.css";
 
-export default function ChangePasswordForm({ setStatus, setClose, setHelper }) {
+//
+//  TODO
+//  need in implement setWindowClosed
+//
+export default function ChangePasswordForm({
+  setStatus,
+  setClose,
+  setHelper,
+  setWindowClosed,
+}) {
   const [passcode, setPasscode] = useState();
   const [newPassword, setNewPassword] = useState();
   const [confirmNewPassword, setConfirmNewPassword] = useState();

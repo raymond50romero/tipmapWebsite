@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-import { setError,
+import {
+  setError,
   setNormal,
   setButtonClick,
   setButtonGrey,
@@ -9,10 +10,15 @@ import { setError,
 import { useHelper } from "../../../contexts/helperContext.jsx";
 import "./style.css";
 
+//
+//  TODO
+//  need to implement setWindowClosed
+
 export default function EmailPasscodeForm({
   setEmailSent,
   setClose,
   setHelper,
+  setWindowClosed,
 }) {
   const [email, setEmail] = useState();
   const showHelper = useHelper();
@@ -67,4 +73,5 @@ EmailPasscodeForm.propTypes = {
   setEmailSent: PropTypes.func.isRequired,
   setClose: PropTypes.func.isRequired,
   setHelper: PropTypes.func.isRequired,
+  setWindowClosed: PropTypes.func.isRequired,
 };

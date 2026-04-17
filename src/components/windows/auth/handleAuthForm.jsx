@@ -12,12 +12,14 @@ export default function HandleAuthForm({
   status,
   setStatus,
   setClose,
+  windowClosed,
+  setWindowClosed,
 }) {
   const [helper, setHelper] = useState();
   const showHelper = useHelper();
 
   useEffect(() => {
-    if (helper) {
+    if (helper && windowClosed) {
       showHelper(helper);
     }
 
@@ -35,7 +37,7 @@ export default function HandleAuthForm({
         setGoBack(false);
         break;
     }
-  }, [helper, showHelper, status, setHeader, setGoBack]);
+  }, [helper, showHelper, status, setHeader, setGoBack, windowClosed]);
 
   switch (status) {
     case "createAccount":
@@ -44,6 +46,7 @@ export default function HandleAuthForm({
           setStatus={setStatus}
           setClose={setClose}
           setHelper={setHelper}
+          setWindowClosed={setWindowClosed}
         />
       );
     case "forgotPassword":
@@ -52,6 +55,7 @@ export default function HandleAuthForm({
           setStatus={setStatus}
           setClose={setClose}
           setHelper={setHelper}
+          setWindowClosed={setWindowClosed}
         />
       );
     default:
@@ -60,6 +64,7 @@ export default function HandleAuthForm({
           setStatus={setStatus}
           setClose={setClose}
           setHelper={setHelper}
+          setWindowClosed={setWindowClosed}
         />
       );
   }
