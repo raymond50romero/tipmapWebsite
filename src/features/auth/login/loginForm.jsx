@@ -50,6 +50,7 @@ export default function LoginForm({
           setHelper(serverResponse.data.message);
           setLoginStatus(true);
           setClose(true);
+          setWindowClosed(true);
           setProfileStatus((prev) => ({
             ...prev,
             username: serverResponse.data.payload.username,

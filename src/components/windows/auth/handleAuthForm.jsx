@@ -76,4 +76,6 @@ HandleAuthForm.propTypes = {
   status: PropTypes.string.isRequired,
   setStatus: PropTypes.func.isRequired,
   setClose: PropTypes.func,
+  windowClosed: PropTypes.func,
+  setWindowClosed: PropTypes.func,
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 import { Select } from "antd";
 import PropTypes from "prop-types";
@@ -82,7 +82,6 @@ export default function CreateAccountForm({
             other,
           );
           if (serverResponse?.status === 201) {
-            console.log("server response is 201");
             setHelper("Account Created!");
             setStatus("login");
             setClose(true);
@@ -91,11 +90,12 @@ export default function CreateAccountForm({
             serverResponse?.status === 409 ||
             serverResponse?.status === 400
           ) {
-            setHelper(
-              serverResponse.response?.data
-                ? serverResponse.response.data
-                : "no response from server",
+            console.log(
+              "this is server response data: ",
+              serverResponse.response.data,
             );
+
+            setHelper(serverResponse.response.data);
           } else if (!serverResponse) {
             setHelper("Unable to create new account");
           } else {
