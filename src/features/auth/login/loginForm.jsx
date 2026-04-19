@@ -127,7 +127,6 @@ export default function LoginForm({ setStatus, setClose, setHelper }) {
 
 LoginForm.propTypes = {
   setStatus: PropTypes.func.isRequired,
-  setIsLoggedIn: PropTypes.func.isRequired,
   setClose: PropTypes.func.isRequired,
   setHelper: PropTypes.func.isRequired,
 };

@@ -13,14 +13,9 @@ export default function HandleAuthForm({
   setStatus,
   setClose,
 }) {
-  const [helper, setHelper] = useState();
   const showHelper = useHelper();
 
   useEffect(() => {
-    if (helper) {
-      showHelper(helper);
-    }
-
     switch (status) {
       case "createAccount":
         setHeader("Create Account");
@@ -35,7 +30,7 @@ export default function HandleAuthForm({
         setGoBack(false);
         break;
     }
-  }, [helper, showHelper, status, setHeader, setGoBack]);
+  }, [showHelper, status, setHeader, setGoBack]);
 
   switch (status) {
     case "createAccount":
@@ -43,7 +38,7 @@ export default function HandleAuthForm({
         <CreatAccountForm
           setStatus={setStatus}
           setClose={setClose}
-          setHelper={setHelper}
+          setHelper={showHelper}
         />
       );
     case "forgotPassword":
@@ -51,7 +46,7 @@ export default function HandleAuthForm({
         <ForgotPasswordForm
           setStatus={setStatus}
           setClose={setClose}
-          setHelper={setHelper}
+          setHelper={showHelper}
         />
       );
     default:
@@ -59,7 +54,7 @@ export default function HandleAuthForm({
         <LoginForm
           setStatus={setStatus}
           setClose={setClose}
-          setHelper={setHelper}
+          setHelper={showHelper}
         />
       );
   }
