@@ -10,12 +10,15 @@ export default function AuthWindow() {
   const [goBack, setGoBack] = useState(false);
   const [status, setStatus] = useState("login");
   const [close, setClose] = useState(false);
+  const [windowClosed, setWindowClosed] = useState(false);
 
   function closeWindow() {
     const authWindow = document.getElementById("auth-window");
     const blurBackground = document.getElementById("blur-background");
     if (authWindow) {
       setStatus("login");
+      setClose(false);
+      setWindowClosed(false);
       authWindow.style.display = "none";
       blurBackground.style.display = "none";
     }
@@ -57,6 +60,8 @@ export default function AuthWindow() {
           status={status}
           setStatus={setStatus}
           setClose={setClose}
+          windowClosed={windowClosed}
+          setWindowClosed={setWindowClosed}
         />
       </>
     </section>

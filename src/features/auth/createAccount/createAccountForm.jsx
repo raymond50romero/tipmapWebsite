@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 import { Select } from "antd";
 import PropTypes from "prop-types";
@@ -12,7 +12,12 @@ import {
 } from "../../../utils/setHelperColors.jsx";
 import "./style.css";
 
-export default function CreateAccountForm({ setStatus, setClose, setHelper }) {
+export default function CreateAccountForm({
+  setStatus,
+  setClose,
+  setHelper,
+  setWindowClosed,
+}) {
   const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -76,22 +81,21 @@ export default function CreateAccountForm({ setStatus, setClose, setHelper }) {
             occupation,
             other,
           );
-          if (serverResponse?.status === 200) {
+          if (serverResponse?.status === 201) {
             setHelper("Account Created!");
             setStatus("login");
             setClose(true);
-          } else if (serverResponse?.status === 400) {
-            setHelper(
-              serverResponse.response?.data
-                ? serverResponse.response.data
-                : "no response from server",
+            setWindowClosed(true);
+          } else if (
+            serverResponse?.status === 409 ||
+            serverResponse?.status === 400
+          ) {
+            console.log(
+              "this is server response data: ",
+              serverResponse.response.data,
             );
-          } else if (serverResponse?.status === 409) {
-            setHelper(
-              serverResponse.response?.data
-                ? serverResponse.response.data
-                : "no response from server",
-            );
+
+            setHelper(serverResponse.response.data);
           } else if (!serverResponse) {
             setHelper("Unable to create new account");
           } else {
@@ -215,4 +219,5 @@ CreateAccountForm.propTypes = {
   setStatus: PropTypes.func.isRequired,
   setClose: PropTypes.func.isRequired,
   setHelper: PropTypes.func.isRequired,
+  setWindowClosed: PropTypes.func.isRequired,
 };

@@ -13,7 +13,12 @@ import { useLoginStatus } from "../../../contexts/loginStatus.jsx";
 import { useProfileStatus } from "../../../contexts/profileStatus.jsx";
 import "./style.css";
 
-export default function LoginForm({ setStatus, setClose, setHelper }) {
+export default function LoginForm({
+  setStatus,
+  setClose,
+  setHelper,
+  setWindowClosed,
+}) {
   const [emailOrUser, setEmailOrUser] = useState();
   const [password, setPassword] = useState();
   const [visible, setVisible] = useState(false);
@@ -45,6 +50,7 @@ export default function LoginForm({ setStatus, setClose, setHelper }) {
           setHelper(serverResponse.data.message);
           setLoginStatus(true);
           setClose(true);
+          setWindowClosed(true);
           setProfileStatus((prev) => ({
             ...prev,
             username: serverResponse.data.payload.username,
@@ -129,4 +135,5 @@ LoginForm.propTypes = {
   setStatus: PropTypes.func.isRequired,
   setClose: PropTypes.func.isRequired,
   setHelper: PropTypes.func.isRequired,
+  setWindowClosed: PropTypes.func.isRequired,
 };

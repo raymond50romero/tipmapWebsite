@@ -12,10 +12,16 @@ export default function HandleAuthForm({
   status,
   setStatus,
   setClose,
+  windowClosed,
+  setWindowClosed,
 }) {
   const showHelper = useHelper();
 
   useEffect(() => {
+    if (helper && windowClosed) {
+      showHelper(helper);
+    }
+
     switch (status) {
       case "createAccount":
         setHeader("Create Account");
@@ -30,7 +36,7 @@ export default function HandleAuthForm({
         setGoBack(false);
         break;
     }
-  }, [showHelper, status, setHeader, setGoBack]);
+  }, [helper, showHelper, status, setHeader, setGoBack, windowClosed]);
 
   switch (status) {
     case "createAccount":
@@ -39,6 +45,7 @@ export default function HandleAuthForm({
           setStatus={setStatus}
           setClose={setClose}
           setHelper={showHelper}
+          setWindowClosed={setWindowClosed}
         />
       );
     case "forgotPassword":
@@ -47,6 +54,7 @@ export default function HandleAuthForm({
           setStatus={setStatus}
           setClose={setClose}
           setHelper={showHelper}
+          setWindowClosed={setWindowClosed}
         />
       );
     default:
@@ -55,6 +63,7 @@ export default function HandleAuthForm({
           setStatus={setStatus}
           setClose={setClose}
           setHelper={showHelper}
+          setWindowClosed={setWindowClosed}
         />
       );
   }
@@ -66,4 +75,6 @@ HandleAuthForm.propTypes = {
   status: PropTypes.string.isRequired,
   setStatus: PropTypes.func.isRequired,
   setClose: PropTypes.func,
+  windowClosed: PropTypes.func,
+  setWindowClosed: PropTypes.func,
 };
