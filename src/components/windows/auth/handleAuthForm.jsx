@@ -18,10 +18,6 @@ export default function HandleAuthForm({
   const showHelper = useHelper();
 
   useEffect(() => {
-    if (helper && windowClosed) {
-      showHelper(helper);
-    }
-
     switch (status) {
       case "createAccount":
         setHeader("Create Account");
@@ -36,7 +32,7 @@ export default function HandleAuthForm({
         setGoBack(false);
         break;
     }
-  }, [helper, showHelper, status, setHeader, setGoBack, windowClosed]);
+  }, [showHelper, status, setHeader, setGoBack, windowClosed]);
 
   switch (status) {
     case "createAccount":
