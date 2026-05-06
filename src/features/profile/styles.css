@@ -29,3 +29,35 @@
   flex-direction: column;
   gap: 15px;
 }
+
+.each-user-made-post {
+  padding: 1em;
+  border: 1px solid #000;
+  border-radius: 16px;
+  background-color: rgba(245, 255, 250, 0.7);
+}
+
+.each-user-made-post-header {
+  margin: 0;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.each-user-made-post-title {
+  margin: 0.4rem 0 0;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.each-user-made-post-comment {
+  margin: 0.4rem 0 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.each-user-made-post-empty {
+  margin: 0.4rem 0 0;
+  font-size: 0.85rem;
+  color: #999;
+  font-style: italic;
+}

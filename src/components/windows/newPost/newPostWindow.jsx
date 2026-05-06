@@ -14,7 +14,6 @@ export default function NewPostWindow() {
   const { userLongLat } = useUserLongLat();
   const { mapCenter } = useMapState();
   const [nextForm, setNextForm] = useState(false);
-  const [brandId, setBrandId] = useState();
   const [mapboxId, setMapboxId] = useState();
   const [name, setName] = useState();
   const [address, setAddress] = useState();
@@ -43,7 +42,6 @@ export default function NewPostWindow() {
   async function createNewPost() {
     const newPostResponse = await newPost(
       mapCenter,
-      brandId,
       mapboxId,
       name,
       address,
@@ -59,6 +57,7 @@ export default function NewPostWindow() {
       title,
       comment,
     );
+    console.log("this is new post response: ", newPostResponse);
     if (newPostResponse === 403) {
       setHelper("Cannot create post, no user logged in");
       return;
@@ -122,7 +121,6 @@ export default function NewPostWindow() {
         ) : (
           <NewPostForm
             setNextForm={setNextForm}
-            setBrandId={setBrandId}
             setMapboxId={setMapboxId}
             setName={setName}
             setAddress={setAddress}

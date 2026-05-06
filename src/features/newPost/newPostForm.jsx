@@ -20,7 +20,6 @@ const MAP_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 
 export default function NewPostForm({
   setNextForm,
-  setBrandId,
   setMapboxId,
   setName,
   setAddress,
@@ -40,7 +39,6 @@ export default function NewPostForm({
 
   // the purpose of having these 'c hooks' is to catch errors
   // before being sent to backend, reducing api calls
-  const [cBrandId, setcBrandId] = useState();
   const [cMapboxId, setcMapboxId] = useState();
   const [cName, setcName] = useState();
   const [cAddress, setcAddress] = useState();
@@ -107,7 +105,6 @@ export default function NewPostForm({
    * reset hooks to default values (null) when clearing search
    */
   function handleClear() {
-    setcBrandId(null);
     setcMapboxId(null);
     setcName(null);
     setcAddress(null);
@@ -158,7 +155,6 @@ export default function NewPostForm({
         event.preventDefault();
         if (checkInputs()) {
           setNextForm(true);
-          setBrandId(cBrandId);
           setMapboxId(cMapboxId);
           setName(cName);
           setAddress(cAddress);
@@ -190,16 +186,10 @@ export default function NewPostForm({
           }}
           onRetrieve={(res) => {
             const feature = res.features[0];
-            const {
-              name,
-              address,
-              full_address,
-              place_formatted,
-              brand_id,
-              mapbox_id,
-            } = feature.properties;
+            console.log("this is res features: ", res.features);
+            const { name, address, full_address, place_formatted, mapbox_id } =
+              feature.properties;
             const { longitude, latitude } = feature.properties.coordinates;
-            setcBrandId(brand_id);
             setcMapboxId(mapbox_id);
             setcName(name);
             setcAddress(address);
@@ -312,7 +302,6 @@ export default function NewPostForm({
 
 NewPostForm.propTypes = {
   setNextForm: PropTypes.func,
-  setBrandId: PropTypes.func,
   setMapboxId: PropTypes.func,
   setName: PropTypes.func,
   setAddress: PropTypes.func,

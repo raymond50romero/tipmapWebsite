@@ -25,7 +25,6 @@ const newPostRoute = import.meta.env.VITE_NEW_POST;
  */
 export default async function newPost(
   mapCenter,
-  brandId,
   mapboxId,
   name,
   address,
@@ -42,7 +41,7 @@ export default async function newPost(
   comment,
 ) {
   if (
-    !brandId ||
+    !mapCenter ||
     !mapboxId ||
     !name ||
     !address ||
@@ -55,12 +54,24 @@ export default async function newPost(
     !management ||
     !clientele
   ) {
+    console.log("something is missing");
+    console.log("mapcenter: ", mapCenter);
+    console.log("mapboxid: ", mapboxId);
+    console.log("name: ", name);
+    console.log("address: ", address);
+    console.log("place: ", place);
+    console.log("longitude: ", longitude);
+    console.log("latitude: ", latitude);
+    console.log("weekdaytips: ", weekdayTips);
+    console.log("weekendTips: ", weekendTips);
+    console.log("workenv: ", workenv);
+    console.log("management: ", management);
+    console.log("clientele: ", clientele);
     return false;
   }
 
   const data = {
     mapCenter: mapCenter,
-    brandId: brandId,
     mapboxId: mapboxId,
     name: name,
     address: address,
@@ -90,7 +101,7 @@ export default async function newPost(
       }
     })
     .catch((error) => {
-      console.error(error);
+      console.error("error when creating new post", error);
       if (error.status === 403) {
         return 403;
       }
