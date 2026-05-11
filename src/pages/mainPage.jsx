@@ -35,6 +35,7 @@ export default function MainPage() {
               ...prev,
               username: res.data.payload.username,
               email: res.data.payload.email,
+              occupation: res.data.payload.occupations,
             }));
             return true;
           } else {
