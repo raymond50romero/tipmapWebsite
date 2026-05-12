@@ -12,6 +12,9 @@ export default function RestaurantDetailWindow() {
     setIsDetailWindowOpen,
     isAllReviewsWindowOpen,
     setIsAllReviewsWindowOpen,
+    isReviewDetailWindowOpen,
+    setIsReviewDetailWindowOpen,
+    setSelectedReviewData,
     selectedRestaurantData,
     currCenter,
     currZoom,
@@ -49,6 +52,8 @@ export default function RestaurantDetailWindow() {
   const closeWindow = () => {
     setIsDetailWindowOpen(false);
     setIsAllReviewsWindowOpen(false);
+    setIsReviewDetailWindowOpen(false);
+    setSelectedReviewData(null);
     const blurBackground = document.getElementById("blur-background");
     if (blurBackground) {
       blurBackground.style.display = "none";
@@ -59,9 +64,14 @@ export default function RestaurantDetailWindow() {
     setIsAllReviewsWindowOpen(true);
   };
 
+  const openReviewDetail = (post) => {
+    setIsReviewDetailWindowOpen(true);
+    setSelectedReviewData(post);
+  };
+
   return (
     <section
-      className={`window show-window ${isAllReviewsWindowOpen ? "shifted-left" : ""}`}
+      className={`window show-window ${isAllReviewsWindowOpen || isReviewDetailWindowOpen ? "shifted-left" : ""}`}
       id="restaurant-detail-window"
     >
       <div className="window-header">
@@ -198,7 +208,7 @@ export default function RestaurantDetailWindow() {
           <h2 className="detail-section-header">Reviews</h2>
           {displayPosts.length > 0 ? (
             displayPosts.map((post, index) => (
-              <div key={index} className="detail-post-tag">
+              <div key={index} className="detail-post-tag clickable-review" onClick={() => openReviewDetail(post)}>
                 <h3 className="detail-post-title">{post.title}</h3>
                 <p className="detail-post-comment">{post.comment}</p>
               </div>

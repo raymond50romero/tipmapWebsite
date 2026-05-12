@@ -4,7 +4,7 @@ import { useMapState } from "../../../contexts/mapState.jsx";
 import "./allReviewsStyles.css";
 
 export default function AllReviewsWindow() {
-  const { isAllReviewsWindowOpen, setIsAllReviewsWindowOpen, selectedRestaurantData } = useMapState();
+  const { isAllReviewsWindowOpen, setIsAllReviewsWindowOpen, selectedRestaurantData, setIsReviewDetailWindowOpen, setSelectedReviewData } = useMapState();
 
   if (!isAllReviewsWindowOpen || !selectedRestaurantData) return null;
 
@@ -12,6 +12,13 @@ export default function AllReviewsWindow() {
 
   const closeWindow = () => {
     setIsAllReviewsWindowOpen(false);
+    setIsReviewDetailWindowOpen(false);
+    setSelectedReviewData(null);
+  };
+
+  const openReviewDetail = (post) => {
+    setIsReviewDetailWindowOpen(true);
+    setSelectedReviewData(post);
   };
 
   return (
@@ -23,7 +30,7 @@ export default function AllReviewsWindow() {
       <div className="detail-posts all-posts-list">
         {allPosts && allPosts.length > 0 ? (
           allPosts.map((post, index) => (
-            <div key={index} className="detail-post-tag">
+            <div key={index} className="detail-post-tag clickable-review" onClick={() => openReviewDetail(post)}>
               <h3 className="detail-post-title">{post.title}</h3>
               <p className="detail-post-comment">{post.comment}</p>
             </div>
