@@ -1,21 +1,72 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
+import axios from "axios";
 import { useMapState } from "../../../contexts/mapState.jsx";
+import { useLoginStatus } from "../../../contexts/loginStatus.jsx";
 import StarRating from "../../../features/posts/starRating.jsx";
 import DollarRating from "../../../features/posts/dollarRating.jsx";
 import "./reviewDetailStyles.css";
 
+const host = import.meta.env.VITE_HOST;
+const port = import.meta.env.VITE_PORT;
+const newCommentRoute = import.meta.env.VITE_NEW_COMMENT;
+const getCommentsRoute = import.meta.env.VITE_GET_COMMENTS;
+
 export default function ReviewDetailWindow() {
   const { isReviewDetailWindowOpen, setIsReviewDetailWindowOpen, selectedReviewData, setSelectedReviewData } = useMapState();
+  const { loginStatus } = useLoginStatus();
 
   const [showRatings, setShowRatings] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (isReviewDetailWindowOpen && selectedReviewData?.post_id) {
+      axios
+        .get(`${host}:${port}/${getCommentsRoute}/${selectedReviewData.post_id}`)
+        .then((res) => {
+          if (res.status === 200) {
+            setComments(res.data.comments);
+          }
+        })
+        .catch((error) => {
+          console.log("error fetching comments: ", error);
+        });
+    } else {
+      setComments([]);
+    }
+  }, [isReviewDetailWindowOpen, selectedReviewData?.post_id]);
 
   if (!isReviewDetailWindowOpen || !selectedReviewData) return null;
 
   const closeWindow = () => {
     setIsReviewDetailWindowOpen(false);
     setSelectedReviewData(null);
+    setNewComment("");
+  };
+
+  const handleSubmitComment = async () => {
+    if (!newComment.trim() || isSubmitting) return;
+
+    setIsSubmitting(true);
+    try {
+      const res = await axios.post(
+        `${host}:${port}/${newCommentRoute}`,
+        { postId: selectedReviewData.post_id, commentText: newComment },
+        { withCredentials: true },
+      );
+
+      if (res.status === 201) {
+        setComments((prev) => [...prev, res.data.comment]);
+        setNewComment("");
+      }
+    } catch (error) {
+      console.log("error submitting comment: ", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -68,6 +119,45 @@ export default function ReviewDetailWindow() {
                   <StarRating rating={selectedReviewData.clientele} />
                 </div>
               </Tooltip>
+            </div>
+          )}
+        </div>
+
+        <div className="comments-section">
+          <h3 className="comments-header">Comments</h3>
+          <div className="comments-list">
+            {comments.length > 0 ? (
+              comments.map((comment) => (
+                <div key={comment.comment_id} className="comment-item">
+                  <div className="comment-meta">
+                    <span className="comment-username">{comment.user?.username}</span>
+                    <span className="comment-date">
+                      {new Date(comment.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <p className="comment-text">{comment.comment_text}</p>
+                </div>
+              ))
+            ) : (
+              <p className="no-comments">No comments yet.</p>
+            )}
+          </div>
+          {loginStatus && (
+            <div className="comment-input-container">
+              <textarea
+                className="comment-input"
+                placeholder="Write a comment..."
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                rows={3}
+              />
+              <button
+                className="comment-submit-btn"
+                onClick={handleSubmitComment}
+                disabled={isSubmitting || !newComment.trim()}
+              >
+                {isSubmitting ? "Posting..." : "Post"}
+              </button>
             </div>
           )}
         </div>
