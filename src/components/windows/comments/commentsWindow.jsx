@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
+
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
-import axios from "axios";
+
+import getComments from "../../../features/comments/api/getComments.jsx";
+import newComments from "../../../features/comments/api/newComment.jsx";
 import { useMapState } from "../../../contexts/mapState.jsx";
 import { useLoginStatus } from "../../../contexts/loginStatus.jsx";
 import StarRating from "../../../features/posts/starRating.jsx";
@@ -27,20 +31,10 @@ export default function CommentsWindow() {
   const [newComment, setNewComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // get comments from post that was clicked
   useEffect(() => {
     if (isCommentsWindowOpen && selectedReviewData?.post_id) {
-      axios
-        .get(
-          `${host}:${port}/${getCommentsRoute}/${selectedReviewData.post_id}`,
-        )
-        .then((res) => {
-          if (res.status === 200) {
-            setComments(res.data.comments);
-          }
-        })
-        .catch((error) => {
-          console.log("error fetching comments: ", error);
-        });
+      setComments(getComments(selectedReviewData?.post_id));
     } else {
       setComments([]);
     }
@@ -52,23 +46,22 @@ export default function CommentsWindow() {
     setIsCommentsWindowOpen(false);
     setSelectedReviewData(null);
     setNewComment("");
+    setComments([]);
+    setShowRatings(false);
+    setIsSubmitting(false);
   };
 
   const handleSubmitComment = async () => {
     if (!newComment.trim() || isSubmitting) return;
 
     setIsSubmitting(true);
+    console.log("this is post id: ", selectedReviewData?.post_id);
+    console.log("this is comment: ", newComment);
     try {
-      const res = await axios.post(
-        `${host}:${port}/${newCommentRoute}`,
-        { postId: selectedReviewData.post_id, commentText: newComment },
-        { withCredentials: true },
-      );
-
-      if (res.status === 201) {
-        setComments((prev) => [...prev, res.data.comment]);
-        setNewComment("");
-      }
+      const res = await newComments(selectedReviewData?.post_id, newComment);
+      console.log("this is res when submitting new comment: ", res);
+      setComments((prev) => [...prev, res.data.comment]);
+      setNewComment("");
     } catch (error) {
       console.log("error submitting comment: ", error);
     } finally {
