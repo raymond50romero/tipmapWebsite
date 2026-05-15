@@ -1,8 +1,0 @@
-forgot password does not work yet, fix it
-
-need to add a way to check if a user is logged in currently. we are saving the cookie on the frontend so we should be 
-able to see if the user is logged in
-
-make address from new post show up on the heat map
-
-make the new post show up as a post

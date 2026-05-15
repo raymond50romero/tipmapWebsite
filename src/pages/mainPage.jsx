@@ -11,7 +11,7 @@ import NewPostWindow from "../components/windows/newPost/newPostWindow.jsx";
 import ProfileWindow from "../components/windows/profile/profileWindow.jsx";
 import RestaurantDetailWindow from "../components/windows/restaurantDetail/restaurantDetailWindow.jsx";
 import AllReviewsWindow from "../components/windows/restaurantDetail/AllReviewsWindow.jsx";
-import ReviewDetailWindow from "../components/windows/restaurantDetail/ReviewDetailWindow.jsx";
+import CommentsWindow from "../components/windows/comments/commentsWindow.jsx";
 import Posts from "../components/posts/posts.jsx";
 
 import "../index.css";
@@ -69,7 +69,7 @@ export default function MainPage() {
         <ProfileWindow />
         <RestaurantDetailWindow />
         <AllReviewsWindow />
-        <ReviewDetailWindow />
+        <CommentsWindow />
       </div>
     </>
   );

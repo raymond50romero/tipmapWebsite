@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import PropTypes from "prop-types";
 
 const MapStateContext = createContext();
@@ -21,7 +21,7 @@ export function MapStateProvider({ children }) {
   const [selectedRestaurantData, setSelectedRestaurantData] = useState(null);
   const [isDetailWindowOpen, setIsDetailWindowOpen] = useState(false);
   const [isAllReviewsWindowOpen, setIsAllReviewsWindowOpen] = useState(false);
-  const [isReviewDetailWindowOpen, setIsReviewDetailWindowOpen] = useState(false);
+  const [isCommentsWindowOpen, setIsCommentsWindowOpen] = useState(false);
   const [selectedReviewData, setSelectedReviewData] = useState(null);
 
   return (
@@ -47,8 +47,8 @@ export function MapStateProvider({ children }) {
         setIsDetailWindowOpen,
         isAllReviewsWindowOpen,
         setIsAllReviewsWindowOpen,
-        isReviewDetailWindowOpen,
-        setIsReviewDetailWindowOpen,
+        isCommentsWindowOpen,
+        setIsCommentsWindowOpen,
         selectedReviewData,
         setSelectedReviewData,
       }}

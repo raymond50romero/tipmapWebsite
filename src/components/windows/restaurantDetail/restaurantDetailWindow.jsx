@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
 import { useMapState } from "../../../contexts/mapState.jsx";
@@ -12,14 +12,10 @@ export default function RestaurantDetailWindow() {
     setIsDetailWindowOpen,
     isAllReviewsWindowOpen,
     setIsAllReviewsWindowOpen,
-    isReviewDetailWindowOpen,
-    setIsReviewDetailWindowOpen,
+    isCommentsWindowOpen,
+    setIsCommentsWindowOpen,
     setSelectedReviewData,
     selectedRestaurantData,
-    currCenter,
-    currZoom,
-    northEast,
-    southWest,
   } = useMapState();
 
   const [showRatings, setShowRatings] = useState(false);
@@ -38,8 +34,6 @@ export default function RestaurantDetailWindow() {
 
   const displayPosts = allPosts?.slice(0, 3) || [];
 
-  console.log("this is all posts: ", displayPosts);
-
   const tipsAverage =
     (parseFloat(averages?.weekday_tips_average || 0) +
       parseFloat(averages?.weekend_tips_average || 0)) /
@@ -52,7 +46,7 @@ export default function RestaurantDetailWindow() {
   const closeWindow = () => {
     setIsDetailWindowOpen(false);
     setIsAllReviewsWindowOpen(false);
-    setIsReviewDetailWindowOpen(false);
+    setIsCommentsWindowOpen(false);
     setSelectedReviewData(null);
     const blurBackground = document.getElementById("blur-background");
     if (blurBackground) {
@@ -65,13 +59,13 @@ export default function RestaurantDetailWindow() {
   };
 
   const openReviewDetail = (post) => {
-    setIsReviewDetailWindowOpen(true);
+    setIsCommentsWindowOpen(true);
     setSelectedReviewData(post);
   };
 
   return (
     <section
-      className={`window show-window ${isAllReviewsWindowOpen || isReviewDetailWindowOpen ? "shifted-left" : ""}`}
+      className={`window show-window ${isAllReviewsWindowOpen || isCommentsWindowOpen ? "shifted-left" : ""}`}
       id="restaurant-detail-window"
     >
       <div className="window-header">
@@ -208,7 +202,11 @@ export default function RestaurantDetailWindow() {
           <h2 className="detail-section-header">Reviews</h2>
           {displayPosts.length > 0 ? (
             displayPosts.map((post, index) => (
-              <div key={index} className="detail-post-tag clickable-review" onClick={() => openReviewDetail(post)}>
+              <div
+                key={index}
+                className="detail-post-tag clickable-review"
+                onClick={() => openReviewDetail(post)}
+              >
                 <h3 className="detail-post-title">{post.title}</h3>
                 <p className="detail-post-comment">{post.comment}</p>
               </div>

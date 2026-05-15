@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
 import axios from "axios";
@@ -6,15 +6,20 @@ import { useMapState } from "../../../contexts/mapState.jsx";
 import { useLoginStatus } from "../../../contexts/loginStatus.jsx";
 import StarRating from "../../../features/posts/starRating.jsx";
 import DollarRating from "../../../features/posts/dollarRating.jsx";
-import "./reviewDetailStyles.css";
+import "./styles.css";
 
 const host = import.meta.env.VITE_HOST;
 const port = import.meta.env.VITE_PORT;
 const newCommentRoute = import.meta.env.VITE_NEW_COMMENT;
 const getCommentsRoute = import.meta.env.VITE_GET_COMMENTS;
 
-export default function ReviewDetailWindow() {
-  const { isReviewDetailWindowOpen, setIsReviewDetailWindowOpen, selectedReviewData, setSelectedReviewData } = useMapState();
+export default function CommentsWindow() {
+  const {
+    isCommentsWindowOpen,
+    setIsCommentsWindowOpen,
+    selectedReviewData,
+    setSelectedReviewData,
+  } = useMapState();
   const { loginStatus } = useLoginStatus();
 
   const [showRatings, setShowRatings] = useState(false);
@@ -23,9 +28,11 @@ export default function ReviewDetailWindow() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (isReviewDetailWindowOpen && selectedReviewData?.post_id) {
+    if (isCommentsWindowOpen && selectedReviewData?.post_id) {
       axios
-        .get(`${host}:${port}/${getCommentsRoute}/${selectedReviewData.post_id}`)
+        .get(
+          `${host}:${port}/${getCommentsRoute}/${selectedReviewData.post_id}`,
+        )
         .then((res) => {
           if (res.status === 200) {
             setComments(res.data.comments);
@@ -37,12 +44,12 @@ export default function ReviewDetailWindow() {
     } else {
       setComments([]);
     }
-  }, [isReviewDetailWindowOpen, selectedReviewData?.post_id]);
+  }, [isCommentsWindowOpen, selectedReviewData?.post_id]);
 
-  if (!isReviewDetailWindowOpen || !selectedReviewData) return null;
+  if (!isCommentsWindowOpen || !selectedReviewData) return null;
 
   const closeWindow = () => {
-    setIsReviewDetailWindowOpen(false);
+    setIsCommentsWindowOpen(false);
     setSelectedReviewData(null);
     setNewComment("");
   };
@@ -70,13 +77,15 @@ export default function ReviewDetailWindow() {
   };
 
   return (
-    <section className="window show-window shifted-right" id="review-detail-window">
+    <section
+      className="window show-window shifted-right"
+      id="review-detail-window"
+    >
       <div className="window-header">
-        <h1 className="detail-name">Review</h1>
+        <h1 className="detail-name">{selectedReviewData.title}</h1>
         <CloseOutlined className="close-btn" onClick={closeWindow} />
       </div>
       <div style={{ marginTop: "1rem" }}>
-        <h2 className="review-detail-title">{selectedReviewData.title}</h2>
         <p className="review-detail-comment">{selectedReviewData.comment}</p>
         <div className="ratings-dropdown">
           <button
@@ -89,13 +98,17 @@ export default function ReviewDetailWindow() {
 
           {showRatings && (
             <div className="review-detail-ratings">
-              <Tooltip title={`Weekday Tips: ${selectedReviewData.weekday_tips}`}>
+              <Tooltip
+                title={`Weekday Tips: ${selectedReviewData.weekday_tips}`}
+              >
                 <div className="review-detail-rating-item tips-item">
                   <span>Weekday Tips:</span>
                   <DollarRating rating={selectedReviewData.weekday_tips} />
                 </div>
               </Tooltip>
-              <Tooltip title={`Weekend Tips: ${selectedReviewData.weekend_tips}`}>
+              <Tooltip
+                title={`Weekend Tips: ${selectedReviewData.weekend_tips}`}
+              >
                 <div className="review-detail-rating-item tips-item">
                   <span>Weekend Tips:</span>
                   <DollarRating rating={selectedReviewData.weekend_tips} />
@@ -107,7 +120,9 @@ export default function ReviewDetailWindow() {
                   <StarRating rating={selectedReviewData.management} />
                 </div>
               </Tooltip>
-              <Tooltip title={`Environment: ${selectedReviewData.work_environment}`}>
+              <Tooltip
+                title={`Environment: ${selectedReviewData.work_environment}`}
+              >
                 <div className="review-detail-rating-item">
                   <span>Environment:</span>
                   <StarRating rating={selectedReviewData.work_environment} />
@@ -130,7 +145,9 @@ export default function ReviewDetailWindow() {
               comments.map((comment) => (
                 <div key={comment.comment_id} className="comment-item">
                   <div className="comment-meta">
-                    <span className="comment-username">{comment.user?.username}</span>
+                    <span className="comment-username">
+                      {comment.user?.username}
+                    </span>
                     <span className="comment-date">
                       {new Date(comment.created_at).toLocaleDateString()}
                     </span>
