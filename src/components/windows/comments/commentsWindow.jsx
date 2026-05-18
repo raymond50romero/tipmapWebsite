@@ -12,11 +12,6 @@ import StarRating from "../../../features/posts/starRating.jsx";
 import DollarRating from "../../../features/posts/dollarRating.jsx";
 import "./styles.css";
 
-const host = import.meta.env.VITE_HOST;
-const port = import.meta.env.VITE_PORT;
-const newCommentRoute = import.meta.env.VITE_NEW_COMMENT;
-const getCommentsRoute = import.meta.env.VITE_GET_COMMENTS;
-
 export default function CommentsWindow() {
   const {
     isCommentsWindowOpen,

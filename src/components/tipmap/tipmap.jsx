@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useMemo } from "react";
+import React, { useRef, useEffect, useState, useMemo } from "react";
 import ReactDOM from "react-dom/client";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -24,6 +24,17 @@ const ZOOM_DELTA_THRESHOLD = 0.5;
 // Petco Park long, lat: -117.15704, 32.70767
 // Seaport Village long, lat: -117.17093, 32.70923
 
+// Mapbox GL JS v3 requires WebGL2. If the browser/GPU can't provide it,
+// the Map constructor throws "Failed to initialize WebGL" — detect it up
+// front so we can show a message instead of crashing the app.
+function isWebGL2Available() {
+  try {
+    return !!document.createElement("canvas").getContext("webgl2");
+  } catch {
+    return false;
+  }
+}
+
 export default function Tipmap() {
   // utils needed for map
   const mapRef = useRef();
@@ -36,6 +47,9 @@ export default function Tipmap() {
   const selectedPinRef = useRef(null);
 
   const [weightFilter, setWeightFilter] = useState("weekendWeight");
+
+  // set when the map can't be rendered (no WebGL2 / Mapbox init failure)
+  const [mapError, setMapError] = useState(null);
 
   // global variable to get users current longitude and latitude
   const { setUserLongLat } = useUserLongLat();
@@ -106,12 +120,28 @@ export default function Tipmap() {
 
   // create map on startup
   useEffect(() => {
+    if (!isWebGL2Available()) {
+      console.error("WebGL2 is unavailable — cannot render the Mapbox map");
+      setMapError(
+        "Your browser or device can't render the map (WebGL2 is unavailable). Try enabling hardware/graphics acceleration, updating your GPU drivers, or using a different browser.",
+      );
+      return;
+    }
+
     mapboxgl.accessToken = MAPBOXGL_TOKEN;
-    mapRef.current = new mapboxgl.Map({
-      container: mapContainerRef.current,
-      center: center,
-      zoom: zoom,
-    });
+    try {
+      mapRef.current = new mapboxgl.Map({
+        container: mapContainerRef.current,
+        center: center,
+        zoom: zoom,
+      });
+    } catch (err) {
+      console.error("Failed to initialize Mapbox map", err);
+      setMapError(
+        "The map failed to load on this device. Try enabling hardware/graphics acceleration, updating your GPU drivers, or using a different browser.",
+      );
+      return;
+    }
 
     // Initialize the global map center
     setMapCenter(center);
@@ -334,9 +364,12 @@ export default function Tipmap() {
       if (interactionTimeoutRef.current) {
         clearTimeout(interactionTimeoutRef.current);
       }
-      mapRef.current.off("move", scheduleCenterAndZoomUpdate);
-      mapRef.current.off("zoom", scheduleCenterAndZoomUpdate);
-      mapRef.current.remove();
+      if (mapRef.current) {
+        mapRef.current.off("move", scheduleCenterAndZoomUpdate);
+        mapRef.current.off("zoom", scheduleCenterAndZoomUpdate);
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
     };
   }, [center, zoom]);
 
@@ -408,7 +441,13 @@ export default function Tipmap() {
 
   return (
     <>
-      <div id="tipmap" className="map-container" ref={mapContainerRef} />
+      {mapError ? (
+        <div id="tipmap" className="map-error" role="alert">
+          <p>{mapError}</p>
+        </div>
+      ) : (
+        <div id="tipmap" className="map-container" ref={mapContainerRef} />
+      )}
     </>
   );
 }

@@ -3,6 +3,21 @@
   height: 100%;
 }
 
+#tipmap.map-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  color: #555;
+  background: #f4f4f4;
+}
+
+#tipmap.map-error p {
+  max-width: 28rem;
+  margin: 0;
+}
+
 #restaurant-popup-container {
   padding: 0.5rem;
   padding-right: 1rem;
