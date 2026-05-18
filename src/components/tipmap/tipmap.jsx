@@ -46,6 +46,11 @@ export default function Tipmap() {
   });
   const selectedPinRef = useRef(null);
 
+  // reusable popup shown while hovering heatmap points
+  const hoverPopupRef = useRef(null);
+  const hoverRootRef = useRef(null);
+  const hoveredKeyRef = useRef(null);
+
   const [weightFilter, setWeightFilter] = useState("weekendWeight");
 
   // set when the map can't be rendered (no WebGL2 / Mapbox init failure)
@@ -373,12 +378,73 @@ export default function Tipmap() {
       setSouthWest(initialBounds.getSouthWest().toArray());
       setCurrCenter(mapRef.current.getCenter().toArray());
       setCurrZoom(mapRef.current.getZoom());
+
+      // show the restaurant popup while hovering heatmap points
+      const map = mapRef.current;
+
+      map.on("mousemove", "hotspots-point", (e) => {
+        if (!e.features || e.features.length === 0) return;
+        map.getCanvas().style.cursor = "pointer";
+
+        const feature = e.features[0];
+        const { name, address, mapbox_id } = feature.properties;
+        if (!name) return;
+
+        const coordinates = feature.geometry.coordinates.slice();
+        const key = mapbox_id || `${name}:${coordinates.join(",")}`;
+
+        // only (re)render when the hovered point actually changes
+        if (key === hoveredKeyRef.current) return;
+        hoveredKeyRef.current = key;
+
+        if (!hoverPopupRef.current) {
+          hoverPopupRef.current = new mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: false,
+            offset: 25,
+            maxWidth: "20rem",
+          });
+        }
+
+        const popupNode = document.createElement("div");
+        if (hoverRootRef.current) hoverRootRef.current.unmount();
+        hoverRootRef.current = ReactDOM.createRoot(popupNode);
+        hoverRootRef.current.render(
+          <RestaurantPopup
+            name={name}
+            address={address}
+            onSeeReviews={() => console.log("See reviews clicked for", name)}
+          />,
+        );
+
+        hoverPopupRef.current
+          .setLngLat(coordinates)
+          .setDOMContent(popupNode)
+          .addTo(map);
+      });
+
+      map.on("mouseleave", "hotspots-point", () => {
+        map.getCanvas().style.cursor = "";
+        hoveredKeyRef.current = null;
+        if (hoverPopupRef.current) hoverPopupRef.current.remove();
+      });
     });
     return () => {
       if (interactionTimeoutRef.current) {
         clearTimeout(interactionTimeoutRef.current);
       }
       setStyleLoaded(false);
+      if (hoverPopupRef.current) {
+        hoverPopupRef.current.remove();
+        hoverPopupRef.current = null;
+      }
+      if (hoverRootRef.current) {
+        const root = hoverRootRef.current;
+        hoverRootRef.current = null;
+        // defer so we don't unmount a root during React's commit phase
+        setTimeout(() => root.unmount());
+      }
+      hoveredKeyRef.current = null;
       if (mapRef.current) {
         mapRef.current.off("move", scheduleCenterAndZoomUpdate);
         mapRef.current.off("zoom", scheduleCenterAndZoomUpdate);
