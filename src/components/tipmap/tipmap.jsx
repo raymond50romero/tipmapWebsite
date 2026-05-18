@@ -51,6 +51,9 @@ export default function Tipmap() {
   // set when the map can't be rendered (no WebGL2 / Mapbox init failure)
   const [mapError, setMapError] = useState(null);
 
+  // true once the map style has loaded and the hotspots source exists
+  const [styleLoaded, setStyleLoaded] = useState(false);
+
   // global variable to get users current longitude and latitude
   const { setUserLongLat } = useUserLongLat();
   const {
@@ -67,9 +70,9 @@ export default function Tipmap() {
     setSouthWest,
   } = useMapState();
 
-  // center and zoom to both calculate current and what to send to the backend
-  const [center, setCenter] = useState(INITIAL_CENTER);
-  const [zoom, setZoom] = useState(INITIAL_ZOOM);
+  // The map instance is created once with INITIAL_CENTER/INITIAL_ZOOM and
+  // then moved imperatively (e.g. flyTo on geolocation) — it is never
+  // torn down and rebuilt for camera changes.
 
   // helper popup
   const setHelper = useHelper();
@@ -101,7 +104,7 @@ export default function Tipmap() {
           position.coords.longitude,
           position.coords.latitude,
         ];
-        setCenter(userLocation);
+        mapRef.current?.flyTo({ center: userLocation, essential: true });
         setCurrCenter(userLocation);
         setHelper("position set to your location");
         setUserLongLat(userLocation);
@@ -132,8 +135,8 @@ export default function Tipmap() {
     try {
       mapRef.current = new mapboxgl.Map({
         container: mapContainerRef.current,
-        center: center,
-        zoom: zoom,
+        center: INITIAL_CENTER,
+        zoom: INITIAL_ZOOM,
       });
     } catch (err) {
       console.error("Failed to initialize Mapbox map", err);
@@ -144,7 +147,7 @@ export default function Tipmap() {
     }
 
     // Initialize the global map center
-    setMapCenter(center);
+    setMapCenter(INITIAL_CENTER);
 
     // update zoom and center that is sent to backend whenever it passes a certain threshold
     function updateCenterAndZoom() {
@@ -359,11 +362,23 @@ export default function Tipmap() {
         },
         slot: "top",
       });
+
+      // The source now exists — let the data-sync effect push points in.
+      setStyleLoaded(true);
+
+      // Seed the view/bounds state from the initial camera so the data
+      // query is enabled on first load without requiring the user to move.
+      const initialBounds = mapRef.current.getBounds();
+      setNorthEast(initialBounds.getNorthEast().toArray());
+      setSouthWest(initialBounds.getSouthWest().toArray());
+      setCurrCenter(mapRef.current.getCenter().toArray());
+      setCurrZoom(mapRef.current.getZoom());
     });
     return () => {
       if (interactionTimeoutRef.current) {
         clearTimeout(interactionTimeoutRef.current);
       }
+      setStyleLoaded(false);
       if (mapRef.current) {
         mapRef.current.off("move", scheduleCenterAndZoomUpdate);
         mapRef.current.off("zoom", scheduleCenterAndZoomUpdate);
@@ -371,17 +386,19 @@ export default function Tipmap() {
         mapRef.current = null;
       }
     };
-  }, [center, zoom]);
+    // create the map exactly once, on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // set data points for heatmap
   useEffect(() => {
-    if (!mapRef.current) return;
+    if (!mapRef.current || !styleLoaded) return;
     const source = mapRef.current.getSource("hotspots");
     if (!source) {
       return;
     }
     source.setData(points);
-  }, [points]);
+  }, [points, styleLoaded]);
 
   const searchedMarkerRef = useRef(null);
 
