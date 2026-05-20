@@ -79,7 +79,7 @@
 .detail-section-header {
   font-size: 1.4rem;
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin: 0;
   border-bottom: 2px solid #f0f0f0;
   padding-bottom: 0.3rem;
 }
@@ -169,18 +169,35 @@
 }
 
 .detail-post-tag {
-  background: #fff;
-  border: 1px solid #eee;
+  position: relative;
+  background: #ddd;
+  border: 1px solid #ccc;
   padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
 }
 
+.detail-post-date {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  font-size: 0.75rem;
+  color: #999;
+}
+
 .detail-post-title {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.25rem 0;
+  padding-right: 4.5rem;
   font-size: 1.1rem;
   font-weight: bold;
   color: #333;
+}
+
+.detail-post-username {
+  display: block;
+  margin: 0 0 0.5rem 0;
+  font-size: 0.8rem;
+  color: #999;
 }
 
 .detail-post-comment {
@@ -191,11 +208,13 @@
 
 .clickable-review {
   cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
 }
 
 .clickable-review:hover {
-  background: #f5f5f5;
+  background: #eee;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 

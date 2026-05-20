@@ -207,7 +207,15 @@ export default function RestaurantDetailWindow() {
                 className="detail-post-tag clickable-review"
                 onClick={() => openReviewDetail(post)}
               >
+                {post.createdAt && (
+                  <span className="detail-post-date">
+                    {new Date(post.createdAt).toLocaleDateString()}
+                  </span>
+                )}
                 <h3 className="detail-post-title">{post.title}</h3>
+                {post.username && (
+                  <span className="detail-post-username">{post.username}</span>
+                )}
                 <p className="detail-post-comment">{post.comment}</p>
               </div>
             ))
