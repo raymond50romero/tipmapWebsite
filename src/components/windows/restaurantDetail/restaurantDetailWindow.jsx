@@ -200,7 +200,10 @@ export default function RestaurantDetailWindow() {
 
         <div className="detail-posts">
           <h2 className="detail-section-header">Reviews</h2>
-          {displayPosts.length > 0 ? (
+          {displayPosts.length > 0 &&
+          Object.values(displayPosts).every(
+            (comments) => comments.comment !== null,
+          ) ? (
             displayPosts.map((post, index) => (
               <div
                 key={index}
@@ -220,7 +223,7 @@ export default function RestaurantDetailWindow() {
               </div>
             ))
           ) : (
-            <p>No reviews yet.</p>
+            <p style={{ fontStyle: "italic" }}>No reviews yet.</p>
           )}
           {allPosts && allPosts.length > 3 && (
             <button className="see-all-btn" onClick={openAllReviews}>
