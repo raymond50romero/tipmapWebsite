@@ -93,12 +93,12 @@ export default function Tipmap() {
   // organize raw data for use on our map
   const points = useMemo(() => {
     return (
-      organizeWeights(rawPoints?.weightsData, weightFilter) || {
+      organizeWeights(rawPoints?.weightsData, weightFilter, currZoom) || {
         type: "FeatureCollection",
         features: [],
       }
     );
-  }, [rawPoints, weightFilter]);
+  }, [rawPoints, weightFilter, currZoom]);
 
   // set users location, default to San Diego if user does
   // not want to share location
@@ -289,14 +289,23 @@ export default function Tipmap() {
         maxzoom: 16,
         paint: {
           // Weight each point by the "value" property (default 1 if omitted)
+          // Value ranges from 0.2 to 1.0 (based on rating / 5).
+          // We use a non-linear mapping so that low tips (0.2) have extremely low weight (0.1)
+          // and high tips (1.0) have high weight (5.0) to make the heatmap highly responsive to tips.
           "heatmap-weight": [
             "interpolate",
             ["linear"],
             ["get", "value"],
-            0,
-            0,
-            10,
-            12,
+            0.2,
+            0.1,
+            0.4,
+            0.3,
+            0.6,
+            0.8,
+            0.8,
+            2.0,
+            1.0,
+            5.0,
           ],
           // Intensify with zoom
           "heatmap-intensity": [
