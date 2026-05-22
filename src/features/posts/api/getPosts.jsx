@@ -24,7 +24,6 @@ export async function getPosts(center, zoom, northEast, southWest) {
       },
     )
     .then((response) => {
-      console.log("response from getting posts: ", response);
       if (response) {
         return response;
       } else {

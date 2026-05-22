@@ -161,6 +161,7 @@ export default function Tipmap() {
       const { center: lastCenter, zoom: lastZoom } =
         lastFetchedParamsRef.current;
 
+      console.log("this is zoom: ", newZoom);
       // get the bounds of the visible map to get all of the posts within the bounds
       setNorthEast(mapRef.current.getBounds().getNorthEast().toArray());
       setSouthWest(mapRef.current.getBounds().getSouthWest().toArray());
@@ -286,38 +287,38 @@ export default function Tipmap() {
         id: "hotspots-heat",
         type: "heatmap",
         source: "hotspots",
-        maxzoom: 16,
+        maxzoom: 18,
         paint: {
           // Weight each point by the "value" property (default 1 if omitted)
           // Value ranges from 0.2 to 1.0 (based on rating / 5).
-          // We use a non-linear mapping so that low tips (0.2) have extremely low weight (0.1)
-          // and high tips (1.0) have high weight (5.0) to make the heatmap highly responsive to tips.
+          // We use a non-linear mapping so that low tips (0.2) have small but visible weight (0.12)
+          // and high tips (1.0) have moderate weight (1.8)
           "heatmap-weight": [
             "interpolate",
             ["linear"],
             ["get", "value"],
             0.2,
-            0.1,
+            0.12,
             0.4,
-            0.3,
+            0.25,
             0.6,
+            0.55,
             0.8,
-            0.8,
-            2.0,
             1.0,
-            5.0,
+            1.0,
+            1.8,
           ],
-          // Intensify with zoom
+          // Intensify with zoom (slightly scaled down to prevent saturation on high tips)
           "heatmap-intensity": [
             "interpolate",
             ["linear"],
             ["zoom"],
             0,
-            0.8,
+            0.5,
             10,
-            1.7,
+            1.2,
             15,
-            3.2,
+            2.2,
           ],
           // Color ramp based on density
           "heatmap-color": [
@@ -326,25 +327,18 @@ export default function Tipmap() {
             ["heatmap-density"],
             0,
             "rgba(0,0,0,0)",
-            0.2,
-            "rgb(0, 0, 90)", // dark blue
-
-            // Main gradient range
-            0.3,
-            "rgb(0, 0, 255)", // blue
-            0.4,
-            "rgb(0, 150, 255)", // sky blue
+            0.15,
+            "rgb(0, 80, 255)", // Vibrant royal blue (not so good tips)
+            0.35,
+            "rgb(0, 190, 255)", // Vibrant neon cyan/light blue (not so good tips)
             0.5,
-            "rgb(0, 255, 180)", // teal
-            0.6,
-            "rgb(0, 255, 0)", // green
+            "rgb(0, 255, 0)", // Vibrant neon green (decent tips)
             0.7,
-            "rgb(255, 255, 0)", // yellow
-            0.8,
-            "rgb(255, 128, 0)", // orange
-
+            "rgb(255, 235, 0)", // Vibrant neon yellow (decent tips)
+            0.85,
+            "rgb(255, 0, 0)", // Vibrant bright red (most tips)
             1.0,
-            "rgb(120, 0, 0)", // dark red
+            "rgb(139, 0, 0)", // Deep dark crimson (max tips)
           ],
           // Radius grows with zoom
           "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 0, 2, 9, 20],
@@ -353,10 +347,10 @@ export default function Tipmap() {
             "interpolate",
             ["linear"],
             ["zoom"],
-            12,
+            14,
             0.7,
-            16,
-            0.3,
+            17,
+            0,
           ],
         },
         slot: "top",
@@ -369,8 +363,30 @@ export default function Tipmap() {
         source: "hotspots",
         minzoom: 14,
         paint: {
-          "circle-radius": ["interpolate", ["linear"], ["zoom"], 14, 2, 22, 10],
-          "circle-color": "#aaa",
+          "circle-radius": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            14,
+            2.5,
+            17.5,
+            8,
+          ],
+          "circle-color": [
+            "interpolate",
+            ["linear"],
+            ["get", "value"],
+            0.2,
+            "rgb(0, 80, 255)", // Low tips (rating 1) -> Royal Blue
+            0.4,
+            "rgb(0, 190, 255)", // Low-mid tips (rating 2) -> Cyan
+            0.6,
+            "rgb(0, 255, 0)", // Medium tips (rating 3) -> Lime Green
+            0.8,
+            "rgb(255, 128, 0)", // High tips (rating 4) -> Orange
+            1.0,
+            "rgb(255, 0, 0)", // Max tips (rating 5) -> Bright Red
+          ],
           "circle-stroke-color": "black",
           "circle-stroke-width": 1,
         },
